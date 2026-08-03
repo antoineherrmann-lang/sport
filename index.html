@@ -1,0 +1,1553 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<title>Sport</title>
+<meta name="theme-color" content="#0086ff">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Sport">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="favicon-32.png" sizes="32x32">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Playfair+Display:ital,wght@1,600;1,700&family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --radius-s:8px; --radius-m:12px; --radius-l:16px;
+  --nav-h:54px;
+  --nav-margin:14px;
+  /* Palette 100% plate, sans dégradé, dérivée de l'icône Sport et de l'identité éditoriale */
+  --blue:#0086ff;
+  --red:#ff2d3e;
+  --green:#1f8147;
+  --ink:#0a0a0a;
+}
+:root[data-theme="dark"]{
+  --bg:#0a0a0a;
+  --text:#f4f3ee;
+  --text-dim:#9a9a93;
+  --border: rgba(244,243,238,.16);
+  --border-strong: rgba(244,243,238,.5);
+  --bg-elevated:#141414;
+  --bg-card:#141414;
+  --bg-input:#1c1c1c;
+  --accent: var(--blue);
+  --accent-2: var(--red);
+  --accent-dim: rgba(0,134,255,.16);
+  --accent-dim-2: rgba(0,134,255,.3);
+  --shadow-hard: 4px 4px 0 var(--blue);
+  --shadow-hard-red: 4px 4px 0 var(--red);
+  --nav-bg: var(--text);
+  --nav-fg: var(--ink);
+}
+:root[data-theme="light"]{
+  --bg:#f0efe9;
+  --text:#0a0a0a;
+  --text-dim:#69695f;
+  --border: rgba(10,10,10,.16);
+  --border-strong: rgba(10,10,10,.85);
+  --bg-elevated:#ffffff;
+  --bg-card:#ffffff;
+  --bg-input:#f0efe9;
+  --accent: var(--blue);
+  --accent-2: var(--red);
+  --accent-dim: rgba(0,134,255,.1);
+  --accent-dim-2: rgba(0,134,255,.22);
+  --shadow-hard: 4px 4px 0 var(--ink);
+  --shadow-hard-red: 4px 4px 0 var(--red);
+  --nav-bg: var(--ink);
+  --nav-fg: #f4f3ee;
+}
+*{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+html,body{margin:0; padding:0; height:100%;}
+body{
+  background:var(--bg); color:var(--text);
+  font-family:'Space Grotesk',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  overscroll-behavior-y:none;
+  position:relative;
+}
+
+#app{
+  max-width:560px; margin:0 auto; min-height:100vh; position:relative;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:calc(var(--nav-h) + var(--nav-margin)*2 + 20px + env(safe-area-inset-bottom));
+}
+.pagehead{
+  padding:18px 18px 4px;
+}
+.pagehead span{
+  font-family:'Anton',sans-serif; font-size:22px; font-weight:400; letter-spacing:.3px;
+  text-transform:uppercase; color:var(--text);
+}
+.home-top{display:flex; justify-content:flex-end; align-items:center; margin:2px 0 12px;}
+.icon-btn{
+  width:42px; height:42px; min-width:42px; min-height:42px; border-radius:50%; border:2px solid var(--border-strong);
+  background:var(--bg-card); color:var(--text); display:flex; align-items:center; justify-content:center;
+  cursor:pointer; box-shadow:3px 3px 0 var(--border-strong); flex-shrink:0; box-sizing:border-box;
+  transition:transform .12s, box-shadow .12s;
+}
+.icon-btn:active{transform:translate(2px,2px); box-shadow:1px 1px 0 var(--border-strong);}
+.icon-btn svg{width:20px; height:20px; flex-shrink:0;}
+.icon-btn.spinning svg{animation:spin .8s linear infinite;}
+.spin-wrap{display:inline-flex; width:16px; height:16px;}
+.spin-wrap svg{width:16px; height:16px;}
+.btn.spinning .spin-wrap svg{animation:spin .8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+main{padding:18px;}
+.screen{animation:fadeIn .2s ease;}
+@keyframes fadeIn{from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:translateY(0);}}
+
+/* Hero */
+.hero{
+  border-radius:var(--radius-l);
+  background:var(--blue);
+  padding:26px 22px; color:#fff; position:relative; overflow:hidden;
+  border:2px solid var(--ink);
+  box-shadow:5px 5px 0 var(--ink);
+  margin-bottom:18px;
+}
+.hero::before{
+  content:""; position:absolute; inset:0; pointer-events:none; opacity:.5;
+  background-image:radial-gradient(rgba(255,255,255,.5) 1.5px, transparent 1.8px);
+  background-size:16px 16px;
+  -webkit-mask-image:linear-gradient(200deg, black, transparent 65%);
+  mask-image:linear-gradient(200deg, black, transparent 65%);
+}
+.hero-logo{
+  width:168px; margin:0 0 10px; color:#fff; position:relative;
+}
+.hero-logo svg{width:100%; height:auto; display:block; fill:currentColor;}
+.hero-sub{
+  font-family:'Playfair Display', serif; font-style:italic; font-weight:600;
+  font-size:19px; opacity:.96; margin:0; position:relative; line-height:1.25;
+}
+
+.card{
+  background:var(--bg-card); border:2px solid var(--border-strong); border-radius:var(--radius-m);
+  padding:16px; margin-bottom:14px; box-shadow:var(--shadow-hard);
+}
+.card-live{box-shadow:var(--shadow-hard-red); border-color:var(--red);}
+.card h2{font-family:'Anton',sans-serif; font-size:17px; margin:0 0 12px; text-transform:uppercase; letter-spacing:.3px; font-weight:400; color:var(--text);}
+.row-stats{display:flex; gap:10px;}
+.stat{flex:1; text-align:center; background:var(--bg-input); border-radius:var(--radius-s); padding:12px 6px; border:2px solid var(--border);}
+.stat b{display:block; font-size:22px; font-family:'Anton',sans-serif; font-weight:400;}
+.stat span{font-size:11px; color:var(--text-dim); font-weight:600;}
+
+.grid-machines{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+.machine-pr{
+  background:var(--bg-input); border-radius:var(--radius-s); padding:10px 12px; border:2px solid var(--border);
+}
+.machine-pr .name{font-size:12px; color:var(--text-dim); display:block; margin-bottom:2px; font-weight:600;}
+.machine-pr .val{font-size:18px; font-weight:700; font-family:'IBM Plex Mono',monospace;}
+
+.activity-item{
+  display:flex; align-items:center; gap:12px; padding:10px 0; border-bottom:2px solid var(--border);
+}
+.activity-item:last-child{border-bottom:none;}
+.activity-dot{width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; border:2px solid var(--border-strong);}
+.activity-dot svg{width:16px; height:16px;}
+.activity-dot.gym{background:var(--accent-dim); color:var(--accent);}
+.activity-dot.run{background:rgba(255,45,62,.14); color:var(--accent-2);}
+.activity-main{flex:1; min-width:0;}
+.activity-title{font-weight:700; font-size:14px;}
+.activity-sub{font-size:12px; color:var(--text-dim);}
+
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  border:2px solid var(--ink); border-radius:var(--radius-s); padding:13px 18px; font-family:'Space Grotesk',sans-serif; font-size:15px; font-weight:700;
+  cursor:pointer; width:100%; transition:transform .12s, box-shadow .12s;
+  box-shadow:3px 3px 0 var(--ink);
+}
+:root[data-theme="dark"] .btn{border-color:var(--text); box-shadow:3px 3px 0 var(--text);}
+.btn:active{transform:translate(3px,3px); box-shadow:0 0 0 var(--ink);}
+:root[data-theme="dark"] .btn:active{box-shadow:0 0 0 var(--text);}
+.btn-primary{background:var(--blue); color:#fff;}
+.btn-secondary{background:var(--bg-card); color:var(--text);}
+.btn-ghost{background:var(--accent-dim); color:var(--accent); border-color:var(--accent);}
+:root[data-theme="dark"] .btn-ghost{box-shadow:3px 3px 0 var(--accent);}
+.btn-ghost:active{box-shadow:0 0 0 var(--accent) !important;}
+.btn-row{display:flex; gap:10px; margin-bottom:14px;}
+.btn-row .btn{width:auto; flex:1;}
+
+label.field-label{display:block; font-size:12px; color:var(--text-dim); margin-bottom:6px; font-weight:700; text-transform:uppercase; letter-spacing:.3px;}
+.field{margin-bottom:14px;}
+input[type=text], input[type=number], input[type=date], select{
+  width:100%; padding:12px 14px; border-radius:var(--radius-s); border:2px solid var(--border-strong);
+  background:var(--bg-input); color:var(--text); font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:15px; outline:none;
+}
+input:focus, select:focus{border-color:var(--accent);}
+
+.choice-group{display:flex; flex-wrap:wrap; gap:8px;}
+.choice{
+  padding:9px 14px; border-radius:999px; border:2px solid var(--border-strong); background:var(--bg-input);
+  color:var(--text-dim); font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:700; cursor:pointer;
+}
+.choice.active{background:var(--accent); border-color:var(--ink); color:#fff;}
+:root[data-theme="dark"] .choice.active{border-color:var(--text);}
+
+.exercise-row{
+  display:grid; grid-template-columns:minmax(0,1fr) 44px 36px 36px 22px; gap:5px; align-items:center; margin-bottom:10px;
+}
+.exercise-row .ex-name{font-size:12.5px; font-weight:700; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; padding-right:4px;}
+.exercise-row input{padding:8px 2px; font-size:12.5px; text-align:center;}
+.ex-remove{
+  width:22px; height:22px; border-radius:50%; border:2px solid var(--border); background:var(--bg-input);
+  color:var(--text-dim); font-size:11px; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center; padding:0;
+}
+.ex-head{display:grid; grid-template-columns:minmax(0,1fr) 44px 36px 36px 22px; gap:5px; margin-bottom:6px;}
+.ex-head span{font-size:9px; color:var(--text-dim); text-align:center; text-transform:uppercase; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-weight:700;}
+.ex-head span:first-child{text-align:left;}
+.add-machine-row{display:flex; gap:8px; margin:10px 0 4px;}
+.add-machine-row input{flex:1; min-width:0;}
+.add-machine-row .btn{width:auto; white-space:nowrap; padding:10px 14px; font-size:13px;}
+
+.history-item{padding:12px 0; border-bottom:2px solid var(--border); display:flex; justify-content:space-between; align-items:flex-start; gap:10px;}
+.history-actions{display:flex; align-items:center; gap:2px; flex-shrink:0;}
+.history-item:last-child{border-bottom:none;}
+.history-date{font-weight:700; font-size:13px;}
+.history-detail{font-size:12px; color:var(--text-dim); margin-top:3px; font-family:'IBM Plex Mono',monospace;}
+.del-btn{background:none; border:none; color:var(--text-dim); cursor:pointer; flex-shrink:0; padding:8px; margin:-8px; display:flex; align-items:center; justify-content:center; border-radius:50%;}
+.del-btn:active{background:var(--bg-input);}
+.del-btn svg{width:16px; height:16px;}
+
+.tag{display:inline-block; font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:.4px; padding:4px 9px; border-radius:5px; background:var(--accent); color:#fff; margin-right:6px;}
+.tag.alt{background:var(--bg-input); color:var(--text-dim); border:2px solid var(--border);}
+
+.program-card{
+  background:var(--bg-card); border:2px solid var(--border-strong); border-radius:var(--radius-m); padding:16px; margin-bottom:14px;
+  box-shadow:var(--shadow-hard);
+}
+.program-head{display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px; gap:10px;}
+.step-edit-row{display:flex; gap:8px; align-items:center; margin-bottom:8px;}
+.step-edit-row input{flex:1;}
+.step-remove{
+  width:32px; height:32px; flex-shrink:0; border-radius:50%; border:2px solid var(--border-strong);
+  background:var(--bg-input); color:var(--text-dim); cursor:pointer; font-size:14px;
+}
+.program-title{font-family:'Anton',sans-serif; font-size:18px; font-weight:400; margin:0 0 4px; text-transform:uppercase;}
+.program-count{font-size:11px; color:var(--text-dim); font-weight:600;}
+.step{display:flex; align-items:center; gap:12px; padding:11px 0; border-bottom:2px solid var(--border);}
+.step:last-child{border-bottom:none;}
+.step-check{width:30px; height:30px; border-radius:8px; border:2px solid var(--border-strong); flex-shrink:0; display:flex; align-items:center; justify-content:center; cursor:pointer; background:var(--bg-input);}
+.step-check.done{background:var(--green); border-color:var(--green);}
+.step-check svg{width:17px; height:17px; opacity:0;}
+.step-check.done svg{opacity:1;}
+.step-label{font-size:14px; flex:1; font-weight:500;}
+.step.done .step-label{color:var(--text-dim); text-decoration:line-through;}
+
+.settings-row{display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:2px solid var(--border);}
+.settings-row:last-child{border-bottom:none;}
+.settings-row .lbl{font-size:14px; font-weight:700;}
+.settings-row .val{font-size:13px; color:var(--text-dim); font-family:'IBM Plex Mono',monospace;}
+
+details.changelog-group{margin-bottom:10px;}
+details.changelog-group summary{font-weight:800; font-size:13px; cursor:pointer; padding:8px 0; color:var(--text-dim);}
+.changelog-entry{margin-bottom:12px;}
+.changelog-entry .v{font-weight:800; font-size:13px; font-family:'IBM Plex Mono',monospace;}
+.changelog-entry ul{margin:4px 0 0; padding-left:18px; font-size:13px; color:var(--text-dim);}
+
+.toast{
+  position:fixed; left:50%; bottom:calc(var(--nav-h) + var(--nav-margin)*2 + 16px + env(safe-area-inset-bottom));
+  transform:translateX(-50%); background:var(--ink); border:2px solid var(--text);
+  color:#f4f3ee; padding:12px 18px; border-radius:999px; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:700;
+  box-shadow:3px 3px 0 var(--blue); z-index:100; opacity:0; pointer-events:none; transition:opacity .2s, transform .2s;
+  max-width:90%; text-align:center;
+}
+.toast.show{opacity:1; transform:translateX(-50%) translateY(-4px);}
+
+.tabbar-wrap{
+  position:fixed; left:0; right:0; z-index:30;
+  bottom:calc(var(--nav-margin) + env(safe-area-inset-bottom));
+  display:flex; justify-content:center; align-items:stretch; gap:10px; padding:0 var(--nav-margin);
+  pointer-events:none;
+}
+nav.tabbar{
+  position:relative; height:var(--nav-h); flex:1; max-width:420px;
+  display:flex; align-items:stretch; padding:5px;
+  border-radius:var(--radius-l);
+  background:var(--nav-bg);
+  border:2px solid var(--ink);
+  box-shadow:4px 4px 0 var(--blue);
+  pointer-events:auto;
+}
+:root[data-theme="dark"] nav.tabbar{border-color:var(--text);}
+.stats-bubble{
+  position:relative; width:var(--nav-h); height:var(--nav-h); flex-shrink:0; border-radius:50%;
+  background:var(--nav-bg); border:2px solid var(--ink); box-shadow:4px 4px 0 var(--red);
+  display:flex; align-items:center; justify-content:center; color:var(--nav-fg); cursor:pointer;
+  pointer-events:auto; transition:color .2s;
+}
+:root[data-theme="dark"] .stats-bubble{border-color:var(--text);}
+.stats-bubble svg{width:18px; height:18px;}
+.stats-bubble.active{
+  color:#fff;
+  background:var(--red);
+}
+.stats-bubble.bump{animation:bubbleBump .32s ease-out;}
+@keyframes bubbleBump{
+  0%{transform:scale(1);}
+  40%{transform:scale(1.08);}
+  70%{transform:scale(.98);}
+  100%{transform:scale(1);}
+}
+.tab-pill{
+  position:absolute; top:5px; bottom:5px; left:5px;
+  width:96px; border-radius:var(--radius-m);
+  background:var(--blue);
+  transition:left .28s cubic-bezier(.22,1.06,.36,1), width .28s cubic-bezier(.22,1.06,.36,1), opacity .2s ease;
+  z-index:0;
+}
+nav.tabbar .tab{
+  position:relative; z-index:1;
+  flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1px;
+  background:none; border:none; color:var(--nav-fg); opacity:.55; font-family:'Space Grotesk',sans-serif; font-size:9px; font-weight:700; cursor:pointer;
+  transition:color .2s, opacity .2s;
+}
+nav.tabbar .tab svg{width:17px; height:17px; transition:transform .2s;}
+nav.tabbar .tab.active{color:#fff; opacity:1;}
+nav.tabbar .tab.active svg{transform:translateY(-1px);}
+
+.onboard-wrap{
+  position:fixed; inset:0; background:var(--bg); z-index:200; overflow-y:auto;
+  display:flex; align-items:flex-start; justify-content:center;
+}
+.onboard-inner{max-width:520px; width:100%; padding:40px 20px 60px;}
+.onboard-hero{text-align:center; margin-bottom:26px;}
+.onboard-hero .hero-logo{width:150px; margin:0 auto 10px; color:var(--text);}
+
+.empty-state{text-align:center; padding:30px 10px; color:var(--text-dim);}
+.empty-state .big{font-size:34px; margin-bottom:8px;}
+
+/* Boutons d'action rapide sur l'accueil */
+.fab-row{display:flex; gap:14px; justify-content:center; margin:6px 0 20px;}
+.fab-item{display:flex; flex-direction:column; align-items:center; gap:8px; background:none; border:none; cursor:pointer; color:var(--text); flex:1; max-width:110px;}
+.fab{
+  width:60px; height:60px; border-radius:50%;
+  background:var(--blue);
+  border:2px solid var(--ink);
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:4px 4px 0 var(--ink);
+  transition:transform .12s, box-shadow .12s;
+}
+:root[data-theme="dark"] .fab{border-color:var(--text); box-shadow:4px 4px 0 var(--text);}
+.fab-item:active .fab{transform:translate(3px,3px); box-shadow:0 0 0 var(--ink);}
+:root[data-theme="dark"] .fab-item:active .fab{box-shadow:0 0 0 var(--text);}
+.fab svg{width:24px; height:24px; color:#fff;}
+.fab-item span{font-size:10.5px; font-weight:700; color:var(--text-dim); text-align:center; line-height:1.2;}
+
+/* Statistiques */
+.stat-note{font-size:12px; color:var(--text-dim); margin-top:10px; font-family:'IBM Plex Mono',monospace;}
+.week-chart{display:flex; gap:8px; overflow-x:auto; padding-bottom:4px;}
+.week-col{display:flex; flex-direction:column; align-items:center; gap:6px; flex-shrink:0; width:34px;}
+.week-bars{display:flex; align-items:flex-end; gap:3px; height:58px;}
+.week-bar{width:9px; border-radius:3px 3px 1px 1px;}
+.week-bar.gym{background:var(--accent);}
+.week-bar.run{background:var(--accent-2);}
+.week-col span{font-size:9px; color:var(--text-dim); font-family:'IBM Plex Mono',monospace;}
+.legend{display:flex; gap:16px; margin-top:12px;}
+.legend span{display:flex; align-items:center; gap:6px; font-size:12px; color:var(--text-dim); font-weight:600;}
+.legend .dot{width:9px; height:9px; border-radius:50%; display:inline-block;}
+.legend .dot.gym{background:var(--accent);}
+.legend .dot.run{background:var(--accent-2);}
+.sparkline{width:100%; height:64px; display:block; margin-top:6px;}
+.sparkline.spark-accent polyline, .sparkline.spark-accent circle{stroke:var(--accent); fill:var(--accent);}
+.sparkline.spark-accent2 polyline, .sparkline.spark-accent2 circle{stroke:var(--accent-2); fill:var(--accent-2);}
+
+::-webkit-scrollbar{display:none;}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============ CONFIG ============ */
+const APP_NAME = "Sport";
+const APP_VERSION = "0.1.0";
+const REPO_VERSION_URL = "./version.json";
+
+const MACHINES = [
+  {id:"chestPress", label:"Chest press"},
+  {id:"lowRow", label:"Low row"},
+  {id:"shoulderPress", label:"Shoulder press"},
+  {id:"pectoral", label:"Pectoral"},
+  {id:"tractionVerticale", label:"Traction verticale"},
+  {id:"adducteur", label:"Adducteur"},
+  {id:"adducteurExt", label:"Adducteur ext."},
+  {id:"proneLegCurl", label:"Prone leg curl"},
+];
+
+const RUN_TYPES = [
+  {id:"endurance", label:"Endurance"},
+  {id:"fractionne", label:"Fractionné"},
+  {id:"recuperation", label:"Récupération"},
+  {id:"course", label:"Course/Compét."},
+];
+
+const CHANGELOG = [
+  {version:"0.1.0", date:"2026-08-03", items:[
+    "Refonte graphique complète : identité éditoriale, flat et affirmée, fini le style « startup tech » et les dégradés bleus",
+    "Nouvelles polices : Anton (titres), Playfair Display italique (accents), Space Grotesk (texte), IBM Plex Mono (données)",
+    "Nouvelle icône plate bleu franc + logo recoloré",
+    "Nouveau système de séance salle : la séance en cours reste affichée en grand automatiquement, visible aussi sur l'accueil",
+    "Ajout d'un raccourci « Nouvelle séance vélo » sur l'accueil",
+  ]},
+  {version:"0.0.7", date:"2026-08-03", items:[
+    "N° de casier : clavier numérique + déplacé de l'accueil vers Salle de sport",
+    "Correction : ajouter une machine en cours de séance ne réinitialise plus les valeurs déjà saisies",
+    "La barre de navigation ne s'anime plus à chaque action, seulement lors d'un vrai changement d'onglet",
+    "Accueil : boutons renommés « Nouvelle séance salle » et « Nouvelle course », ouvrent directement le formulaire",
+    "Nouveau fonctionnement des séances salle : brouillon sauvegardable, bouton Terminer, et modification possible depuis l'historique",
+  ]},
+  {version:"0.0.6", date:"2026-08-02", items:[
+    "« Routine » renommé de nouveau en « Programme »",
+    "Statistiques : nouvelle liste des programmes terminés (par nom, nombre de séances)",
+    "Course scindée en deux : À pied / À vélo, avec records et historique séparés",
+    "Nouvelle progression vitesse (km/h) pour le vélo, allure filtrée sur la course à pied",
+    "Effet de bump sur la bulle Stats adouci",
+    "Vérification du bouton supprimer dans Programmes (fonctionnel) + zone tactile agrandie",
+  ]},
+  {version:"0.0.5", date:"2026-08-02", items:[
+    "Correction : la pastille de sélection restait affichée sous Accueil quand Stats était sélectionné",
+    "Rebond de la pastille adouci lors des changements d'onglet",
+    "Renommage de « Programmes » en « Routines »",
+    "Léger effet de bump sur la bulle Statistiques à la sélection",
+    "Salle de sport : ajout/suppression de machines directement dans le formulaire de séance (panneau « Gérer les machines » retiré)",
+    "Correction de l'icône Réglages rognée",
+  ]},
+  {version:"0.0.4", date:"2026-08-02", items:[
+    "Correction : bouton Réglages inaccessible sous l'encoche sur l'accueil",
+    "Barre de navigation moins haute",
+    "Correction du débordement du tableau dans Salle de sport",
+    "Possibilité de masquer les machines par défaut (et de les réactiver)",
+    "Nouvelle palette : bleu franc, sans violet",
+    "Cases à cocher plus grandes dans Programmes",
+    "Correction du bug \"Invalid Date\" dans Statistiques",
+    "Onglet Statistiques déplacé en dernier et détaché en bulle séparée",
+  ]},
+  {version:"0.0.3", date:"2026-08-02", items:[
+    "Onboarding simplifié : uniquement le prénom",
+    "Réglages retirés de la barre de navigation, accessibles depuis l'accueil",
+    "Ajout de machines personnalisées dans les séances salle (proposées automatiquement ensuite)",
+    "Programmes 100% personnalisables : crée les tiens (ex. IROX), les anciens programmes par défaut ont été retirés",
+    "Profil simplifié : uniquement le prénom",
+  ]},
+  {version:"0.0.2", date:"2026-08-02", items:[
+    "Nouvel onglet Statistiques : vue d'ensemble, volume hebdomadaire, progression par machine et progression de l'allure",
+    "Vrai logo vectoriel dans le hero (accueil et onboarding)",
+    "Icônes Feather partout (nav, activité, actions)",
+    "Nouveaux champs course : type de course, FC moyenne, dénivelé positif, calories",
+    "Dark mode moins violet, fond plus bleu foncé",
+    "Haut de page allégé (plus de bandeau inutile sur l'accueil)",
+    "Waveform décoratif retiré",
+  ]},
+  {version:"0.0.1", date:"2026-08-01", items:[
+    "Première version : suivi Salle de sport et Course",
+    "Programmes à cocher étape par étape, adaptés à l'objectif",
+    "Onboarding avec objectif, niveau, fréquence et numéro de casier",
+    "Thème clair / sombre automatique selon l'appareil",
+    "Vérification de mise à jour au lancement + bouton de recherche forcée",
+  ]},
+];
+
+/* ============ STORAGE ============ */
+const K = {
+  profile: "sport_profile",
+  gym: "sport_gym_sessions",
+  runs: "sport_runs",
+  progress: "sport_programs_progress",
+  programsList: "sport_programs_list",
+  customMachines: "sport_custom_machines",
+  hiddenMachines: "sport_hidden_machines",
+  settings: "sport_settings",
+  lastVersion: "sport_last_version_seen",
+};
+
+function load(key, fallback){
+  try{
+    const raw = localStorage.getItem(key);
+    return raw ? JSON.parse(raw) : fallback;
+  }catch(e){ return fallback; }
+}
+function save(key, val){ localStorage.setItem(key, JSON.stringify(val)); }
+
+let state = {
+  profile: load(K.profile, null),
+  gym: load(K.gym, []),
+  runs: load(K.runs, []),
+  progress: load(K.progress, {}),
+  programsList: load(K.programsList, []),
+  customMachines: load(K.customMachines, []),
+  hiddenMachines: load(K.hiddenMachines, []),
+  settings: load(K.settings, {theme:"auto"}),
+  screen: "home",
+};
+function allMachinesRaw(){ return [...MACHINES, ...state.customMachines]; }
+function allMachines(){ return allMachinesRaw().filter(m=>!state.hiddenMachines.includes(m.id)); }
+function slugify(str){
+  return str.toString().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"")
+    .replace(/[^a-z0-9]+/g,"_").replace(/^_+|_+$/g,"") || uid();
+}
+
+/* ============ THEME ============ */
+function applyTheme(){
+  let mode = state.settings.theme || "auto";
+  let effective = mode;
+  if(mode === "auto"){
+    effective = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  }
+  document.documentElement.setAttribute("data-theme", effective);
+}
+window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", applyTheme);
+applyTheme();
+
+/* ============ ICONS ============ */
+const ICONS = {
+  home: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>',
+  dumbbell: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',
+  run: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>',
+  list: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>',
+  stats: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>',
+  settings: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06A1.65 1.65 0 004.6 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06A1.65 1.65 0 009 4.6a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06A1.65 1.65 0 0019.4 9c.13.32.2.66.2 1v.09c.7.14 1.4.49 1.4 1.51z"/></svg>',
+  refresh: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>',
+  check: '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>',
+  trash: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>',
+  edit: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>',
+  bike: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><path d="M15 6a1 1 0 100-2 1 1 0 000 2z"/><path d="M12 17.5V14l-3-3 4-3 2 3h3"/></svg>',
+};
+
+/* ============ LOGO (vecteur d'origine, recolorable via currentColor) ============ */
+const LOGO_HORIZONTAL = `<svg viewBox="0 0 46.54 8.08" xmlns="http://www.w3.org/2000/svg"><path d="M.12,5.25v-.07h2.19v.24c0,.52.19.66,1.65.66,1.33,0,1.47-.1,1.47-.45,0-.28-.15-.4-.79-.48l-2.45-.33c-1.46-.2-2.19-.98-2.19-2.24S.97.05,3.79.05C6.27.05,7.45,1.13,7.45,2.88v.07h-2.19v-.17c0-.56-.24-.75-1.71-.75-1.12,0-1.36.15-1.36.49,0,.24.14.36.56.42l2.45.36c1.91.28,2.42,1.26,2.42,2.26,0,1.34-1.03,2.53-3.66,2.53C1.57,8.08.12,7.23.12,5.25Z"/><path d="M7.93,8.08V.05h4.69c2.01,0,3.28,1.09,3.28,3s-1.26,3.01-3.28,3.01h-2.31v2.03h-2.38ZM10.3,2.07v1.96h2.05c.83,0,1.18-.16,1.18-.98s-.34-.97-1.18-.97h-2.05Z"/><path d="M16.2,4.01c0-2.43,1.61-4.01,4.34-4.01.06,0,5.23.03,5.28.04,2.69.06,4.21,1.63,4.21,4.01s-1.57,3.99-4.32,4.01c-.02,0-5.15-.03-5.17-.03-2.72,0-4.34-1.58-4.34-4.01ZM27.7,4.05c0-1.49-.42-1.89-1.88-1.92-.06,0-5.22-.04-5.28-.04-1.59,0-2,.37-2,1.92s.41,1.92,2,1.92c.05,0,5.22.03,5.27.03,1.46-.02,1.89-.42,1.89-1.92Z"/><path d="M41.47,8.08V2.07h-2.83V.05h7.89v2.03h-2.82v6.01h-2.24Z"/><path d="M30.52,8.08V.05h4.57c2.07,0,3.15.89,3.15,2.46,0,1.27-.62,2.03-2.11,2.22v.12c.81.22,1.06.61,1.35,1.22l.97,2.02h-2.53l-.93-1.97c-.28-.6-.51-.77-1.37-.77h-.9v2.73h-2.2ZM32.71,3.67h2.35c.64,0,.88-.12.88-.8,0-.64-.23-.79-.88-.79h-2.35v1.6Z"/></svg>`;
+const LOGO_VERTICAL = `<svg viewBox="0 0 16.26 25.48" xmlns="http://www.w3.org/2000/svg"><path d="M.22,5.36v-.07h2.25v.25c0,.54.19.68,1.7.68,1.37,0,1.51-.11,1.51-.47,0-.29-.16-.41-.82-.49l-2.52-.34C.86,4.73.1,3.92.1,2.63S1.1,0,4,0c2.55,0,3.78,1.12,3.78,2.91v.07h-2.25v-.18c0-.58-.25-.77-1.76-.77-1.15,0-1.4.16-1.4.5,0,.25.14.37.58.43l2.52.37c1.97.29,2.49,1.3,2.49,2.33,0,1.38-1.06,2.6-3.77,2.6C1.72,8.28.22,7.4.22,5.36Z"/><path d="M8.17,8.06V.02h4.69c2.01,0,3.28,1.09,3.28,3s-1.26,3.01-3.28,3.01h-2.31v2.03h-2.38ZM10.54,2.05v1.96h2.05c.83,0,1.18-.16,1.18-.98s-.34-.97-1.18-.97h-2.05Z"/><path d="M0,12.71c0-2.51,1.66-4.14,4.47-4.14.06,0,7.39.04,7.45.04,2.77.07,4.34,1.68,4.34,4.14s-1.61,4.11-4.45,4.14c-.02,0-7.31-.03-7.34-.03-2.81,0-4.47-1.63-4.47-4.14ZM13.85,12.74c0-1.54-.44-1.95-1.93-1.98-.06,0-7.39-.04-7.45-.04-1.64,0-2.06.38-2.06,1.98s.42,1.98,2.06,1.98c.05,0,7.38.03,7.43.03,1.51-.03,1.95-.44,1.95-1.98Z"/><path d="M11.05,25.48v-6.17h-2.91v-2.08h8.1v2.08h-2.89v6.17h-2.31Z"/><path d="M0,25.48v-8.25h4.69c2.12,0,3.24.91,3.24,2.53,0,1.31-.64,2.08-2.17,2.28v.12c.83.22,1.09.63,1.39,1.26l1,2.07h-2.6l-.96-2.02c-.29-.62-.53-.79-1.4-.79h-.92v2.81H0ZM2.26,20.95h2.41c.66,0,.9-.12.9-.83,0-.65-.24-.81-.9-.81h-2.41v1.64Z"/></svg>`;
+
+/* ============ UTIL ============ */
+function todayStr(){ return new Date().toISOString().slice(0,10); }
+function fmtDate(d){
+  const dt = new Date(d+"T00:00:00");
+  return dt.toLocaleDateString("fr-FR", {day:"2-digit", month:"short", year:"numeric"});
+}
+function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+function startOfWeek(){
+  const d = new Date();
+  const day = (d.getDay()+6)%7; // Monday=0
+  d.setHours(0,0,0,0);
+  d.setDate(d.getDate()-day);
+  return d;
+}
+function showToast(msg, ms=2200){
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(showToast._t);
+  showToast._t = setTimeout(()=>t.classList.remove("show"), ms);
+}
+
+/* ============ RECORDS ============ */
+function machinePR(machineId){
+  let max = 0;
+  state.gym.forEach(s=>{
+    if((s.status||"done")==="draft") return;
+    const e = s.exercises[machineId];
+    if(e && e.poids && parseFloat(e.poids) > max) max = parseFloat(e.poids);
+  });
+  return max;
+}
+function filterRunsBySport(mode){
+  return state.runs.filter(r=> (r.sport||"pied")===mode);
+}
+function computeRunStats(list){
+  if(list.length===0) return {bestPace:null, bestSpeed:null, longest:0, totalKm:0};
+  let bestPace = Infinity, bestSpeed = 0, longest = 0, totalKm = 0;
+  list.forEach(r=>{
+    const dist = parseFloat(r.distance)||0;
+    const dur = parseFloat(r.duree)||0;
+    totalKm += dist;
+    if(dist > longest) longest = dist;
+    if(dist>0 && dur>0){
+      const pace = dur/dist;
+      if(pace < bestPace) bestPace = pace;
+      const speed = dist/(dur/60);
+      if(speed > bestSpeed) bestSpeed = speed;
+    }
+  });
+  return {bestPace: bestPace===Infinity?null:bestPace, bestSpeed: bestSpeed||null, longest, totalKm};
+}
+function runStats(){
+  return computeRunStats(state.runs);
+}
+function paceStr(paceMinPerKm){
+  if(paceMinPerKm==null) return "—";
+  const m = Math.floor(paceMinPerKm);
+  const s = Math.round((paceMinPerKm - m)*60);
+  return `${m}'${s.toString().padStart(2,"0")}"/km`;
+}
+function speedStr(kmh){
+  if(kmh==null) return "—";
+  return kmh.toFixed(1) + " km/h";
+}
+function weekSummary(){
+  const sow = startOfWeek();
+  const gymCount = state.gym.filter(s=> (s.status||"done")==="done" && new Date(s.date+"T00:00:00") >= sow).length;
+  const kmWeek = state.runs.filter(r=> new Date(r.date+"T00:00:00") >= sow)
+    .reduce((a,r)=>a+(parseFloat(r.distance)||0),0);
+  return {gymCount, kmWeek};
+}
+
+/* ============ RENDER ROOT ============ */
+let statsBump = false;
+let shellBuilt = false;
+let lastRenderedScreen = null;
+function ensureShell(){
+  if(shellBuilt) return;
+  const app = document.getElementById("app");
+  app.innerHTML = `
+    <div class="pagehead" id="pagehead" style="display:none;"><span id="pageheadText"></span></div>
+    <main class="screen" id="mainContent"></main>
+    <div class="tabbar-wrap">
+      <nav class="tabbar">
+        <div class="tab-pill" id="tabPill"></div>
+        ${tab('home', ICONS.home, 'Accueil')}
+        ${tab('gym', ICONS.dumbbell, 'Salle')}
+        ${tab('run', ICONS.run, 'Course')}
+        ${tab('programs', ICONS.list, 'Progr.')}
+      </nav>
+      <button class="stats-bubble" data-screen="stats" title="Statistiques">${ICONS.stats}</button>
+    </div>
+  `;
+  document.querySelectorAll("nav.tabbar .tab").forEach(b=>{
+    b.addEventListener("click", ()=>{ state.screen = b.dataset.screen; window.scrollTo(0,0); render(); });
+  });
+  document.querySelector(".stats-bubble").addEventListener("click", ()=>{
+    if(state.screen !== "stats") statsBump = true;
+    state.screen = "stats"; window.scrollTo(0,0); render();
+  });
+  shellBuilt = true;
+}
+function render(){
+  const app = document.getElementById("app");
+  if(!state.profile || !state.profile.onboarded){
+    shellBuilt = false; lastRenderedScreen = null;
+    app.innerHTML = renderOnboarding();
+    bindOnboarding();
+    return;
+  }
+  ensureShell();
+  const pagehead = document.getElementById("pagehead");
+  if(state.screen === "home"){
+    pagehead.style.display = "none";
+  } else {
+    pagehead.style.display = "";
+    document.getElementById("pageheadText").textContent = screenTitle();
+  }
+  document.getElementById("mainContent").innerHTML = renderScreen();
+  bindScreen();
+  if(lastRenderedScreen !== state.screen){
+    document.querySelectorAll("nav.tabbar .tab").forEach(b=>{
+      b.classList.toggle("active", b.dataset.screen === state.screen);
+    });
+    const bubble = document.querySelector(".stats-bubble");
+    bubble.classList.toggle("active", state.screen === "stats");
+    if(statsBump){
+      bubble.classList.add("bump");
+      statsBump = false;
+      setTimeout(()=>{ bubble.classList.remove("bump"); }, 400);
+    }
+    positionTabPill();
+    lastRenderedScreen = state.screen;
+  }
+}
+function screenTitle(){
+  return {gym:"Salle de sport", run:"Course", stats:"Statistiques", programs:"Programmes", settings:"Réglages"}[state.screen] || "SPORT";
+}
+function tab(id, icon, label){
+  return `<button class="tab" data-screen="${id}">${icon}<span>${label}</span></button>`;
+}
+function positionTabPill(){
+  const nav = document.querySelector("nav.tabbar");
+  const pill = document.getElementById("tabPill");
+  if(!nav || !pill) return;
+  const active = nav.querySelector(".tab.active");
+  if(!active){ pill.style.opacity = "0"; return; }
+  pill.style.opacity = "1";
+  pill.style.left = active.offsetLeft + "px";
+  pill.style.width = active.offsetWidth + "px";
+}
+window.addEventListener("resize", positionTabPill);
+
+function renderScreen(){
+  if(state.screen==="home") return renderHome();
+  if(state.screen==="gym") return renderGym();
+  if(state.screen==="run") return renderRun();
+  if(state.screen==="stats") return renderStats();
+  if(state.screen==="programs") return renderPrograms();
+  if(state.screen==="settings") return renderSettings();
+  return "";
+}
+function bindScreen(){
+  if(state.screen==="home") bindHome();
+  if(state.screen==="gym") bindGym();
+  if(state.screen==="run") bindRun();
+  if(state.screen==="stats") bindStats();
+  if(state.screen==="programs") bindPrograms();
+  if(state.screen==="settings") bindSettings();
+}
+
+/* ============ ONBOARDING ============ */
+function renderOnboarding(){
+  return `
+  <div class="onboard-wrap"><div class="onboard-inner">
+    <div class="onboard-hero">
+      <div class="hero-logo">${LOGO_HORIZONTAL}</div>
+      <p class="hero-sub" style="color:var(--text-dim); margin-top:6px;">Salle de sport & course, suivies simplement.</p>
+    </div>
+    <div class="card">
+      <h2>Prénom</h2>
+      <div class="field"><input type="text" id="ob_name" placeholder="Ton prénom"></div>
+      <button class="btn btn-primary" id="ob_submit">Commencer</button>
+    </div>
+  </div></div>`;
+}
+function bindOnboarding(){
+  document.getElementById("ob_submit").addEventListener("click", ()=>{
+    const name = document.getElementById("ob_name").value.trim();
+    state.profile = {
+      name: name || "",
+      casier: "",
+      onboarded: true,
+    };
+    save(K.profile, state.profile);
+    render();
+  });
+}
+
+/* ============ HOME ============ */
+function renderHome(){
+  const ws = weekSummary();
+  const rs = runStats();
+  const draft = getDraftSession();
+  const items = [
+    ...state.gym.map(s=>({type:"gym", date:s.date, data:s})),
+    ...state.runs.map(r=>({type:"run", date:r.date, data:r})),
+  ].sort((a,b)=> b.date.localeCompare(a.date)).slice(0,5);
+
+  return `
+    <div class="home-top">
+      <button class="icon-btn" id="openSettings" title="Réglages">${ICONS.settings}</button>
+    </div>
+    <div class="hero">
+      <div class="hero-logo">${LOGO_HORIZONTAL}</div>
+      <p class="hero-sub">Salut ${state.profile.name || ''} — prêt·e pour la séance ?</p>
+    </div>
+
+    ${draft ? `
+    <div class="card card-live">
+      <h2>🏋️ Séance en cours</h2>
+      <p class="stat-note" style="margin-top:0;">${fmtDate(draft.date)} · ${Object.keys(draft.exercises).length} machine${Object.keys(draft.exercises).length>1?'s':''} renseignée${Object.keys(draft.exercises).length>1?'s':''}</p>
+      <button class="btn btn-primary" id="resumeDraft">Continuer la séance →</button>
+    </div>` : ""}
+
+    <div class="card">
+      <h2>Cette semaine</h2>
+      <div class="row-stats">
+        <div class="stat"><b>${ws.gymCount}</b><span>séances salle</span></div>
+        <div class="stat"><b>${ws.kmWeek.toFixed(1)}</b><span>km course</span></div>
+      </div>
+    </div>
+
+    <div class="fab-row">
+      <button class="fab-item" id="quickGym"><div class="fab">${ICONS.dumbbell}</div><span>Nouvelle séance salle</span></button>
+      <button class="fab-item" id="quickRun"><div class="fab">${ICONS.run}</div><span>Nouvelle course à pied</span></button>
+      <button class="fab-item" id="quickVelo"><div class="fab">${ICONS.bike}</div><span>Nouvelle séance vélo</span></button>
+    </div>
+
+    <div class="card">
+      <h2>Records machines</h2>
+      <div class="grid-machines">
+        ${allMachines().map(m=>{
+          const pr = machinePR(m.id);
+          return `<div class="machine-pr"><span class="name">${m.label}</span><span class="val">${pr>0?pr+" kg":"—"}</span></div>`;
+        }).join("")}
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Course — records</h2>
+      <div class="row-stats">
+        <div class="stat"><b>${paceStr(rs.bestPace)}</b><span>meilleure allure</span></div>
+        <div class="stat"><b>${rs.longest.toFixed(1)} km</b><span>plus longue sortie</span></div>
+        <div class="stat"><b>${rs.totalKm.toFixed(1)} km</b><span>cumul total</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Activité récente</h2>
+      ${items.length===0 ? emptyState("🏋️","Aucune activité pour l'instant") : items.map(it=>{
+        if(it.type==="gym"){
+          const nb = Object.values(it.data.exercises).filter(e=>e.poids).length;
+          const isDraft = (it.data.status||"done")==="draft";
+          return activityRow("gym",ICONS.dumbbell, `Séance salle${isDraft?' · brouillon':''}`, `${fmtDate(it.date)} · ${nb} machine${nb>1?'s':''}`);
+        }else{
+          return activityRow("run",ICONS.run, `Course — ${it.data.distance} km`, `${fmtDate(it.date)} · ${it.data.duree} min`);
+        }
+      }).join("")}
+    </div>
+  `;
+}
+function emptyState(emoji, text){
+  return `<div class="empty-state"><div class="big">${emoji}</div><div>${text}</div></div>`;
+}
+function activityRow(cls, emoji, title, sub){
+  return `<div class="activity-item"><div class="activity-dot ${cls}">${emoji}</div><div class="activity-main"><div class="activity-title">${title}</div><div class="activity-sub">${sub}</div></div></div>`;
+}
+function bindHome(){
+  document.getElementById("openSettings").addEventListener("click", ()=>{ state.screen="settings"; render(); });
+  document.getElementById("resumeDraft")?.addEventListener("click", ()=>{
+    state.screen="gym";
+    render();
+  });
+  document.getElementById("quickGym").addEventListener("click", ()=>{
+    state.screen="gym";
+    if(!getDraftSession()) startNewSession();
+    render();
+  });
+  document.getElementById("quickRun").addEventListener("click", ()=>{
+    state.screen="run";
+    runViewMode = "pied";
+    runFormOpen = true;
+    render();
+  });
+  document.getElementById("quickVelo").addEventListener("click", ()=>{
+    state.screen="run";
+    runViewMode = "velo";
+    runFormOpen = true;
+    render();
+  });
+}
+
+/* ============ GYM ============ */
+let editingSessionId = null;
+function getEditingSession(){
+  return state.gym.find(s=>s.id===editingSessionId);
+}
+function getDraftSession(){
+  return state.gym.find(s=>(s.status||"done")==="draft");
+}
+function startNewSession(){
+  const s = {id:uid(), date:todayStr(), exercises:{}, status:"draft"};
+  state.gym.push(s);
+  save(K.gym, state.gym);
+  editingSessionId = s.id;
+}
+function closeSessionForm(discardIfEmpty){
+  if(discardIfEmpty){
+    const s = getEditingSession();
+    if(s && (s.status||"done")==="draft" && Object.keys(s.exercises).length===0){
+      state.gym = state.gym.filter(x=>x.id!==s.id);
+      save(K.gym, state.gym);
+    }
+  }
+  editingSessionId = null;
+}
+function renderGym(){
+  const draft = getDraftSession();
+  const displaySession = editingSessionId ? getEditingSession() : draft;
+  if(displaySession) editingSessionId = displaySession.id;
+
+  const sorted = [...state.gym].filter(s=>!displaySession || s.id!==displaySession.id).sort((a,b)=>b.date.localeCompare(a.date));
+  const machines = allMachines();
+  return `
+    ${displaySession ? renderGymForm() : `<button class="btn btn-primary" id="toggleGymForm" style="margin-bottom:14px;">+ Nouvelle séance</button>`}
+
+    <div class="card">
+      <h2>N° de casier</h2>
+      <div class="field" style="margin-bottom:0;">
+        <input type="text" inputmode="numeric" pattern="[0-9]*" id="lockerInput" value="${state.profile.casier || ''}" placeholder="Ex : 128">
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Records par machine</h2>
+      ${machines.length===0 ? emptyState("🏋️","Aucune machine active") : `
+      <div class="grid-machines">
+        ${machines.map(m=>{
+          const pr = machinePR(m.id);
+          return `<div class="machine-pr"><span class="name">${m.label}</span><span class="val">${pr>0?pr+" kg":"—"}</span></div>`;
+        }).join("")}
+      </div>`}
+    </div>
+
+    <div class="card">
+      <h2>Historique</h2>
+      ${sorted.length===0 ? emptyState("📋","Aucune séance enregistrée") : sorted.map(s=>{
+        const ex = allMachinesRaw().filter(m=>s.exercises[m.id] && s.exercises[m.id].poids)
+          .map(m=>`${m.label} ${s.exercises[m.id].poids}kg×${s.exercises[m.id].reps||'?'}(${s.exercises[m.id].series||'?'}s)`).join(" · ");
+        return `<div class="history-item">
+          <div>
+            <div class="history-date">${fmtDate(s.date)}</div>
+            <div class="history-detail">${ex || 'Aucun détail'}</div>
+          </div>
+          <div class="history-actions">
+            <button class="del-btn" data-edit="${s.id}" title="Modifier">${ICONS.edit}</button>
+            <button class="del-btn" data-id="${s.id}" title="Supprimer">${ICONS.trash}</button>
+          </div>
+        </div>`;
+      }).join("")}
+    </div>
+  `;
+}
+function renderGymForm(){
+  const session = getEditingSession();
+  if(!session) return "";
+  const machines = allMachines();
+  const isDraft = (session.status||"done")==="draft";
+  return `
+  <div class="card ${isDraft?'card-live':''}">
+    <h2>${isDraft? "Séance en cours" : "Modifier la séance"}</h2>
+    <div class="field">
+      <label class="field-label">Date</label>
+      <input type="date" id="gymDate" value="${session.date}">
+    </div>
+    ${machines.length===0 ? emptyState("🏋️","Ajoute une machine ci-dessous") : `
+    <div class="ex-head"><span>Machine</span><span>Kg</span><span>Reps</span><span>Séries</span><span></span></div>
+    ${machines.map(m=>{
+      const val = session.exercises[m.id] || {};
+      return `
+      <div class="exercise-row">
+        <div class="ex-name">${m.label}</div>
+        <input type="number" step="0.5" min="0" inputmode="decimal" data-machine="${m.id}" data-field="poids" value="${val.poids||''}" placeholder="—">
+        <input type="number" min="0" inputmode="numeric" data-machine="${m.id}" data-field="reps" value="${val.reps||''}" placeholder="—">
+        <input type="number" min="0" inputmode="numeric" data-machine="${m.id}" data-field="series" value="${val.series||''}" placeholder="—">
+        <button type="button" class="ex-remove" data-remove-machine="${m.id}" title="Retirer cette machine">✕</button>
+      </div>`;
+    }).join("")}`}
+    <div class="add-machine-row">
+      <input type="text" id="newMachineName" placeholder="Nouvelle machine (ex : Leg press)">
+      <button class="btn btn-ghost" id="addMachineBtn" type="button">+ Ajouter</button>
+    </div>
+    ${isDraft ? `
+    <div class="btn-row" style="margin-top:8px;">
+      <button class="btn btn-secondary" id="discardGym">Annuler la séance</button>
+      <button class="btn btn-primary" id="finishGym">Terminer ✓</button>
+    </div>` : `
+    <button class="btn btn-primary" id="closeEditGym" style="margin-top:8px;">Fermer</button>
+    `}
+  </div>`;
+}
+function bindGym(){
+  document.getElementById("toggleGymForm")?.addEventListener("click", ()=>{
+    startNewSession();
+    render();
+  });
+  if(editingSessionId){
+    document.getElementById("gymDate").addEventListener("change", e=>{
+      const s = getEditingSession();
+      if(s){ s.date = e.target.value || todayStr(); save(K.gym, state.gym); }
+    });
+    document.querySelectorAll("[data-machine]").forEach(inp=>{
+      inp.addEventListener("input", e=>{
+        const s = getEditingSession();
+        if(!s) return;
+        const machineId = inp.dataset.machine, field = inp.dataset.field;
+        if(!s.exercises[machineId]) s.exercises[machineId] = {};
+        s.exercises[machineId][field] = e.target.value;
+        save(K.gym, state.gym);
+      });
+    });
+    document.getElementById("addMachineBtn").addEventListener("click", ()=>{
+      const input = document.getElementById("newMachineName");
+      const label = input.value.trim();
+      if(!label){ showToast("Donne un nom à la machine"); return; }
+      const id = "custom_" + slugify(label) + "_" + Date.now().toString(36).slice(-4);
+      state.customMachines.push({id, label});
+      save(K.customMachines, state.customMachines);
+      showToast(`"${label}" ajoutée`);
+      render();
+    });
+    document.querySelectorAll("[data-remove-machine]").forEach(btn=>{
+      btn.addEventListener("click", ()=>{
+        const id = btn.dataset.removeMachine;
+        const isCustom = id.startsWith("custom_");
+        if(isCustom){
+          state.customMachines = state.customMachines.filter(m=>m.id!==id);
+          save(K.customMachines, state.customMachines);
+        } else {
+          if(!state.hiddenMachines.includes(id)) state.hiddenMachines.push(id);
+          save(K.hiddenMachines, state.hiddenMachines);
+        }
+        render();
+      });
+    });
+    document.getElementById("discardGym")?.addEventListener("click", ()=>{
+      closeSessionForm(true);
+      showToast("Séance annulée");
+      render();
+    });
+    document.getElementById("finishGym")?.addEventListener("click", ()=>{
+      const s = getEditingSession();
+      if(s && Object.keys(s.exercises).length===0){
+        showToast("Renseigne au moins une machine");
+        return;
+      }
+      if(s) s.status = "done";
+      save(K.gym, state.gym);
+      closeSessionForm(false);
+      showToast("Séance terminée 💪");
+      render();
+    });
+    document.getElementById("closeEditGym")?.addEventListener("click", ()=>{
+      closeSessionForm(false);
+      render();
+    });
+  }
+  const locker = document.getElementById("lockerInput");
+  if(locker){
+    locker.addEventListener("change", (e)=>{
+      state.profile.casier = e.target.value.trim();
+      save(K.profile, state.profile);
+      showToast("Numéro de casier enregistré");
+    });
+  }
+  document.querySelectorAll("[data-edit]").forEach(b=>{
+    b.addEventListener("click", ()=>{
+      editingSessionId = b.dataset.edit;
+      render();
+    });
+  });
+  document.querySelectorAll(".del-btn[data-id]").forEach(b=>{
+    b.addEventListener("click", ()=>{
+      state.gym = state.gym.filter(s=>s.id !== b.dataset.id);
+      save(K.gym, state.gym);
+      render();
+    });
+  });
+}
+
+/* ============ RUN ============ */
+let runFormOpen = false;
+let runViewMode = "pied";
+function renderRun(){
+  const list = filterRunsBySport(runViewMode);
+  const sorted = [...list].sort((a,b)=>b.date.localeCompare(a.date));
+  const rs = computeRunStats(list);
+  const isVelo = runViewMode === "velo";
+  return `
+    <div class="choice-group" id="runViewSwitch" style="margin-bottom:14px;">
+      <div class="choice ${!isVelo?'active':''}" data-mode="pied">🏃 À pied</div>
+      <div class="choice ${isVelo?'active':''}" data-mode="velo">🚴 À vélo</div>
+    </div>
+    <button class="btn btn-primary" id="toggleRunForm" style="margin-bottom:14px;">${runFormOpen? "Annuler" : (isVelo?"+ Nouvelle sortie vélo":"+ Nouvelle course")}</button>
+    ${runFormOpen ? renderRunForm() : ""}
+    <div class="card">
+      <h2>Records</h2>
+      <div class="row-stats">
+        <div class="stat"><b>${isVelo? speedStr(rs.bestSpeed) : paceStr(rs.bestPace)}</b><span>${isVelo?"vitesse max":"meilleure allure"}</span></div>
+        <div class="stat"><b>${rs.longest.toFixed(1)} km</b><span>plus longue sortie</span></div>
+        <div class="stat"><b>${rs.totalKm.toFixed(1)} km</b><span>cumul total</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <h2>Historique</h2>
+      ${sorted.length===0 ? emptyState(isVelo?"🚴":"🏃", isVelo?"Aucune sortie vélo enregistrée":"Aucune course enregistrée") : sorted.map(r=>{
+        const dist = parseFloat(r.distance), dur = parseFloat(r.duree);
+        const perf = isVelo ? speedStr(dist/(dur/60)) : paceStr(dur/dist);
+        const extra = [];
+        if(r.fc) extra.push(`${r.fc} bpm`);
+        if(r.denivele) extra.push(`D+ ${r.denivele} m`);
+        if(r.calories) extra.push(`${r.calories} kcal`);
+        if(r.type) extra.push(RUN_TYPES.find(t=>t.id===r.type)?.label || r.type);
+        return `<div class="history-item">
+          <div><div class="history-date">${fmtDate(r.date)}</div><div class="history-detail">${r.distance} km · ${r.duree} min · ${perf}${extra.length? " · "+extra.join(" · "):""}</div></div>
+          <button class="del-btn" data-id="${r.id}" title="Supprimer">${ICONS.trash}</button>
+        </div>`;
+      }).join("")}
+    </div>
+  `;
+}
+function renderRunForm(){
+  const isVelo = runViewMode === "velo";
+  return `
+  <div class="card">
+    <h2>${isVelo?"Nouvelle sortie vélo":"Nouvelle course"}</h2>
+    <div class="field"><label class="field-label">Type</label><div class="choice-group" id="runSport">
+      <div class="choice ${!isVelo?'active':''}" data-val="pied">🏃 À pied</div>
+      <div class="choice ${isVelo?'active':''}" data-val="velo">🚴 À vélo</div>
+    </div></div>
+    <div class="field"><label class="field-label">Date</label><input type="date" id="runDate" value="${todayStr()}"></div>
+    <div class="field"><label class="field-label">Distance (km)</label><input type="number" step="0.01" min="0" id="runDist" placeholder="Ex : 5.2"></div>
+    <div class="field"><label class="field-label">Durée (minutes)</label><input type="number" step="0.1" min="0" id="runDur" placeholder="Ex : 28.5"></div>
+    <div class="field" id="runPacePreview" style="font-size:13px; color:var(--text-dim);"></div>
+    <div class="field"><label class="field-label">Type de sortie</label><div class="choice-group" id="runType">
+      ${RUN_TYPES.map((t,i)=>`<div class="choice ${i===0?'active':''}" data-val="${t.id}">${t.label}</div>`).join("")}
+    </div></div>
+    <div class="field"><label class="field-label">FC moyenne (bpm, optionnel)</label><input type="number" min="0" id="runFc" placeholder="Ex : 152"></div>
+    <div class="field"><label class="field-label">Dénivelé positif (m, optionnel)</label><input type="number" min="0" id="runDenivele" placeholder="Ex : 80"></div>
+    <div class="field"><label class="field-label">Calories (kcal, optionnel)</label><input type="number" min="0" id="runCalories" placeholder="Ex : 320"></div>
+    <button class="btn btn-primary" id="saveRun">Enregistrer</button>
+  </div>`;
+}
+function bindRun(){
+  document.querySelectorAll("#runViewSwitch .choice").forEach(c=>{
+    c.addEventListener("click", ()=>{
+      runViewMode = c.dataset.mode;
+      runFormOpen = false;
+      render();
+    });
+  });
+  document.getElementById("toggleRunForm").addEventListener("click", ()=>{
+    runFormOpen = !runFormOpen;
+    render();
+  });
+  if(runFormOpen){
+    const dist = document.getElementById("runDist");
+    const dur = document.getElementById("runDur");
+    const preview = document.getElementById("runPacePreview");
+    let runTypeVal = RUN_TYPES[0].id;
+    let runSportVal = runViewMode;
+    document.querySelectorAll("#runSport .choice").forEach(c=>{
+      c.addEventListener("click", ()=>{
+        document.querySelectorAll("#runSport .choice").forEach(x=>x.classList.remove("active"));
+        c.classList.add("active");
+        runSportVal = c.dataset.val;
+        updatePreview();
+      });
+    });
+    document.querySelectorAll("#runType .choice").forEach(c=>{
+      c.addEventListener("click", ()=>{
+        document.querySelectorAll("#runType .choice").forEach(x=>x.classList.remove("active"));
+        c.classList.add("active");
+        runTypeVal = c.dataset.val;
+      });
+    });
+    function updatePreview(){
+      const d = parseFloat(dist.value), t = parseFloat(dur.value);
+      if(d>0 && t>0){
+        preview.textContent = runSportVal==="velo"
+          ? "Vitesse estimée : " + speedStr(d/(t/60))
+          : "Allure estimée : " + paceStr(t/d);
+      } else { preview.textContent = ""; }
+    }
+    dist.addEventListener("input", updatePreview);
+    dur.addEventListener("input", updatePreview);
+    document.getElementById("saveRun").addEventListener("click", ()=>{
+      const date = document.getElementById("runDate").value || todayStr();
+      const distance = dist.value, duree = dur.value;
+      if(!distance || !duree){ showToast("Renseigne distance et durée"); return; }
+      const fc = document.getElementById("runFc").value;
+      const denivele = document.getElementById("runDenivele").value;
+      const calories = document.getElementById("runCalories").value;
+      state.runs.push({id:uid(), date, distance, duree, sport:runSportVal, type:runTypeVal, fc, denivele, calories});
+      save(K.runs, state.runs);
+      runFormOpen = false;
+      runViewMode = runSportVal;
+      showToast(runSportVal==="velo" ? "Sortie vélo enregistrée 🚴" : "Course enregistrée 🏃");
+      render();
+    });
+  }
+  document.querySelectorAll(".del-btn").forEach(b=>{
+    b.addEventListener("click", ()=>{
+      state.runs = state.runs.filter(r=>r.id !== b.dataset.id);
+      save(K.runs, state.runs);
+      render();
+    });
+  });
+}
+
+/* ============ PROGRAMS ============ */
+/* ============ STATS ============ */
+let statsMachine = null;
+function getWeekKey(dateStr){
+  const d = new Date(dateStr+"T00:00:00");
+  const day = (d.getDay()+6)%7;
+  d.setHours(0,0,0,0); d.setDate(d.getDate()-day);
+  return d.toISOString().slice(0,10);
+}
+function weeklyVolume(n){
+  const weeks = [];
+  const now = new Date();
+  const day = (now.getDay()+6)%7;
+  now.setHours(0,0,0,0); now.setDate(now.getDate()-day);
+  for(let i=n-1;i>=0;i--){
+    const start = new Date(now); start.setDate(start.getDate()-7*i);
+    weeks.push({key:start.toISOString().slice(0,10), start, gym:0, run:0, km:0});
+  }
+  state.gym.forEach(s=>{ if((s.status||"done")!=="done") return; const k=getWeekKey(s.date); const w=weeks.find(w=>w.key===k); if(w) w.gym++; });
+  state.runs.forEach(r=>{ const k=getWeekKey(r.date); const w=weeks.find(w=>w.key===k); if(w){ w.run++; w.km += parseFloat(r.distance)||0; } });
+  return weeks;
+}
+function machineSeries(machineId){
+  return state.gym.filter(s=>(s.status||"done")==="done" && s.exercises[machineId] && s.exercises[machineId].poids)
+    .sort((a,b)=>a.date.localeCompare(b.date))
+    .map(s=>({date:s.date, poids:parseFloat(s.exercises[machineId].poids)}));
+}
+function sparklineSVG(values, colorClass){
+  if(values.length<2) return "";
+  const w=300,h=64,pad=6;
+  const max=Math.max(...values), min=Math.min(...values);
+  const range=(max-min)||1;
+  const step=(w-2*pad)/(values.length-1);
+  const pts = values.map((v,i)=>{
+    const x=pad+i*step;
+    const y=h-pad-((v-min)/range)*(h-2*pad);
+    return {x,y};
+  });
+  const line = pts.map(p=>`${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(" ");
+  const dots = pts.map(p=>`<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="2.5"/>`).join("");
+  return `<svg viewBox="0 0 ${w} ${h}" class="sparkline ${colorClass}"><polyline points="${line}" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>${dots}</svg>`;
+}
+function renderStats(){
+  const totalGym = state.gym.filter(s=>(s.status||"done")==="done").length;
+  const totalKm = state.runs.reduce((a,r)=>a+(parseFloat(r.distance)||0),0);
+  const totalPrograms = Object.values(state.progress).reduce((a,p)=>a+(p.sessions||0),0);
+  const weeks = weeklyVolume(8);
+  const maxWeek = Math.max(1, ...weeks.map(w=>Math.max(w.gym,w.run)));
+  const machinesWithData = allMachines().filter(m=>machineSeries(m.id).length>=2);
+  if(!statsMachine || !machinesWithData.find(m=>m.id===statsMachine)){
+    statsMachine = machinesWithData[0] ? machinesWithData[0].id : null;
+  }
+  const series = statsMachine ? machineSeries(statsMachine) : [];
+  const paceRuns = [...state.runs].filter(r=>(r.sport||"pied")==="pied")
+    .sort((a,b)=>a.date.localeCompare(b.date))
+    .filter(r=>parseFloat(r.distance)>0 && parseFloat(r.duree)>0);
+  const paceSeries = paceRuns.map(r=> -(parseFloat(r.duree)/parseFloat(r.distance)));
+  const veloRuns = [...state.runs].filter(r=>r.sport==="velo")
+    .sort((a,b)=>a.date.localeCompare(b.date))
+    .filter(r=>parseFloat(r.distance)>0 && parseFloat(r.duree)>0);
+  const veloSeries = veloRuns.map(r=> parseFloat(r.distance)/(parseFloat(r.duree)/60));
+  const fcRuns = state.runs.filter(r=>r.fc);
+  const avgFc = fcRuns.length ? Math.round(fcRuns.reduce((a,r)=>a+parseFloat(r.fc),0)/fcRuns.length) : null;
+  const finishedPrograms = state.programsList
+    .map(p=>({title:p.title, sessions:(state.progress[p.id]?.sessions)||0}))
+    .filter(p=>p.sessions>0)
+    .sort((a,b)=>b.sessions-a.sessions);
+
+  return `
+    <div class="card">
+      <h2>Vue d'ensemble</h2>
+      <div class="row-stats">
+        <div class="stat"><b>${totalGym}</b><span>séances salle</span></div>
+        <div class="stat"><b>${totalKm.toFixed(1)}</b><span>km course</span></div>
+        <div class="stat"><b>${totalPrograms}</b><span>programmes finis</span></div>
+      </div>
+      ${avgFc ? `<div class="stat-note">FC moyenne sur tes courses : ${avgFc} bpm</div>` : ""}
+    </div>
+
+    <div class="card">
+      <h2>Programmes terminés</h2>
+      ${finishedPrograms.length===0 ? emptyState("📝","Aucun programme terminé pour l'instant") : finishedPrograms.map(p=>`
+        <div class="settings-row">
+          <span class="lbl">${p.title}</span>
+          <span class="val">${p.sessions} séance${p.sessions!==1?'s':''}</span>
+        </div>
+      `).join("")}
+    </div>
+
+    <div class="card">
+      <h2>Volume hebdomadaire (8 semaines)</h2>
+      <div class="week-chart">
+        ${weeks.map(w=>`
+          <div class="week-col">
+            <div class="week-bars">
+              <div class="week-bar gym" style="height:${Math.max(3,Math.round((w.gym/maxWeek)*54))}px"></div>
+              <div class="week-bar run" style="height:${Math.max(3,Math.round((w.run/maxWeek)*54))}px"></div>
+            </div>
+            <span>${w.start.toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit'})}</span>
+          </div>`).join("")}
+      </div>
+      <div class="legend"><span><i class="dot gym"></i>Salle</span><span><i class="dot run"></i>Course</span></div>
+    </div>
+
+    <div class="card">
+      <h2>Progression par machine</h2>
+      ${machinesWithData.length===0 ? emptyState("📈","Pas encore assez de données (2 séances min. par machine)") : `
+        <div class="choice-group" id="statsMachineChoice">
+          ${machinesWithData.map(m=>`<div class="choice ${m.id===statsMachine?'active':''}" data-val="${m.id}">${m.label}</div>`).join("")}
+        </div>
+        ${sparklineSVG(series.map(s=>s.poids), 'spark-accent')}
+        <div class="stat-note">De ${series[0]?.poids ?? '—'} kg à ${series[series.length-1]?.poids ?? '—'} kg</div>
+      `}
+    </div>
+
+    <div class="card">
+      <h2>Progression allure course à pied</h2>
+      ${paceSeries.length<2 ? emptyState("🏃","Pas encore assez de courses enregistrées") : `
+        ${sparklineSVG(paceSeries, 'spark-accent2')}
+        <div class="stat-note">Courbe qui monte = tu deviens plus rapide</div>
+      `}
+    </div>
+
+    <div class="card">
+      <h2>Progression vitesse vélo</h2>
+      ${veloSeries.length<2 ? emptyState("🚴","Pas encore assez de sorties vélo enregistrées") : `
+        ${sparklineSVG(veloSeries, 'spark-accent')}
+        <div class="stat-note">Vitesse moyenne par sortie, en km/h</div>
+      `}
+    </div>
+  `;
+}
+function bindStats(){
+  const group = document.getElementById("statsMachineChoice");
+  if(group){
+    group.querySelectorAll(".choice").forEach(c=>{
+      c.addEventListener("click", ()=>{ statsMachine = c.dataset.val; render(); });
+    });
+  }
+}
+
+let programFormOpen = false;
+let programDraftTitle = "";
+let programDraftSteps = [""];
+function esc(str){ return (str||"").replace(/"/g,"&quot;").replace(/</g,"&lt;"); }
+function renderPrograms(){
+  return `
+    <button class="btn btn-primary" id="toggleProgramForm" style="margin-bottom:14px;">${programFormOpen? "Annuler" : "+ Nouveau programme"}</button>
+    ${programFormOpen ? renderProgramForm() : ""}
+    ${(!programFormOpen && state.programsList.length===0) ? emptyState("📝","Aucun programme pour l'instant — crée le tien (ex : IROX) !") : ""}
+    ${state.programsList.map(p=>{
+      const prog = state.progress[p.id] || {done:[], sessions:0};
+      const allDone = p.steps.length>0 && p.steps.every((_,i)=> prog.done.includes(i));
+      return `
+      <div class="program-card">
+        <div class="program-head">
+          <div>
+            <div class="program-title">${p.title}</div>
+            <span class="program-count">${prog.sessions} séance${prog.sessions!==1?'s':''} terminée${prog.sessions!==1?'s':''}</span>
+          </div>
+          <button class="del-btn" data-delprog="${p.id}" title="Supprimer le programme">${ICONS.trash}</button>
+        </div>
+        ${p.steps.map((s,i)=>`
+          <div class="step ${prog.done.includes(i)?'done':''}">
+            <div class="step-check ${prog.done.includes(i)?'done':''}" data-prog="${p.id}" data-idx="${i}">${ICONS.check}</div>
+            <div class="step-label">${s}</div>
+          </div>
+        `).join("")}
+        ${allDone ? `<button class="btn btn-primary" style="margin-top:12px;" data-finish="${p.id}">Terminer la séance ✓</button>` : ""}
+      </div>`;
+    }).join("")}
+  `;
+}
+function renderProgramForm(){
+  return `
+  <div class="card">
+    <h2>Nouveau programme</h2>
+    <div class="field"><label class="field-label">Nom du programme</label><input type="text" id="progTitle" value="${esc(programDraftTitle)}" placeholder="Ex : IROX"></div>
+    <label class="field-label">Étapes</label>
+    ${programDraftSteps.map((s,i)=>`
+      <div class="step-edit-row">
+        <input type="text" data-step-idx="${i}" value="${esc(s)}" placeholder="Ex : 1 km de course">
+        ${programDraftSteps.length>1 ? `<button class="step-remove" data-remove-idx="${i}" type="button">✕</button>` : ""}
+      </div>
+    `).join("")}
+    <button class="btn btn-ghost" id="addStepBtn" type="button" style="margin:8px 0 14px;">+ Ajouter une étape</button>
+    <button class="btn btn-primary" id="saveProgram">Enregistrer le programme</button>
+  </div>`;
+}
+function bindPrograms(){
+  document.getElementById("toggleProgramForm").addEventListener("click", ()=>{
+    programFormOpen = !programFormOpen;
+    if(programFormOpen){ programDraftTitle=""; programDraftSteps=[""]; }
+    render();
+  });
+  if(programFormOpen){
+    document.getElementById("progTitle").addEventListener("input", e=>{ programDraftTitle = e.target.value; });
+    document.querySelectorAll("[data-step-idx]").forEach(inp=>{
+      inp.addEventListener("input", e=>{ programDraftSteps[parseInt(inp.dataset.stepIdx)] = e.target.value; });
+    });
+    document.querySelectorAll("[data-remove-idx]").forEach(btn=>{
+      btn.addEventListener("click", ()=>{ programDraftSteps.splice(parseInt(btn.dataset.removeIdx),1); render(); });
+    });
+    document.getElementById("addStepBtn").addEventListener("click", ()=>{ programDraftSteps.push(""); render(); });
+    document.getElementById("saveProgram").addEventListener("click", ()=>{
+      const title = programDraftTitle.trim();
+      const steps = programDraftSteps.map(s=>s.trim()).filter(Boolean);
+      if(!title){ showToast("Donne un nom au programme"); return; }
+      if(steps.length===0){ showToast("Ajoute au moins une étape"); return; }
+      state.programsList.push({id:uid(), title, steps});
+      save(K.programsList, state.programsList);
+      programFormOpen = false; programDraftTitle=""; programDraftSteps=[""];
+      showToast("Programme créé 🎉");
+      render();
+    });
+  }
+  document.querySelectorAll("[data-delprog]").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      if(confirm("Supprimer ce programme ?")){
+        const pid = btn.dataset.delprog;
+        state.programsList = state.programsList.filter(p=>p.id!==pid);
+        delete state.progress[pid];
+        save(K.programsList, state.programsList);
+        save(K.progress, state.progress);
+        render();
+      }
+    });
+  });
+  document.querySelectorAll(".step-check").forEach(el=>{
+    el.addEventListener("click", ()=>{
+      const pid = el.dataset.prog, idx = parseInt(el.dataset.idx);
+      if(!state.progress[pid]) state.progress[pid] = {done:[], sessions:0};
+      const done = state.progress[pid].done;
+      const pos = done.indexOf(idx);
+      if(pos>-1) done.splice(pos,1); else done.push(idx);
+      save(K.progress, state.progress);
+      render();
+    });
+  });
+  document.querySelectorAll("[data-finish]").forEach(el=>{
+    el.addEventListener("click", ()=>{
+      const pid = el.dataset.finish;
+      state.progress[pid].sessions += 1;
+      state.progress[pid].done = [];
+      save(K.progress, state.progress);
+      showToast("Séance terminée, bravo ! 🎉");
+      render();
+    });
+  });
+}
+
+/* ============ SETTINGS ============ */
+function renderSettings(){
+  const p = state.profile;
+  return `
+    <div class="card">
+      <h2>Profil</h2>
+      <div class="field"><label class="field-label">Prénom</label><input type="text" id="s_name" value="${p.name||''}"></div>
+      <button class="btn btn-primary" id="s_save">Enregistrer le profil</button>
+    </div>
+
+    <div class="card">
+      <h2>Apparence</h2>
+      <div class="choice-group">
+        <div class="choice ${state.settings.theme==='auto'?'active':''}" data-theme-choice="auto">Auto</div>
+        <div class="choice ${state.settings.theme==='light'?'active':''}" data-theme-choice="light">Clair</div>
+        <div class="choice ${state.settings.theme==='dark'?'active':''}" data-theme-choice="dark">Sombre</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Données</h2>
+      <div class="btn-row">
+        <button class="btn btn-secondary" id="exportBtn">Exporter</button>
+        <button class="btn btn-secondary" id="importBtn">Importer</button>
+      </div>
+      <input type="file" id="importFile" accept="application/json" style="display:none;">
+      <button class="btn btn-ghost" id="resetBtn">Réinitialiser toutes les données</button>
+    </div>
+
+    <div class="card">
+      <h2>À propos</h2>
+      <div class="settings-row"><span class="lbl">Version</span><span class="val">${APP_VERSION}</span></div>
+      <button class="btn btn-secondary" id="checkUpdateBtn" style="margin-top:10px; gap:8px;"><span class="spin-wrap">${ICONS.refresh}</span>Rechercher une mise à jour</button>
+    </div>
+
+    <div class="card">
+      <h2>Changelog</h2>
+      ${CHANGELOG.map(c=>`
+        <details class="changelog-group" open>
+          <summary>v${c.version} — ${c.date}</summary>
+          <div class="changelog-entry"><ul>${c.items.map(i=>`<li>${i}</li>`).join("")}</ul></div>
+        </details>
+      `).join("")}
+    </div>
+  `;
+}
+function bindSettings(){
+  document.getElementById("s_save").addEventListener("click", ()=>{
+    state.profile.name = document.getElementById("s_name").value.trim();
+    save(K.profile, state.profile);
+    showToast("Profil enregistré");
+  });
+  document.querySelectorAll("[data-theme-choice]").forEach(el=>{
+    el.addEventListener("click", ()=>{
+      state.settings.theme = el.dataset.themeChoice;
+      save(K.settings, state.settings);
+      applyTheme();
+      render();
+    });
+  });
+  document.getElementById("exportBtn").addEventListener("click", ()=>{
+    const data = {profile:state.profile, gym:state.gym, runs:state.runs, progress:state.progress, programsList:state.programsList, customMachines:state.customMachines, exportedAt:new Date().toISOString()};
+    const blob = new Blob([JSON.stringify(data,null,2)], {type:"application/json"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url; a.download = `sport-export-${todayStr()}.json`;
+    document.body.appendChild(a); a.click(); a.remove();
+    URL.revokeObjectURL(url);
+    showToast("Export téléchargé");
+  });
+  document.getElementById("importBtn").addEventListener("click", ()=>{
+    document.getElementById("importFile").click();
+  });
+  document.getElementById("importFile").addEventListener("change", (e)=>{
+    const file = e.target.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      try{
+        const data = JSON.parse(reader.result);
+        if(data.profile) { state.profile = data.profile; save(K.profile, state.profile); }
+        if(data.gym) { state.gym = data.gym; save(K.gym, state.gym); }
+        if(data.runs) { state.runs = data.runs; save(K.runs, state.runs); }
+        if(data.progress) { state.progress = data.progress; save(K.progress, state.progress); }
+        if(data.programsList) { state.programsList = data.programsList; save(K.programsList, state.programsList); }
+        if(data.customMachines) { state.customMachines = data.customMachines; save(K.customMachines, state.customMachines); }
+        showToast("Import réussi");
+        render();
+      }catch(err){ showToast("Fichier invalide"); }
+    };
+    reader.readAsText(file);
+  });
+  document.getElementById("resetBtn").addEventListener("click", ()=>{
+    if(confirm("Supprimer toutes les données de l'app ? Cette action est irréversible.")){
+      localStorage.clear();
+      location.reload();
+    }
+  });
+  document.getElementById("checkUpdateBtn").addEventListener("click", ()=>checkForUpdate(true));
+}
+
+/* ============ UPDATE CHECK ============ */
+function checkForUpdate(manual){
+  const btn = document.getElementById("checkUpdateBtn");
+  if(btn) btn.classList.add("spinning");
+  fetch(REPO_VERSION_URL + "?t=" + Date.now(), {cache:"no-store"})
+    .then(r=> r.ok ? r.json() : null)
+    .then(data=>{
+      if(btn) btn.classList.remove("spinning");
+      if(!data || !data.version){
+        if(manual) showToast("Impossible de vérifier (hors ligne ?)");
+        return;
+      }
+      const lastSeen = localStorage.getItem(K.lastVersion) || APP_VERSION;
+      if(data.version !== APP_VERSION){
+        const alreadyReloading = sessionStorage.getItem("sport_reloading");
+        if(!alreadyReloading){
+          sessionStorage.setItem("sport_reloading","1");
+          showToast("Nouvelle version disponible, mise à jour…");
+          setTimeout(()=> location.reload(true), 800);
+        } else if(manual){
+          showToast("Une nouvelle version (" + data.version + ") est disponible, réessaie de recharger.");
+        }
+      } else {
+        sessionStorage.removeItem("sport_reloading");
+        if(manual) showToast("Tu as déjà la dernière version (" + APP_VERSION + ")");
+      }
+    })
+    .catch(()=>{
+      if(btn) btn.classList.remove("spinning");
+      if(manual) showToast("Impossible de vérifier (hors ligne ?)");
+    });
+}
+
+/* ============ BOOT ============ */
+render();
+checkForUpdate(false);
+
+if ("serviceWorker" in navigator) {
+  // pas de service worker dédié : on garde le fetch manuel ci-dessus pour rester simple et fiable
+}
+</script>
+</body>
+</html>
