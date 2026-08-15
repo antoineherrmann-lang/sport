@@ -1,0 +1,3150 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<title>Sport</title>
+<meta name="theme-color" content="#0086ff">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Sport">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="favicon-32.png" sizes="32x32">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Playfair+Display:ital,wght@1,600;1,700&family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --radius-s:8px; --radius-m:12px; --radius-l:16px;
+  --nav-h:59px;
+  --nav-margin:2px;
+  /* Palette 100% plate, sans dégradé, dérivée de l'icône Sport et de l'identité éditoriale */
+  --blue:#0086ff;
+  --red:#ff2d3e;
+  --green:#1f8147;
+  --ink:#0a0a0a;
+}
+:root[data-theme="dark"]{
+  --bg:#0a0a0a;
+  --text:#f4f3ee;
+  --text-dim:#9a9a93;
+  --border: rgba(244,243,238,.16);
+  --border-strong: rgba(244,243,238,.5);
+  --bg-elevated:#141414;
+  --bg-card:#141414;
+  --bg-input:#1c1c1c;
+  --accent: var(--blue);
+  --accent-2: var(--red);
+  --accent-dim: rgba(0,134,255,.16);
+  --accent-dim-2: rgba(0,134,255,.3);
+  --shadow-hard: 4px 4px 0 var(--blue);
+  --shadow-hard-red: 4px 4px 0 var(--red);
+  --nav-bg: var(--text);
+  --nav-fg: var(--text);
+  --glass-bg: rgba(20,20,20,.55);
+  --glass-border: rgba(244,243,238,.22);
+  --glass-shadow: 0 8px 24px rgba(0,0,0,.4);
+}
+:root[data-theme="light"]{
+  --bg:#f0efe9;
+  --text:#0a0a0a;
+  --text-dim:#69695f;
+  --border: rgba(10,10,10,.16);
+  --border-strong: rgba(10,10,10,.85);
+  --bg-elevated:#ffffff;
+  --bg-card:#ffffff;
+  --bg-input:#f0efe9;
+  --accent: var(--blue);
+  --accent-2: var(--red);
+  --accent-dim: rgba(0,134,255,.1);
+  --accent-dim-2: rgba(0,134,255,.22);
+  --shadow-hard: 4px 4px 0 var(--ink);
+  --shadow-hard-red: 4px 4px 0 var(--red);
+  --nav-bg: var(--ink);
+  --nav-fg: var(--text);
+  --glass-bg: rgba(255,255,255,.32);
+  --glass-border: rgba(255,255,255,.55);
+  --glass-shadow: 0 10px 28px rgba(10,10,10,.18), inset 0 1px 0 rgba(255,255,255,.9), inset 0 -1px 0 rgba(10,10,10,.05);
+}
+*{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+html,body{margin:0; padding:0; height:100%;}
+body{
+  background:var(--bg); color:var(--text);
+  font-family:'Space Grotesk',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  overscroll-behavior-y:none;
+  position:relative;
+}
+
+#app{
+  max-width:560px; margin:0 auto; min-height:100vh; position:relative;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:calc(var(--nav-h) + var(--nav-margin)*2 + 20px + env(safe-area-inset-bottom));
+}
+.pagehead{
+  padding:22px 18px 6px;
+}
+.pagehead > span{
+  font-family:'Anton',sans-serif; font-size:clamp(28px, 9vw, 38px); font-weight:400; letter-spacing:.2px; line-height:1;
+  text-transform:uppercase; color:var(--text); display:block;
+}
+.title-letter{
+  display:inline-block; opacity:0; transform:translateY(var(--rise,14px));
+  animation:titleLetterIn .42s cubic-bezier(.22,1,.36,1) forwards;
+}
+@keyframes titleLetterIn{
+  to{opacity:1; transform:translateY(0);}
+}
+.icon-btn{
+  width:42px; height:42px; min-width:42px; min-height:42px; border-radius:50%; border:2px solid var(--border-strong);
+  background:var(--bg-card); color:var(--text); display:flex; align-items:center; justify-content:center;
+  cursor:pointer; box-shadow:3px 3px 0 var(--border-strong); flex-shrink:0; box-sizing:border-box;
+  transition:transform .12s, box-shadow .12s;
+}
+.icon-btn:active{transform:translate(2px,2px); box-shadow:1px 1px 0 var(--border-strong);}
+.icon-btn svg{width:20px; height:20px; flex-shrink:0;}
+.icon-btn.spinning svg{animation:spin .8s linear infinite;}
+.spin-wrap{display:inline-flex; width:16px; height:16px;}
+.spin-wrap svg{width:16px; height:16px;}
+.btn.spinning .spin-wrap svg{animation:spin .8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+main{padding:18px;}
+.screen{}
+.enter-block{animation:blockIn .38s cubic-bezier(.22,1,.36,1) backwards;}
+@keyframes blockIn{from{opacity:0; transform:translateY(14px) scale(.98);} to{opacity:1; transform:translateY(0) scale(1);}}
+.reveal-in{animation:revealIn .32s cubic-bezier(.22,1,.36,1);}
+@keyframes revealIn{from{opacity:0; transform:translateY(8px) scale(.97);} to{opacity:1; transform:translateY(0) scale(1);}}
+@keyframes fadeIn{from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:translateY(0);}}
+
+/* Hero */
+.home-header{
+  display:flex; align-items:center; justify-content:space-between; gap:10px;
+  padding:6px 2px 16px;
+}
+.home-logo{
+  color:var(--ink);
+}
+.home-logo svg{width:142px; height:auto; display:block; fill:currentColor;}
+.hero-settings{
+  flex-shrink:0;
+  background:#fff; color:var(--ink); border-color:var(--ink);
+  box-shadow:3px 3px 0 var(--ink);
+}
+.hero-settings:active{box-shadow:1px 1px 0 var(--ink);}
+.hero-logo{
+  flex:1; min-width:0; display:flex; justify-content:center;
+  color:#fff;
+}
+.hero-logo svg{width:168px; max-width:100%; height:auto; display:block; fill:currentColor;}
+
+.card{
+  background:var(--bg-card); border:2px solid var(--border-strong); border-radius:var(--radius-m);
+  padding:16px; margin-bottom:14px; box-shadow:var(--shadow-hard);
+}
+.card-live{position:relative; overflow:hidden; border-color:var(--blue); box-shadow:4px 4px 0 var(--blue); background:var(--accent-dim);}
+.card-editing{border-color:var(--blue); box-shadow:4px 4px 0 var(--blue); background:var(--accent-dim);}
+.card-live::before{
+  content:""; position:absolute; top:0; left:0; width:100px; height:100px; pointer-events:none; z-index:0;
+  background-image:radial-gradient(var(--blue) 1.5px, transparent 1.8px);
+  background-size:13px 13px; opacity:.4;
+  -webkit-mask-image:radial-gradient(circle at 0% 0%, black, transparent 68%);
+  mask-image:radial-gradient(circle at 0% 0%, black, transparent 68%);
+  animation:heroDots 10s linear infinite;
+}
+.card-live > *{position:relative; z-index:1;}
+@keyframes heroDots{
+  0%{background-position:0 0;}
+  100%{background-position:130px 65px;}
+}
+.live-dot{
+  display:inline-block; width:9px; height:9px; border-radius:50%; background:var(--blue);
+  margin-right:7px; vertical-align:middle; animation:livePulse 1.6s ease-in-out infinite;
+}
+@keyframes livePulse{
+  0%,100%{opacity:1; transform:scale(1);}
+  50%{opacity:.35; transform:scale(1.35);}
+}
+.card h2{font-family:'Anton',sans-serif; font-size:17px; margin:0 0 12px; text-transform:uppercase; letter-spacing:.3px; font-weight:400; color:var(--text);}
+.row-stats{display:flex; gap:10px;}
+.stat{flex:1; text-align:center; background:var(--bg-input); border-radius:var(--radius-s); padding:12px 6px; border:2px solid var(--border);}
+.stat b{display:block; font-size:22px; font-family:'Anton',sans-serif; font-weight:400;}
+.stat span{font-size:11px; color:var(--text-dim); font-weight:600;}
+
+.grid-machines{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+.machine-pr{
+  background:var(--bg-input); border-radius:var(--radius-s); padding:10px 12px; border:2px solid var(--border);
+}
+.machine-pr .name{font-size:12px; color:var(--text-dim); display:block; margin-bottom:2px; font-weight:600;}
+.machine-pr .val{font-size:18px; font-weight:700; font-family:'IBM Plex Mono',monospace;}
+
+.activity-item{
+  display:flex; align-items:center; gap:12px; padding:10px 0; border-bottom:2px solid var(--border);
+}
+.activity-item:last-child{border-bottom:none;}
+.activity-dot{width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; border:2px solid var(--border-strong);}
+.activity-dot svg{width:16px; height:16px;}
+.activity-dot.gym{background:var(--accent-dim); color:var(--accent);}
+.activity-dot.run{background:rgba(255,45,62,.14); color:var(--accent-2);}
+.activity-main{flex:1; min-width:0;}
+.activity-title{font-weight:700; font-size:14px;}
+.activity-sub{font-size:12px; color:var(--text-dim);}
+
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  border:2px solid var(--ink); border-radius:var(--radius-s); padding:13px 18px; font-family:'Space Grotesk',sans-serif; font-size:15px; font-weight:700;
+  cursor:pointer; width:100%; transition:transform .12s, box-shadow .12s;
+  box-shadow:3px 3px 0 var(--ink);
+}
+:root[data-theme="dark"] .btn{border-color:var(--text); box-shadow:3px 3px 0 var(--text);}
+.btn:active{transform:translate(3px,3px); box-shadow:0 0 0 var(--ink);}
+:root[data-theme="dark"] .btn:active{box-shadow:0 0 0 var(--text);}
+.btn-primary{background:var(--blue); color:#fff;}
+.btn-secondary{background:var(--bg-card); color:var(--text);}
+.btn-ghost{background:var(--accent-dim); color:var(--accent); border-color:var(--accent);}
+:root[data-theme="dark"] .btn-ghost{box-shadow:3px 3px 0 var(--accent);}
+.btn-ghost:active{box-shadow:0 0 0 var(--accent) !important;}
+.btn-cancel{background:transparent; color:var(--text-dim); border-color:var(--border-strong); box-shadow:none; text-decoration:underline; text-underline-offset:3px;}
+.btn-cancel:active{transform:none; box-shadow:none; opacity:.6;}
+.btn-row{display:flex; gap:10px; margin-bottom:14px;}
+.btn-row-3070{display:flex; gap:10px; margin-bottom:14px;}
+.btn-row-3070 > *:first-child{flex:0.3 1 0%; width:auto;}
+.btn-row-3070 > *:last-child{flex:0.7 1 0%; width:auto;}
+.btn-row-7030{display:flex; gap:10px; margin-bottom:14px;}
+.btn-row-7030 > *:first-child{flex:0.7 1 0%; width:auto;}
+.btn-row-7030 > *:last-child{flex:0.3 1 0%; width:auto;}
+.btn-row .btn{width:auto; flex:1;}
+
+label.field-label{display:block; font-size:12px; color:var(--text-dim); margin-bottom:6px; font-weight:700; text-transform:uppercase; letter-spacing:.3px;}
+.field{margin-bottom:14px; min-width:0;}
+input[type=text], input[type=number], input[type=date], select{
+  width:100%; max-width:100%; min-width:0; box-sizing:border-box;
+  padding:12px 14px; border-radius:var(--radius-s); border:2px solid var(--border-strong);
+  background:var(--bg-input); color:var(--text); font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:15px; outline:none;
+}
+input[type=date]{
+  -webkit-appearance:none; appearance:none;
+}
+@media (max-width:380px){
+  input[type=date]{font-size:13px; padding:12px 8px;}
+}
+input:focus, select:focus{border-color:var(--accent);}
+
+#runViewSwitch{flex-wrap:nowrap;}
+#runViewSwitch .choice{flex:1; text-align:center;}
+.choice-group{display:flex; flex-wrap:wrap; gap:8px;}
+.choice{
+  padding:9px 14px; border-radius:999px; border:2px solid var(--border-strong); background:var(--bg-input);
+  color:var(--text-dim); font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:700; cursor:pointer;
+}
+.choice.active{background:var(--accent); border-color:var(--ink); color:#fff;}
+:root[data-theme="dark"] .choice.active{border-color:var(--text);}
+
+.exercise-row{
+  display:grid; grid-template-columns:minmax(0,1fr) 58px 50px 50px 26px; gap:6px; align-items:center; margin-bottom:12px;
+}
+.exercise-row .ex-name{font-size:13.5px; font-weight:700; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; padding-right:4px;}
+.exercise-row input{padding:11px 4px; font-size:15px; text-align:center; font-weight:700;}
+.ex-remove{
+  width:24px; height:24px; border-radius:50%; border:2px solid var(--border); background:var(--bg-input);
+  color:var(--text-dim); font-size:12px; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center; padding:0;
+}
+.ex-head{display:grid; grid-template-columns:minmax(0,1fr) 58px 50px 50px 26px; gap:6px; margin-bottom:8px;}
+.ex-head span{font-size:9px; color:var(--text-dim); text-align:center; text-transform:uppercase; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-weight:700;}
+.ex-head span:first-child{text-align:left;}
+.add-machine-row{display:flex; gap:8px; margin:10px 0 4px;}
+.add-machine-row input{flex:1; min-width:0;}
+.add-machine-row .btn{width:auto; white-space:nowrap; padding:10px 14px; font-size:13px;}
+.mm-list{max-height:280px; overflow-y:auto; overflow-x:hidden;}
+.machine-manage-row{display:flex; align-items:center; justify-content:space-between; gap:8px; padding:7px 0; border-bottom:1px solid var(--border); min-width:0;}
+.machine-manage-row:last-child{border-bottom:none;}
+.mm-name{flex:1; min-width:0; font-size:12.5px; font-weight:700; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.mm-actions{display:flex; align-items:center; gap:5px; flex-shrink:0;}
+.mm-toggle{
+  font-family:'Space Grotesk',sans-serif; font-size:9.5px; font-weight:700; padding:4px 9px; border-radius:999px;
+  border:1.5px solid var(--border); background:var(--bg-input); color:var(--text-dim); cursor:pointer; flex-shrink:0; white-space:nowrap;
+}
+.mm-toggle.on{background:var(--blue); border-color:var(--blue); color:#fff;}
+.settings-row-link{cursor:pointer;}
+.settings-row-link:active{opacity:.6;}
+
+.history-item{
+  padding:12px; margin-bottom:10px; border:2px solid var(--border); border-radius:var(--radius-s);
+  display:flex; justify-content:space-between; align-items:flex-start; gap:10px;
+  cursor:pointer; transition:border-color .12s, transform .12s;
+}
+.history-item:active{transform:scale(.98);}
+.history-item:hover{border-color:var(--border-strong);}
+.history-main{flex:1; min-width:0;}
+.history-actions{display:flex; align-items:center; gap:2px; flex-shrink:0;}
+.history-date{font-weight:700; font-size:13px;}
+.history-detail{font-size:12px; color:var(--text-dim); margin-top:3px; font-family:'IBM Plex Mono',monospace; overflow-wrap:break-word;}
+.del-btn{background:none; border:none; color:var(--text-dim); cursor:pointer; flex-shrink:0; padding:8px; margin:-8px; display:flex; align-items:center; justify-content:center; border-radius:50%;}
+.del-btn:active{background:var(--bg-input);}
+.del-btn svg{width:16px; height:16px;}
+
+.tag{display:inline-block; font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:.4px; padding:4px 9px; border-radius:5px; background:var(--accent); color:#fff; margin-right:6px;}
+.tag.done-badge{
+  background:var(--green); font-family:'Space Grotesk',sans-serif; vertical-align:middle;
+  margin-right:0; margin-left:2px; position:relative; top:-2px;
+}
+.tag svg{width:11px; height:11px; vertical-align:middle; display:inline-block;}
+.tag.alt{background:var(--bg-input); color:var(--text-dim); border:2px solid var(--border);}
+
+.program-card{
+  background:var(--bg-card); border:2px solid var(--border-strong); border-radius:var(--radius-m); padding:16px; margin-bottom:14px;
+  box-shadow:var(--shadow-hard);
+}
+.program-head{display:flex; align-items:flex-start; margin-bottom:10px; gap:10px;}
+.program-head-main{flex:1; min-width:0;}
+.program-actions{display:flex; align-items:center; gap:6px; flex-shrink:0;}
+.reorder-col{display:flex; flex-direction:column; gap:4px; flex-shrink:0;}
+.reorder-btn{
+  width:28px; height:22px; border-radius:6px; border:2px solid var(--border); background:var(--bg-input);
+  color:var(--text-dim); cursor:pointer; display:flex; align-items:center; justify-content:center; padding:0;
+}
+.reorder-btn svg{width:14px; height:14px;}
+.reorder-btn:disabled{opacity:.25; cursor:default;}
+.reorder-btn:active:not(:disabled){transform:scale(.9);}
+.program-actions .del-btn{
+  width:28px; height:48px; border-radius:6px; border:2px solid var(--border); background:var(--bg-input);
+  color:var(--text-dim); padding:0; margin:0;
+}
+.program-actions .del-btn:active{background:var(--bg-input); transform:scale(.95);}
+.program-actions .del-btn svg{width:15px; height:15px;}
+.program-actions .edit-program-btn{
+  width:28px; height:48px; border-radius:6px; border:2px solid var(--border); background:var(--bg-input);
+  color:var(--text-dim); padding:0; margin:0; display:flex; align-items:center; justify-content:center; cursor:pointer;
+}
+.program-actions .edit-program-btn:active{transform:scale(.95);}
+.program-actions .edit-program-btn svg{width:15px; height:15px;}
+.program-export-link{
+  display:block; width:100%; margin-top:10px; padding:6px 0; background:none; border:none;
+  color:var(--text-dim); font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:600;
+  text-decoration:underline; text-underline-offset:2px; cursor:pointer; text-align:center; opacity:.7;
+}
+.program-export-link:active{opacity:.4;}
+.step-edit-row{display:flex; gap:8px; align-items:center; margin-bottom:6px;}
+.step-edit-row input{flex:1;}
+.step-detail-row{display:flex; gap:6px; margin:0 0 12px; padding-left:2px;}
+.step-detail-row input{flex:1; min-width:0; padding:8px 6px; font-size:12px; text-align:center;}
+.step-remove{
+  width:32px; height:32px; flex-shrink:0; border-radius:50%; border:2px solid var(--border-strong);
+  background:var(--bg-input); color:var(--text-dim); cursor:pointer; font-size:14px;
+}
+.program-title{font-family:'Anton',sans-serif; font-size:18px; font-weight:400; margin:0 0 4px; text-transform:uppercase;}
+.program-count{font-size:11px; color:var(--text-dim); font-weight:600;}
+.step{display:flex; align-items:flex-start; gap:12px; padding:11px 4px; border-bottom:2px solid var(--border); border-radius:8px; margin:0 -4px;}
+.step:last-child{border-bottom:none;}
+.step.just-done{animation:stepDoneFlash .6s ease;}
+@keyframes stepDoneFlash{
+  0%{background:var(--accent-dim); transform:scale(1.015);}
+  100%{background:transparent; transform:scale(1);}
+}
+.step-body{flex:1; min-width:0; padding-top:2px;}
+.step-meta{display:flex; gap:6px; margin-top:6px; flex-wrap:wrap;}
+.step-chip{
+  display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:11px; font-weight:600;
+  background:var(--bg-input); color:var(--text-dim); border:1px solid var(--border); border-radius:6px; padding:3px 8px;
+}
+.step-check{width:30px; height:30px; border-radius:8px; border:2px solid var(--border-strong); flex-shrink:0; display:flex; align-items:center; justify-content:center; cursor:pointer; background:var(--bg-input); transition:transform .15s;}
+.step-bullet{width:30px; height:30px; flex-shrink:0; display:flex; align-items:center; justify-content:center;}
+.step-bullet::before{content:""; width:7px; height:7px; border-radius:50%; background:var(--text-dim);}
+.program-preview{cursor:pointer;}
+.step-check.done{background:var(--green); border-color:var(--green); animation:checkPop .32s cubic-bezier(.34,1.56,.4,1);}
+@keyframes checkPop{
+  0%{transform:scale(.6) rotate(-8deg);}
+  55%{transform:scale(1.2) rotate(4deg);}
+  100%{transform:scale(1) rotate(0deg);}
+}
+.step-check svg{width:17px; height:17px; opacity:0; transition:opacity .15s;}
+.step-check.done svg{opacity:1;}
+.step-label{font-size:14px; flex:1; font-weight:500; transition:color .3s;}
+.step.done .step-label{color:var(--text-dim); text-decoration:line-through;}
+.program-done-list{margin-bottom:12px;}
+.program-done-row{
+  display:flex; align-items:center; gap:10px; padding:10px 12px; margin-bottom:6px;
+  background:var(--bg-input); border:2px solid var(--border); border-radius:var(--radius-s); cursor:pointer; opacity:.75;
+  transition:opacity .15s, transform .1s;
+}
+.program-done-row:active{opacity:.5; transform:scale(.98);}
+.program-done-check{
+  width:20px; height:20px; border-radius:50%; background:var(--green); color:#fff; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700;
+}
+.program-done-title{flex:1; min-width:0; font-size:13px; font-weight:700; color:var(--text-dim); text-decoration:line-through; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.program-done-chevron{flex-shrink:0; color:var(--text-dim); opacity:.6; display:flex; align-items:center;}
+.program-done-chevron svg{width:15px; height:15px; transform:rotate(-90deg);}
+
+.settings-row{display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:2px solid var(--border);}
+.settings-row:last-child{border-bottom:none;}
+.settings-row .lbl{font-size:14px; font-weight:700;}
+.settings-row .val{font-size:13px; color:var(--text-dim); font-family:'IBM Plex Mono',monospace;}
+
+details.changelog-group{margin-bottom:10px;}
+details.changelog-group summary{font-weight:800; font-size:13px; cursor:pointer; padding:8px 0; color:var(--text-dim);}
+.changelog-entry{margin-bottom:12px;}
+.changelog-entry .v{font-weight:800; font-size:13px; font-family:'IBM Plex Mono',monospace;}
+.changelog-entry ul{margin:4px 0 0; padding-left:18px; font-size:13px; color:var(--text-dim);}
+
+.confetti-burst{position:fixed; inset:0; pointer-events:none; z-index:200; overflow:hidden;}
+.confetti-piece{
+  position:absolute; top:32%; border-radius:2px;
+  animation-name:confettiFall; animation-timing-function:cubic-bezier(.25,.46,.45,.94); animation-fill-mode:forwards;
+  opacity:0;
+}
+.confetti-piece.round{border-radius:50%;}
+@keyframes confettiFall{
+  0%{opacity:1; transform:translate(0,0) rotate(0deg);}
+  25%{opacity:1; transform:translate(calc(var(--dx) * 40px), var(--dy-up)) rotate(calc(var(--rot) * .3));}
+  100%{opacity:0; transform:translate(calc(var(--dx) * 160px), 280px) rotate(var(--rot));}
+}
+.popup-overlay{
+  position:fixed; inset:0; z-index:300; display:flex; align-items:center; justify-content:center;
+  padding:24px; background:rgba(10,10,10,.28); backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px);
+  opacity:0; pointer-events:none; transition:opacity .2s ease;
+}
+.popup-overlay.show{opacity:1; pointer-events:auto;}
+.popup-card{
+  background:var(--bg-card); border:2px solid var(--border-strong); border-radius:var(--radius-m);
+  box-shadow:4px 4px 0 var(--blue);
+  padding:20px 18px; max-width:340px; width:100%;
+  transform:scale(.95) translateY(8px); transition:transform .28s cubic-bezier(.32,1.3,.4,1);
+}
+.popup-overlay.show .popup-card{transform:scale(1) translateY(0);}
+.popup-card h2{margin:0 0 10px;}
+.popup-close-row{display:flex; gap:10px; margin-top:14px;}
+.popup-close-row .btn{width:auto; flex:1;}
+
+.celebrate-overlay{
+  position:fixed; inset:0; z-index:300; display:flex; align-items:center; justify-content:center;
+  padding:24px; background:rgba(10,10,10,.22); backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px);
+  opacity:0; pointer-events:none; transition:opacity .2s ease;
+}
+.celebrate-overlay.show{opacity:1; pointer-events:auto;}
+.celebrate-card{
+  background:var(--bg-card); border:2px solid var(--border-strong); box-shadow:4px 4px 0 var(--blue);
+  border-radius:var(--radius-m); padding:26px 22px 20px; max-width:300px; width:100%;
+  text-align:center;
+  transform:scale(.95) translateY(8px); transition:transform .28s cubic-bezier(.32,1.3,.4,1);
+}
+.celebrate-overlay.show .celebrate-card{transform:scale(1) translateY(0);}
+.celebrate-title{font-family:'Anton',sans-serif; font-size:24px; text-transform:uppercase; line-height:1.05; color:var(--text); margin-bottom:8px;}
+.celebrate-phrase{font-family:'Space Grotesk',sans-serif; font-size:14.5px; font-weight:700; color:var(--text); margin-bottom:12px;}
+.celebrate-note{font-family:'Space Grotesk',sans-serif; font-size:11.5px; color:var(--text-dim); margin-bottom:18px; line-height:1.4;}
+.celebrate-card .btn{width:100%;}
+.toast{
+  position:fixed; left:50%; bottom:calc(var(--nav-h) + var(--nav-margin)*2 + 16px + env(safe-area-inset-bottom));
+  transform:translateX(-50%) translateY(10px) scale(.9); background:var(--glass-bg); border:1px solid var(--glass-border);
+  color:var(--text); padding:11px 18px 11px 16px; border-radius:999px; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:600;
+  box-shadow:var(--glass-shadow); z-index:100; opacity:0; pointer-events:none; transition:opacity .2s ease;
+  max-width:90%; text-align:center;
+  backdrop-filter:blur(26px) saturate(165%); -webkit-backdrop-filter:blur(26px) saturate(165%);
+  display:flex; align-items:center; gap:8px;
+}
+.toast::before{content:""; width:7px; height:7px; border-radius:50%; background:var(--text-dim); flex-shrink:0; transition:background .2s;}
+.toast-success::before{background:var(--green);}
+.toast-error::before{background:var(--red);}
+.toast.show{opacity:1; animation:toastIn .5s cubic-bezier(.22,1,.36,1) forwards;}
+@keyframes toastIn{
+  0%{transform:translateX(-50%) translateY(10px) scale(.9);}
+  55%{transform:translateX(-50%) translateY(-8px) scale(1.04);}
+  100%{transform:translateX(-50%) translateY(-4px) scale(1);}
+}
+
+.bottom-fade{
+  position:fixed; left:0; right:0; bottom:0; height:90px; z-index:20; pointer-events:none;
+  backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+  -webkit-mask-image:linear-gradient(to top, black 0%, black 18%, transparent 58%);
+  mask-image:linear-gradient(to top, black 0%, black 18%, transparent 58%);
+}
+.tabbar-wrap{
+  position:fixed; left:0; right:0; z-index:30;
+  bottom:calc(var(--nav-margin) + env(safe-area-inset-bottom));
+  display:flex; justify-content:center; align-items:center; gap:10px; padding:0 var(--nav-margin);
+  pointer-events:none;
+}
+nav.tabbar{
+  position:relative; height:var(--nav-h); flex:0 1 293px; max-width:293px; min-width:0;
+  display:flex; align-items:stretch; padding:5px;
+  border-radius:999px; overflow:hidden;
+  background:var(--glass-bg);
+  border:1px solid var(--glass-border);
+  box-shadow:var(--glass-shadow);
+  backdrop-filter:blur(28px) saturate(170%); -webkit-backdrop-filter:blur(28px) saturate(170%);
+  pointer-events:auto; touch-action:none;
+}
+.stats-bubble{
+  position:relative; width:var(--nav-h); height:var(--nav-h); flex-shrink:0; border-radius:50%;
+  background:var(--glass-bg); border:1px solid var(--glass-border);
+  box-shadow:var(--glass-shadow);
+  backdrop-filter:blur(28px) saturate(170%); -webkit-backdrop-filter:blur(28px) saturate(170%);
+  display:flex; align-items:center; justify-content:center; color:var(--nav-fg); cursor:pointer;
+  pointer-events:auto; transition:color .25s ease, background .25s ease, transform .15s ease;
+  box-sizing:border-box;
+}
+.stats-bubble:active{transform:scale(.92);}
+.stats-bubble svg{width:19px; height:19px; opacity:.5; transition:opacity .25s ease;}
+.stats-bubble.active{
+  color:#fff;
+  background:var(--blue);
+}
+.stats-bubble.active svg{opacity:1;}
+.stats-bubble.bump{animation:bubbleBump .32s cubic-bezier(.3,1.2,.4,1);}
+@keyframes bubbleBump{
+  0%{transform:scale(1);}
+  50%{transform:scale(1.06);}
+  100%{transform:scale(1);}
+}
+.tab-pill{
+  position:absolute; top:5px; bottom:5px; left:5px;
+  width:96px; border-radius:999px;
+  background:rgba(0,134,255,.72);
+  box-shadow:0 2px 10px rgba(0,134,255,.35), inset 0 1px 0 rgba(255,255,255,.35);
+  backdrop-filter:blur(6px) saturate(180%); -webkit-backdrop-filter:blur(6px) saturate(180%);
+  transition:left .4s cubic-bezier(.34,1.26,.64,1), width .4s cubic-bezier(.34,1.26,.64,1), opacity .2s ease;
+  z-index:0;
+}
+.tab-pill.dragging{transition:none;}
+nav.tabbar .tab{
+  position:relative; z-index:1; min-width:0;
+  flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px;
+  background:none; border:none; color:var(--nav-fg); opacity:.5; font-family:'Space Grotesk',sans-serif; font-size:9.5px; font-weight:700; cursor:pointer;
+  transition:color .25s ease, opacity .25s ease, transform .15s ease; padding:0 2px;
+}
+nav.tabbar .tab:active{transform:scale(.93);}
+nav.tabbar .tab span{white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:100%;}
+nav.tabbar .tab svg{width:20px; height:20px; transition:transform .25s ease;}
+nav.tabbar .tab.active{color:#fff; opacity:1;}
+nav.tabbar .tab.active svg{transform:translateY(-1px);}
+
+.onboard-wrap{
+  position:fixed; inset:0; background:var(--bg); z-index:200; overflow-y:auto;
+  display:flex; align-items:flex-start; justify-content:center;
+}
+.onboard-inner{max-width:520px; width:100%; padding:40px 20px 60px;}
+.onboard-hero{text-align:center; margin-bottom:26px;}
+.onboard-hero .hero-logo{width:150px; margin:0 auto 10px; color:var(--text);}
+
+.empty-state{text-align:center; padding:30px 10px; color:var(--text-dim);}
+.empty-state .big{font-size:34px; margin-bottom:8px;}
+
+/* Boutons d'action rapide sur l'accueil */
+.fab-row{display:grid; grid-template-columns:repeat(4,1fr); gap:6px; margin:6px 0 20px;}
+.fab-item{display:flex; flex-direction:column; align-items:center; gap:6px; background:none; border:none; cursor:pointer; color:var(--text); min-width:0;}
+.fab{
+  width:52px; height:52px; border-radius:50%;
+  background:var(--blue);
+  border:2px solid var(--ink);
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:4px 4px 0 var(--ink);
+  transition:transform .12s, box-shadow .12s;
+}
+:root[data-theme="dark"] .fab{border-color:var(--text); box-shadow:4px 4px 0 var(--text);}
+.fab-item:active .fab{transform:translate(3px,3px); box-shadow:0 0 0 var(--ink);}
+:root[data-theme="dark"] .fab-item:active .fab{box-shadow:0 0 0 var(--text);}
+.fab svg{width:21px; height:21px; color:#fff;}
+.fab-item span{font-size:9.5px; font-weight:700; color:var(--text-dim); text-align:center; line-height:1.2;}
+
+/* Statistiques */
+.stat-note{font-size:12px; color:var(--text-dim); margin-top:10px; font-family:'IBM Plex Mono',monospace;}
+.heatmap-grid{display:grid; grid-template-columns:repeat(20, 1fr); gap:3px; width:100%;}
+.heatmap-col{display:grid; grid-template-rows:repeat(7, 1fr); gap:3px;}
+.heatmap-cell{width:100%; aspect-ratio:1/1; border-radius:2.5px; background:var(--border); display:block;}
+.heatmap-cell.future{background:transparent;}
+.heatmap-legend{display:flex; align-items:center; gap:4px; margin-top:10px; font-size:10.5px; color:var(--text-dim); font-family:'Space Grotesk',sans-serif;}
+.heatmap-legend .heatmap-cell{width:10px; height:10px; aspect-ratio:unset; flex-shrink:0;}
+.week-chart{display:flex; gap:8px; overflow-x:auto; padding-bottom:4px;}
+.week-col{display:flex; flex-direction:column; align-items:center; gap:6px; flex-shrink:0; width:34px;}
+.week-bars{display:flex; align-items:flex-end; gap:3px; height:58px;}
+.week-bar{width:9px; border-radius:3px 3px 1px 1px;}
+.week-bar.gym{background:var(--accent);}
+.week-bar.run{background:var(--accent-2);}
+.week-col span{font-size:9px; color:var(--text-dim); font-family:'IBM Plex Mono',monospace;}
+.legend{display:flex; gap:16px; margin-top:12px;}
+.legend span{display:flex; align-items:center; gap:6px; font-size:12px; color:var(--text-dim); font-weight:600;}
+.legend .dot{width:9px; height:9px; border-radius:50%; display:inline-block;}
+.legend .dot.gym{background:var(--accent);}
+.legend .dot.run{background:var(--accent-2);}
+.chart-click-area{cursor:pointer;}
+.chart-hint{font-size:10.5px; color:var(--text-dim); text-align:center; margin-top:2px; opacity:.7;}
+.stats-detail{max-height:220px; overflow-y:auto; margin-top:8px; padding-top:4px; border-top:2px solid var(--border);}
+.sparkline{width:100%; height:64px; display:block; margin-top:6px; overflow:visible;}
+.spark-path{stroke-dasharray:1; stroke-dashoffset:1; animation:sparkDraw 1.2s cubic-bezier(.22,1,.36,1) forwards;}
+@keyframes sparkDraw{to{stroke-dashoffset:0;}}
+.sparkline.spark-accent .spark-path{stroke:var(--accent);}
+.sparkline.spark-accent2 .spark-path{stroke:var(--accent-2);}
+
+::-webkit-scrollbar{display:none;}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div class="toast" id="toast"></div>
+<div class="celebrate-overlay" id="celebrateModal">
+  <div class="celebrate-card">
+    <div class="celebrate-title" id="celebrateTitle"></div>
+    <div class="celebrate-phrase" id="celebratePhrase"></div>
+    <div class="celebrate-note">Tes informations ont bien été enregistrées.</div>
+    <button class="btn btn-primary" id="celebrateContinue">Continuer</button>
+  </div>
+</div>
+
+<script>
+/* ============ CONFIG ============ */
+const APP_NAME = "Sport";
+const APP_VERSION = "1.11.3";
+const APP_VERSION_NAME = "Power Update";
+
+const MACHINES = [
+  {id:"chestPress", label:"Chest press"},
+  {id:"lowRow", label:"Low row"},
+  {id:"shoulderPress", label:"Shoulder press"},
+  {id:"pectoral", label:"Pectoral"},
+  {id:"tractionVerticale", label:"Traction verticale"},
+  {id:"adducteur", label:"Adducteur"},
+  {id:"adducteurExt", label:"Adducteur ext."},
+  {id:"proneLegCurl", label:"Prone leg curl"},
+];
+
+const RUN_TYPES = [
+  {id:"endurance", label:"Endurance"},
+  {id:"fractionne", label:"Fractionné"},
+  {id:"recuperation", label:"Récupération"},
+  {id:"course", label:"Course/Compét."},
+];
+
+const CHANGELOG = [
+  {version:"1.11.3", date:"2026-08-03", items:[
+    "Nav bar : retrait du glow bleu",
+    "Calendrier d'activité : les jours multi-types passent d'un camembert coloré à un dégradé diagonal doux entre les couleurs (à tester)",
+  ]},
+  {version:"1.11.2", date:"2026-08-03", items:[
+    "Calendrier d'activité corrigé : la grille remplit maintenant bien tout le cadre de la carte",
+    "Code couleur par type : bleu (Salle), rouge (Course), jaune (Programme) — un jour avec plusieurs types affiche un camembert coloré partagé entre les couleurs concernées",
+  ]},
+  {version:"1.11.1", date:"2026-08-03", items:[
+    "Flou du bas revu : quasi nul en haut de la zone (ne blur plus le haut des titres), plus marqué juste au-dessus de la nav",
+    "Nav bar : léger contour et glow sobre pour mieux la distinguer du fond",
+    "Statistiques : nouvelle carte « Activité récente », un calendrier façon heatmap sur 20 semaines",
+  ]},
+  {version:"1.11.0", name:"Power Update", date:"2026-08-03", items:[
+    "Réglages : correction du débordement horizontal dans la gestion des machines",
+    "Réglages : ligne changelog en double supprimée, cliquer sur la Version ouvre directement le changelog",
+    "Léger flou progressif sous la barre de navigation flottante pour une meilleure lisibilité",
+    "Statistiques : les courbes sont cliquables et affichent un détail chiffré avec les dates de chaque donnée",
+    "Course : les boutons À pied / À vélo occupent maintenant toute la largeur, côte à côte",
+  ]},
+  {version:"1.10.0", name:"Opti Update", date:"2026-08-03", items:[
+    "Nom de version affiché en entier dans Réglages (ex : « 1.10.0 — Opti Update »)",
+    "« Historique » renommé selon le contexte : Dernières séances à la salle / Dernières courses / Dernières sorties vélo",
+    "Salle et Course : cliquer sur un élément de l'historique ouvre un aperçu en lecture seule avec un bouton Modifier, plutôt que d'ouvrir directement l'édition",
+    "Le panneau de modification a maintenant un fond bleu pour bien montrer qu'il est ouvert",
+    "Design des popups (célébration + aperçu historique) allégé, plus cohérent avec le style général de l'app",
+    "Réglages : suppression des statistiques possible par type (Salle / Course / Programmes séparément)",
+  ]},
+  {version:"1.8.1", date:"2026-08-03", items:[
+    "Grande notification de fin : fond bien plus opaque et lisible, tout en gardant un flou élégant, dans le style cartes de l'app",
+    "Programme en cours sur l'accueil : les étapes sont maintenant cochables directement, comme dans Programmes",
+  ]},
+  {version:"1.8.0", date:"2026-08-03", items:[
+    "Grande notification centrée en liquid glass à la fin d'une séance salle, d'une course/sortie vélo ou d'un programme",
+    "Titre clair (Séance terminée / Course enregistrée / Programme terminé), phrase motivante, confettis et rappel que les données sont enregistrées",
+    "Bouton « Continuer » pour la fermer, ou disparition automatique après 8 secondes",
+  ]},
+  {version:"1.7.0", date:"2026-08-03", items:[
+    "Confettis revus : effet d'éclatement plus vivant, formes et tailles variées, plus de pièces",
+    "Confettis ajoutés à la fin d'une séance salle et d'une nouvelle course/sortie vélo (en plus des programmes)",
+    "18 phrases de félicitations différentes, tirées au hasard à chaque fin de séance/course/programme pour rester motivant",
+  ]},
+  {version:"1.6.3", date:"2026-08-03", items:[
+    "Badge « Terminé » ajouté près du titre dans la vue détaillée d'un programme ponctuel terminé",
+  ]},
+  {version:"1.6.2", date:"2026-08-03", items:[
+    "Accueil : nombre de programmes réalisés ajouté dans la carte du mois",
+    "Programmes : « IROX » remplacé par « Hyrox » dans l'exemple, message vide simplifié",
+  ]},
+  {version:"1.6.1", date:"2026-08-03", items:[
+    "Petite pluie de confettis en plus de la notification quand un programme est terminé",
+    "L'icône crayon ouvre maintenant la vue détaillée (comme un clic sur la carte) au lieu du formulaire directement",
+    "Nouveau bouton « Modifier le programme » bien visible dans la vue détaillée, hiérarchie des 6 boutons revue (Export devient un petit lien discret)",
+    "Programmes ponctuels terminés : design revu (bordure + chevron) pour bien montrer qu'on peut cliquer dessus",
+  ]},
+  {version:"1.6.0", date:"2026-08-03", items:[
+    "Programmes : nouveau système Récurrent / Ponctuel avec sous-onglets dédiés",
+    "Récurrent : se réinitialise après chaque séance, comme avant",
+    "Ponctuel : une fois terminé, reste marqué comme fait dans une liste compacte grisée",
+    "Options ajoutées : changer le type d'un programme, le dupliquer, réinitialiser un ponctuel terminé",
+    "Tous les programmes existants sont passés en Ponctuel, les nouveaux sont Récurrent par défaut",
+    "Bouton « Supprimer tous les programmes » d'un coup (statistiques conservées)",
+    "Bouton Importer réduit (70/30 avec Nouveau programme)",
+    "Animation soignée quand on coche une étape (ne se rejoue plus sur les étapes déjà cochées)",
+    "Réglages : section machines renommée et compactée, changelog déplacé dans une sous-page dédiée",
+  ]},
+  {version:"1.5.1", date:"2026-08-03", items:[
+    "Correction : la puce d'une étape affichait « ?×15 » quand seul le nombre de répétitions était renseigné (sans séries) — affiche maintenant « 15 reps » proprement",
+  ]},
+  {version:"1.5.0", date:"2026-08-03", items:[
+    "Import de programmes au format JSON (fichier unique ou tableau de plusieurs programmes)",
+    "Les machines mentionnées par leur nom sont automatiquement reliées à une machine existante ou créées si besoin",
+    "Export d'un programme en .json depuis sa vue détaillée, pour réutiliser ou partager le bon format",
+  ]},
+  {version:"1.4.0", date:"2026-08-03", items:[
+    "Animations subtiles ajoutées : lancer une séance ou un programme, ouvrir un formulaire, déployer le détail d'un programme, choisir une machine",
+    "Ces animations ne se jouent qu'au moment précis de l'action (démarrage, ouverture) et ne se répètent pas à chaque interaction suivante (cocher une étape, ajouter un champ, etc.)",
+  ]},
+  {version:"1.3.1", date:"2026-08-03", items:[
+    "Bouton Modifier ajouté sur chaque programme (avant les flèches de réorganisation)",
+    "Possible de terminer un programme en cours sans avoir coché toutes les étapes",
+    "Accueil : 4e raccourci « Lancer un programme »",
+    "Statistiques : indication du programme actuellement en cours dans la vue d'ensemble",
+  ]},
+  {version:"1.3.0", date:"2026-08-03", items:[
+    "Programmes entièrement repensés : chaque programme s'affiche en carte compacte (titre, aperçu, bouton Démarrer)",
+    "Cliquer sur la carte ouvre une vue détaillée avec toutes les étapes, Fermer/Démarrer",
+    "Une fois démarré, le programme se lance comme une séance salle : épinglé en haut, fond bleu animé, checklist interactive, visible aussi sur l'accueil",
+    "Impossible d'avoir une séance salle ET un programme actifs en même temps : le premier lancé reste prioritaire, un message explique la situation si on tente l'autre",
+  ]},
+  {version:"1.2.0", date:"2026-08-03", items:[
+    "Programmes : possibilité d'ajouter optionnellement séries, répétitions et temps (secondes) par étape",
+    "Affichage sous forme de petites puces (ex : « 3×12 », « ⏱ 45s ») directement sur chaque étape du programme",
+  ]},
+  {version:"1.1.8", date:"2026-08-03", items:[
+    "Nav bar : largeur réduite de 15% (345px → 293px, ne touche plus les bords), hauteur augmentée de 15% (51px → 59px), icônes/texte réajustés en conséquence",
+  ]},
+  {version:"1.1.7", date:"2026-08-03", items:[
+    "Nav bar élargie de 15% (300px → 345px), texte et icônes des onglets légèrement agrandis en conséquence",
+  ]},
+  {version:"1.1.6", date:"2026-08-03", items:[
+    "Nav bar réduite de 20% en hauteur",
+    "Plus de transparence sur la nav, la bulle Statistiques et les notifications",
+  ]},
+  {version:"1.1.5", date:"2026-08-03", items:[
+    "Icône Course : retour au pictogramme « vent »",
+  ]},
+  {version:"1.1.4", date:"2026-08-03", items:[
+    "Icône Course remplacée par une chaussure de sport",
+    "Vrai correctif de l'animation de la nav : un tap simple fait maintenant glisser le sélecteur élégamment (fondu élastique) au lieu de sauter instantanément — le suivi instantané du doigt ne s'active plus que lors d'un vrai glissement",
+  ]},
+  {version:"1.1.3", date:"2026-08-03", items:[
+    "Icône Course remplacée par un pictogramme plus propre",
+    "Glissement du sélecteur entre les onglets rendu plus fluide et élégant (moins caricatural), la bulle Statistiques reste indépendante",
+  ]},
+  {version:"1.1.2", date:"2026-08-03", items:[
+    "Retrait du badge « Nouveau » dans les programmes liés à une machine",
+    "Icônes remplacées par des équivalents Lucide plus proches des activités (haltère, empreintes de pas pour la course, presse-papier pour les programmes)",
+    "Notifications : petite animation plus vivante à l'apparition, affichées un peu plus longtemps",
+    "Rebond du sélecteur de la nav nettement plus marqué et fluide",
+  ]},
+  {version:"1.1.1", date:"2026-08-03", items:[
+    "Nav bar abaissée davantage",
+    "Rebond du sélecteur ramené (modéré, sans risque de débordement grâce au cadre qui le recadre proprement)",
+    "Sélecteur légèrement translucide, effet liquid glass renforcé",
+    "Possibilité de créer une nouvelle machine directement depuis le sélecteur dans Programmes (synchronisée avec Salle)",
+    "Nouvelle section Machines dans Réglages pour une gestion précise (activer/masquer/supprimer)",
+    "Logo de l'accueil agrandi de 20%, bouton réglages recentré",
+  ]},
+  {version:"1.1.0", date:"2026-08-03", items:[
+    "Nav bar abaissée davantage et agrandie, inspirée de l'App Store",
+    "Le sélecteur de la nav suit maintenant le doigt quand on glisse",
+    "Accueil : entête simplifiée, logo noir à gauche et bouton réglages à droite, sans fond coloré",
+    "Séance en cours (accueil et salle) : petite animation de points en coin pour bien voir qu'une activité est active",
+    "Programmes : bouton « + Machine » pour insérer une machine prédéfinie dans une étape, avec son record affiché directement dans le programme",
+  ]},
+  {version:"1.0.6", date:"2026-08-03", items:[
+    "Nav bar abaissée davantage",
+    "Animations d'entrée (titre lettre par lettre, cascade des blocs) limitées à la toute première visite de chaque page dans la session, plus de répétition à chaque va-et-vient",
+  ]},
+  {version:"1.0.5", date:"2026-08-03", items:[
+    "Correctif critique : suppression d'un réglage CSS qui forçait iOS à créer deux zones de défilement imbriquées, bloquant le scroll par intermittence",
+    "Correctif critique : mécanisme de mise à jour refait à l'identique de MADA (navigation avec anti-cache au lieu d'un simple rechargement), plus fiable, plus de risque de boucle qui recharge l'app en continu",
+    "Nav : hauteur réduite, largeur légèrement augmentée",
+  ]},
+  {version:"1.0.4", date:"2026-08-03", items:[
+    "Nav entièrement reconstruite : barre nettement plus compacte (264px max), un peu plus haute et mieux proportionnée",
+    "Suppression des bordures dures pour un rendu plus liquide et moins rigide",
+    "Rebond du sélecteur nettement adouci (fini le débordement sur les longs trajets comme Accueil → Programmes)",
+  ]},
+  {version:"1.0.3", date:"2026-08-03", items:[
+    "Icône Réglages : refonte du positionnement dans l'entête (vrai layout en 3 colonnes au lieu d'un positionnement absolu fragile) pour ne plus jamais être rognée",
+  ]},
+  {version:"1.0.2", date:"2026-08-03", items:[
+    "Correction de la barre de navigation : la pastille active ne déborde plus du cadre, la barre ne s'étire plus sur toute la largeur",
+    "Rebond plus fluide et élastique du sélecteur de la nav",
+    "Statistiques : bouton « Réinitialiser les statistiques » ajouté en bas de l'écran, avec confirmation",
+  ]},
+  {version:"1.0.1", date:"2026-08-03", items:[
+    "Correction : les lettres des titres de page s'empilaient verticalement au lieu de s'afficher côte à côte",
+  ]},
+  {version:"1.0.0", date:"2026-08-03", items:[
+    "Passage en version 1.0",
+    "Titres de page animés lettre par lettre à chaque changement d'écran (venant du bas, fondu, ordre légèrement aléatoire)",
+  ]},
+  {version:"0.1.9", date:"2026-08-03", items:[
+    "Course et Programmes : bouton Annuler déplacé en bas, à côté d'Enregistrer (30/70)",
+    "Salle : Annuler et Terminer en 30/70 dans la séance en cours",
+    "Accueil : deux boutons Continuer/Terminer (50/50) sur la carte séance en cours",
+    "Accueil : résumé du mois en cours (« En [mois] ») à la place de « Cette semaine »",
+    "Supprimer un programme conserve désormais ses statistiques dans le panneau Statistiques",
+  ]},
+  {version:"0.1.8", date:"2026-08-03", items:[
+    "Boutons Annuler dans un style distinct (discret, souligné) pour ne plus les confondre avec les actions principales",
+  ]},
+  {version:"0.1.7", date:"2026-08-03", items:[
+    "Correction renforcée du débordement des dates (protection anti-débordement horizontal sur iPhone)",
+    "Barre de navigation abaissée, plus compacte et plus centrée, un peu plus haute",
+  ]},
+  {version:"0.1.6", date:"2026-08-03", items:[
+    "Système de mise à jour simplifié : un seul fichier à modifier (index.html), plus besoin de version.json",
+  ]},
+  {version:"0.1.5", date:"2026-08-03", items:[
+    "Correction de performance : l'animation d'apparition ne se rejoue plus à chaque micro-action (juste au changement d'écran)",
+    "Statistiques : chiffres détaillés (actuel, record, évolution) sous chaque courbe de progression",
+    "Poids de l'app affiché dans Réglages → À propos",
+    "Programmes : icônes de réorganisation et de suppression harmonisées visuellement",
+  ]},
+  {version:"0.1.4", date:"2026-08-03", items:[
+    "Animation d'apparition en cascade des blocs à chaque page",
+    "Programmes : flèches de réorganisation déplacées à côté de la poubelle",
+    "Statistiques : courbes organiques et animées (juste les traits, plus de points)",
+    "Nouvelles statistiques : volume soulevé, série de semaines actives, machine favorite, répartition pied/vélo",
+  ]},
+  {version:"0.1.3", date:"2026-08-03", items:[
+    "Programmes réorganisables manuellement (flèches haut/bas)",
+    "Micro-animations : notifications avec pastille succès/erreur, étape cochée qui rebondit",
+    "Séance en cours : ombre passée en bleu (au lieu de noir)",
+    "Effet liquid glass renforcé sur la nav et les notifications",
+  ]},
+  {version:"0.1.2", date:"2026-08-03", items:[
+    "Entête : logo centré et icône réglages alignée avec lui",
+    "Bulle Statistiques repassée en bleu (comme le reste du menu), même flou verre que la nav principale",
+    "Effet de bump sur Statistiques encore réduit",
+    "Suppression du dark mode, et des sections Profil/Apparence dans Réglages",
+    "Changelog : seule la dernière version est dépliée par défaut, dates retirées",
+    "Historique des programmes présenté comme dans Salle/Course",
+    "Séance en cours : nouveau style bleu et sobre (plus de rouge), avec un indicateur animé, sur l'accueil et dans Salle",
+  ]},
+  {version:"0.1.1", date:"2026-08-03", items:[
+    "Suppression de l'onboarding, devenu inutile",
+    "Bouton Réglages fusionné dans l'entête « SPORT », plus de rognage",
+    "Nav et notifications repassées en verre translucide, plus sobre, et abaissées",
+    "Points animés en fond de l'entête",
+    "Correction du débordement des dates dans les historiques Salle et Course",
+    "Titres de page (Salle, Course, Programmes, Statistiques) beaucoup plus grands",
+    "« Programmes » affiché en entier dans le menu",
+    "Champs plus grands dans la séance en cours",
+    "Historiques : séparation plus claire entre les séances, clic direct pour modifier",
+    "Programmes : historique des séances déjà réalisées visible",
+  ]},
+  {version:"0.1.0", date:"2026-08-03", items:[
+    "Refonte graphique complète : identité éditoriale, flat et affirmée, fini le style « startup tech » et les dégradés bleus",
+    "Nouvelles polices : Anton (titres), Playfair Display italique (accents), Space Grotesk (texte), IBM Plex Mono (données)",
+    "Nouvelle icône plate bleu franc + logo recoloré",
+    "Nouveau système de séance salle : la séance en cours reste affichée en grand automatiquement, visible aussi sur l'accueil",
+    "Ajout d'un raccourci « Nouvelle séance vélo » sur l'accueil",
+  ]},
+  {version:"0.0.7", date:"2026-08-03", items:[
+    "N° de casier : clavier numérique + déplacé de l'accueil vers Salle de sport",
+    "Correction : ajouter une machine en cours de séance ne réinitialise plus les valeurs déjà saisies",
+    "La barre de navigation ne s'anime plus à chaque action, seulement lors d'un vrai changement d'onglet",
+    "Accueil : boutons renommés « Nouvelle séance salle » et « Nouvelle course », ouvrent directement le formulaire",
+    "Nouveau fonctionnement des séances salle : brouillon sauvegardable, bouton Terminer, et modification possible depuis l'historique",
+  ]},
+  {version:"0.0.6", date:"2026-08-02", items:[
+    "« Routine » renommé de nouveau en « Programme »",
+    "Statistiques : nouvelle liste des programmes terminés (par nom, nombre de séances)",
+    "Course scindée en deux : À pied / À vélo, avec records et historique séparés",
+    "Nouvelle progression vitesse (km/h) pour le vélo, allure filtrée sur la course à pied",
+    "Effet de bump sur la bulle Stats adouci",
+    "Vérification du bouton supprimer dans Programmes (fonctionnel) + zone tactile agrandie",
+  ]},
+  {version:"0.0.5", date:"2026-08-02", items:[
+    "Correction : la pastille de sélection restait affichée sous Accueil quand Stats était sélectionné",
+    "Rebond de la pastille adouci lors des changements d'onglet",
+    "Renommage de « Programmes » en « Routines »",
+    "Léger effet de bump sur la bulle Statistiques à la sélection",
+    "Salle de sport : ajout/suppression de machines directement dans le formulaire de séance (panneau « Gérer les machines » retiré)",
+    "Correction de l'icône Réglages rognée",
+  ]},
+  {version:"0.0.4", date:"2026-08-02", items:[
+    "Correction : bouton Réglages inaccessible sous l'encoche sur l'accueil",
+    "Barre de navigation moins haute",
+    "Correction du débordement du tableau dans Salle de sport",
+    "Possibilité de masquer les machines par défaut (et de les réactiver)",
+    "Nouvelle palette : bleu franc, sans violet",
+    "Cases à cocher plus grandes dans Programmes",
+    "Correction du bug \"Invalid Date\" dans Statistiques",
+    "Onglet Statistiques déplacé en dernier et détaché en bulle séparée",
+  ]},
+  {version:"0.0.3", date:"2026-08-02", items:[
+    "Onboarding simplifié : uniquement le prénom",
+    "Réglages retirés de la barre de navigation, accessibles depuis l'accueil",
+    "Ajout de machines personnalisées dans les séances salle (proposées automatiquement ensuite)",
+    "Programmes 100% personnalisables : crée les tiens (ex. IROX), les anciens programmes par défaut ont été retirés",
+    "Profil simplifié : uniquement le prénom",
+  ]},
+  {version:"0.0.2", date:"2026-08-02", items:[
+    "Nouvel onglet Statistiques : vue d'ensemble, volume hebdomadaire, progression par machine et progression de l'allure",
+    "Vrai logo vectoriel dans le hero (accueil et onboarding)",
+    "Icônes Feather partout (nav, activité, actions)",
+    "Nouveaux champs course : type de course, FC moyenne, dénivelé positif, calories",
+    "Dark mode moins violet, fond plus bleu foncé",
+    "Haut de page allégé (plus de bandeau inutile sur l'accueil)",
+    "Waveform décoratif retiré",
+  ]},
+  {version:"0.0.1", date:"2026-08-01", items:[
+    "Première version : suivi Salle de sport et Course",
+    "Programmes à cocher étape par étape, adaptés à l'objectif",
+    "Onboarding avec objectif, niveau, fréquence et numéro de casier",
+    "Thème clair / sombre automatique selon l'appareil",
+    "Vérification de mise à jour au lancement + bouton de recherche forcée",
+  ]},
+];
+
+/* ============ STORAGE ============ */
+const K = {
+  profile: "sport_profile",
+  gym: "sport_gym_sessions",
+  runs: "sport_runs",
+  progress: "sport_programs_progress",
+  programsList: "sport_programs_list",
+  customMachines: "sport_custom_machines",
+  hiddenMachines: "sport_hidden_machines",
+  settings: "sport_settings",
+};
+
+function load(key, fallback){
+  try{
+    const raw = localStorage.getItem(key);
+    return raw ? JSON.parse(raw) : fallback;
+  }catch(e){ return fallback; }
+}
+function save(key, val){ localStorage.setItem(key, JSON.stringify(val)); }
+
+let state = {
+  profile: load(K.profile, null),
+  gym: load(K.gym, []),
+  runs: load(K.runs, []),
+  progress: load(K.progress, {}),
+  programsList: load(K.programsList, []),
+  customMachines: load(K.customMachines, []),
+  hiddenMachines: load(K.hiddenMachines, []),
+  settings: load(K.settings, {theme:"auto"}),
+  screen: "home",
+};
+(function migrateProgramTypes(){
+  let changed = false;
+  state.programsList.forEach(p=>{
+    if(!p.progType){ p.progType = "ponctuel"; changed = true; }
+  });
+  if(changed) save(K.programsList, state.programsList);
+})();
+function allMachinesRaw(){ return [...MACHINES, ...state.customMachines]; }
+function allMachines(){ return allMachinesRaw().filter(m=>!state.hiddenMachines.includes(m.id)); }
+function slugify(str){
+  return str.toString().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"")
+    .replace(/[^a-z0-9]+/g,"_").replace(/^_+|_+$/g,"") || uid();
+}
+
+/* ============ THEME ============ */
+function applyTheme(){
+  document.documentElement.setAttribute("data-theme", "light");
+}
+applyTheme();
+
+/* ============ ICONS ============ */
+const ICONS = {
+  home: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>',
+  dumbbell: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.4 14.4 9.6 9.6"/><path d="M18.657 21.485a2 2 0 1 1-2.829-2.828l-1.767 1.768a2 2 0 1 1-2.829-2.829l6.364-6.364a2 2 0 1 1 2.829 2.829l-1.768 1.767a2 2 0 1 1 2.828 2.829z"/><path d="m21.5 21.5-1.4-1.4"/><path d="M3.9 3.9 2.5 2.5"/><path d="M6.404 12.768a2 2 0 1 1-2.829-2.829l1.768-1.767a2 2 0 1 1-2.828-2.829l2.828-2.828a2 2 0 1 1 2.829 2.828l1.767-1.768a2 2 0 1 1 2.829 2.829z"/></svg>',
+  run: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M17.5 8a2.5 2.5 0 1 1 2 4H2"/><path d="M12.8 19.4A2 2 0 1 0 14 16H2"/></svg>',
+  list: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="m9 14 2 2 4-4"/></svg>',
+  stats: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>',
+  settings: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06A1.65 1.65 0 004.6 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06A1.65 1.65 0 009 4.6a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06A1.65 1.65 0 0019.4 9c.13.32.2.66.2 1v.09c.7.14 1.4.49 1.4 1.51z"/></svg>',
+  refresh: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>',
+  check: '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>',
+  trash: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>',
+  edit: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.986L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.13a.5.5 0 0 0 .632.632l4.13-1.321a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/></svg>',
+  bike: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18.5" cy="17.5" r="3.5"/><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="15" cy="5" r="1"/><path d="M12 17.5V14l-3-3 4-3 2 3h2"/></svg>',
+  chevronUp: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>',
+  chevronDown: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>',
+};
+
+/* ============ LOGO (vecteur d'origine, recolorable via currentColor) ============ */
+const LOGO_HORIZONTAL = `<svg viewBox="0 0 46.54 8.08" xmlns="http://www.w3.org/2000/svg"><path d="M.12,5.25v-.07h2.19v.24c0,.52.19.66,1.65.66,1.33,0,1.47-.1,1.47-.45,0-.28-.15-.4-.79-.48l-2.45-.33c-1.46-.2-2.19-.98-2.19-2.24S.97.05,3.79.05C6.27.05,7.45,1.13,7.45,2.88v.07h-2.19v-.17c0-.56-.24-.75-1.71-.75-1.12,0-1.36.15-1.36.49,0,.24.14.36.56.42l2.45.36c1.91.28,2.42,1.26,2.42,2.26,0,1.34-1.03,2.53-3.66,2.53C1.57,8.08.12,7.23.12,5.25Z"/><path d="M7.93,8.08V.05h4.69c2.01,0,3.28,1.09,3.28,3s-1.26,3.01-3.28,3.01h-2.31v2.03h-2.38ZM10.3,2.07v1.96h2.05c.83,0,1.18-.16,1.18-.98s-.34-.97-1.18-.97h-2.05Z"/><path d="M16.2,4.01c0-2.43,1.61-4.01,4.34-4.01.06,0,5.23.03,5.28.04,2.69.06,4.21,1.63,4.21,4.01s-1.57,3.99-4.32,4.01c-.02,0-5.15-.03-5.17-.03-2.72,0-4.34-1.58-4.34-4.01ZM27.7,4.05c0-1.49-.42-1.89-1.88-1.92-.06,0-5.22-.04-5.28-.04-1.59,0-2,.37-2,1.92s.41,1.92,2,1.92c.05,0,5.22.03,5.27.03,1.46-.02,1.89-.42,1.89-1.92Z"/><path d="M41.47,8.08V2.07h-2.83V.05h7.89v2.03h-2.82v6.01h-2.24Z"/><path d="M30.52,8.08V.05h4.57c2.07,0,3.15.89,3.15,2.46,0,1.27-.62,2.03-2.11,2.22v.12c.81.22,1.06.61,1.35,1.22l.97,2.02h-2.53l-.93-1.97c-.28-.6-.51-.77-1.37-.77h-.9v2.73h-2.2ZM32.71,3.67h2.35c.64,0,.88-.12.88-.8,0-.64-.23-.79-.88-.79h-2.35v1.6Z"/></svg>`;
+const LOGO_VERTICAL = `<svg viewBox="0 0 16.26 25.48" xmlns="http://www.w3.org/2000/svg"><path d="M.22,5.36v-.07h2.25v.25c0,.54.19.68,1.7.68,1.37,0,1.51-.11,1.51-.47,0-.29-.16-.41-.82-.49l-2.52-.34C.86,4.73.1,3.92.1,2.63S1.1,0,4,0c2.55,0,3.78,1.12,3.78,2.91v.07h-2.25v-.18c0-.58-.25-.77-1.76-.77-1.15,0-1.4.16-1.4.5,0,.25.14.37.58.43l2.52.37c1.97.29,2.49,1.3,2.49,2.33,0,1.38-1.06,2.6-3.77,2.6C1.72,8.28.22,7.4.22,5.36Z"/><path d="M8.17,8.06V.02h4.69c2.01,0,3.28,1.09,3.28,3s-1.26,3.01-3.28,3.01h-2.31v2.03h-2.38ZM10.54,2.05v1.96h2.05c.83,0,1.18-.16,1.18-.98s-.34-.97-1.18-.97h-2.05Z"/><path d="M0,12.71c0-2.51,1.66-4.14,4.47-4.14.06,0,7.39.04,7.45.04,2.77.07,4.34,1.68,4.34,4.14s-1.61,4.11-4.45,4.14c-.02,0-7.31-.03-7.34-.03-2.81,0-4.47-1.63-4.47-4.14ZM13.85,12.74c0-1.54-.44-1.95-1.93-1.98-.06,0-7.39-.04-7.45-.04-1.64,0-2.06.38-2.06,1.98s.42,1.98,2.06,1.98c.05,0,7.38.03,7.43.03,1.51-.03,1.95-.44,1.95-1.98Z"/><path d="M11.05,25.48v-6.17h-2.91v-2.08h8.1v2.08h-2.89v6.17h-2.31Z"/><path d="M0,25.48v-8.25h4.69c2.12,0,3.24.91,3.24,2.53,0,1.31-.64,2.08-2.17,2.28v.12c.83.22,1.09.63,1.39,1.26l1,2.07h-2.6l-.96-2.02c-.29-.62-.53-.79-1.4-.79h-.92v2.81H0ZM2.26,20.95h2.41c.66,0,.9-.12.9-.83,0-.65-.24-.81-.9-.81h-2.41v1.64Z"/></svg>`;
+
+/* ============ UTIL ============ */
+function todayStr(){ return new Date().toISOString().slice(0,10); }
+function fmtDate(d){
+  const dt = new Date(d+"T00:00:00");
+  return dt.toLocaleDateString("fr-FR", {day:"2-digit", month:"short", year:"numeric"});
+}
+function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+function startOfWeek(){
+  const d = new Date();
+  const day = (d.getDay()+6)%7; // Monday=0
+  d.setHours(0,0,0,0);
+  d.setDate(d.getDate()-day);
+  return d;
+}
+function computeActivityHeatmap(weeksCount){
+  const dayTypes = {};
+  function addType(dateStr, type){
+    if(!dayTypes[dateStr]) dayTypes[dateStr] = new Set();
+    dayTypes[dateStr].add(type);
+  }
+  state.gym.forEach(s=>{ if((s.status||"done")==="done") addType(s.date, "gym"); });
+  state.runs.forEach(r=>{ addType(r.date, "run"); });
+  Object.values(state.progress).forEach(p=>{ (p.history||[]).forEach(d=> addType(d, "program")); });
+
+  const monday = startOfWeek();
+  const startDate = new Date(monday);
+  startDate.setDate(startDate.getDate() - (weeksCount-1)*7);
+  const today = new Date(); today.setHours(0,0,0,0);
+
+  const weeks = [];
+  for(let w=0; w<weeksCount; w++){
+    const week = [];
+    for(let d=0; d<7; d++){
+      const date = new Date(startDate);
+      date.setDate(date.getDate() + w*7 + d);
+      const dateStr = date.toISOString().slice(0,10);
+      week.push({date: dateStr, types: [...(dayTypes[dateStr]||[])], future: date>today});
+    }
+    weeks.push(week);
+  }
+  return weeks;
+}
+const HEATMAP_COLORS = {gym:"var(--blue)", run:"var(--red)", program:"#ffd23f"};
+function heatmapCellBg(types){
+  if(!types || types.length===0) return "";
+  if(types.length===1) return `background:${HEATMAP_COLORS[types[0]]};`;
+  const n = types.length;
+  const stops = types.map((t,i)=> `${HEATMAP_COLORS[t]} ${Math.round(i*100/(n-1))}%`).join(", ");
+  return `background:linear-gradient(135deg, ${stops});`;
+}
+function computeTonnage(){
+  let total = 0;
+  state.gym.forEach(s=>{
+    if((s.status||"done")!=="done") return;
+    Object.values(s.exercises).forEach(e=>{
+      const poids = parseFloat(e.poids)||0, reps = parseFloat(e.reps)||0, series = parseFloat(e.series)||0;
+      total += poids * reps * series;
+    });
+  });
+  return total;
+}
+function mostUsedMachine(){
+  const counts = {};
+  state.gym.forEach(s=>{
+    if((s.status||"done")!=="done") return;
+    Object.keys(s.exercises).forEach(id=>{ counts[id] = (counts[id]||0) + 1; });
+  });
+  let best = null, bestCount = 0;
+  Object.entries(counts).forEach(([id,c])=>{ if(c>bestCount){ best=id; bestCount=c; } });
+  if(!best) return null;
+  const m = allMachinesRaw().find(m=>m.id===best);
+  return {label: m ? m.label : best, count: bestCount};
+}
+function computeStreakWeeks(){
+  let streak = 0;
+  let cursor = startOfWeek();
+  while(true){
+    const weekStart = new Date(cursor);
+    const weekEnd = new Date(cursor);
+    weekEnd.setDate(weekEnd.getDate()+7);
+    const hasGym = state.gym.some(s=>(s.status||"done")==="done" && new Date(s.date+"T00:00:00")>=weekStart && new Date(s.date+"T00:00:00")<weekEnd);
+    const hasRun = state.runs.some(r=> new Date(r.date+"T00:00:00")>=weekStart && new Date(r.date+"T00:00:00")<weekEnd);
+    if(hasGym || hasRun){
+      streak++;
+      cursor.setDate(cursor.getDate()-7);
+    } else break;
+  }
+  return streak;
+}
+function showToast(msg, type="default", ms=3200){
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.className = "toast show" + (type!=="default" ? " toast-"+type : "");
+  clearTimeout(showToast._t);
+  showToast._t = setTimeout(()=>t.classList.remove("show"), ms);
+}
+const MOTIVATION_PHRASES = [
+  "Séance dans la poche 💪",
+  "Encore une de faite, bravo !",
+  "Tu deviens plus fort à chaque séance 🔥",
+  "GG, c'est validé !",
+  "Rien ne t'arrête 🚀",
+  "Belle énergie aujourd'hui !",
+  "Un pas de plus vers l'objectif 🎯",
+  "Terminé, respect 👏",
+  "Toujours plus loin !",
+  "Effort payant, continue comme ça !",
+  "Une séance de plus, une force de plus 💪",
+  "Bravo, tu l'as fait !",
+  "Chaque séance compte, bien joué",
+  "Tu progresses, ça se voit !",
+  "Objectif atteint, prochaine étape ?",
+  "Ça, c'est du sérieux !",
+  "Franchement bien joué 👌",
+  "La régularité paie, continue !",
+];
+function pickMotivation(){
+  return MOTIVATION_PHRASES[Math.floor(Math.random()*MOTIVATION_PHRASES.length)];
+}
+function celebrateConfetti(){
+  const colors = ["#0086ff","#ff2d3e","#1f8147","#ffd23f","#a855f7"];
+  const container = document.createElement("div");
+  container.className = "confetti-burst";
+  for(let i=0; i<26; i++){
+    const piece = document.createElement("span");
+    piece.className = "confetti-piece" + (Math.random()<.5 ? " round" : "");
+    const size = 6 + Math.round(Math.random()*5);
+    piece.style.width = size+"px";
+    piece.style.height = size+"px";
+    piece.style.left = (35 + Math.random()*30) + "%";
+    piece.style.background = colors[i % colors.length];
+    piece.style.setProperty("--dx", (Math.random()*2.6-1.3).toFixed(2));
+    piece.style.setProperty("--dy-up", -(20 + Math.random()*40).toFixed(0)+"px");
+    piece.style.setProperty("--rot", Math.round(Math.random()*520-260)+"deg");
+    piece.style.animationDuration = (1.1 + Math.random()*0.5)+"s";
+    piece.style.animationDelay = (Math.random()*0.18)+"s";
+    container.appendChild(piece);
+  }
+  document.body.appendChild(container);
+  setTimeout(()=> container.remove(), 1900);
+}
+let celebrateTimer = null;
+function showCelebration(title){
+  const overlay = document.getElementById("celebrateModal");
+  document.getElementById("celebrateTitle").textContent = title;
+  document.getElementById("celebratePhrase").textContent = pickMotivation();
+  celebrateConfetti();
+  overlay.classList.add("show");
+  clearTimeout(celebrateTimer);
+  celebrateTimer = setTimeout(hideCelebration, 8000);
+}
+function hideCelebration(){
+  document.getElementById("celebrateModal").classList.remove("show");
+  clearTimeout(celebrateTimer);
+}
+function showDetailPopup(innerHtml){
+  closeDetailPopup();
+  const overlay = document.createElement("div");
+  overlay.className = "popup-overlay";
+  overlay.id = "detailPopupOverlay";
+  overlay.innerHTML = `<div class="popup-card">${innerHtml}</div>`;
+  overlay.addEventListener("click", (e)=>{ if(e.target===overlay) closeDetailPopup(); });
+  document.body.appendChild(overlay);
+  requestAnimationFrame(()=> overlay.classList.add("show"));
+}
+function closeDetailPopup(){
+  const el = document.getElementById("detailPopupOverlay");
+  if(el){
+    el.classList.remove("show");
+    setTimeout(()=>{ if(el.parentNode) el.remove(); }, 220);
+  }
+}
+
+/* ============ RECORDS ============ */
+function machinePR(machineId){
+  let max = 0;
+  state.gym.forEach(s=>{
+    if((s.status||"done")==="draft") return;
+    const e = s.exercises[machineId];
+    if(e && e.poids && parseFloat(e.poids) > max) max = parseFloat(e.poids);
+  });
+  return max;
+}
+function filterRunsBySport(mode){
+  return state.runs.filter(r=> (r.sport||"pied")===mode);
+}
+function computeRunStats(list){
+  if(list.length===0) return {bestPace:null, bestSpeed:null, longest:0, totalKm:0};
+  let bestPace = Infinity, bestSpeed = 0, longest = 0, totalKm = 0;
+  list.forEach(r=>{
+    const dist = parseFloat(r.distance)||0;
+    const dur = parseFloat(r.duree)||0;
+    totalKm += dist;
+    if(dist > longest) longest = dist;
+    if(dist>0 && dur>0){
+      const pace = dur/dist;
+      if(pace < bestPace) bestPace = pace;
+      const speed = dist/(dur/60);
+      if(speed > bestSpeed) bestSpeed = speed;
+    }
+  });
+  return {bestPace: bestPace===Infinity?null:bestPace, bestSpeed: bestSpeed||null, longest, totalKm};
+}
+function runStats(){
+  return computeRunStats(state.runs);
+}
+function paceStr(paceMinPerKm){
+  if(paceMinPerKm==null) return "—";
+  const m = Math.floor(paceMinPerKm);
+  const s = Math.round((paceMinPerKm - m)*60);
+  return `${m}'${s.toString().padStart(2,"0")}"/km`;
+}
+function speedStr(kmh){
+  if(kmh==null) return "—";
+  return kmh.toFixed(1) + " km/h";
+}
+const MONTH_NAMES = ["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"];
+function monthSummary(){
+  const now = new Date();
+  const y = now.getFullYear(), m = now.getMonth();
+  const gymCount = state.gym.filter(s=>{
+    if((s.status||"done")!=="done") return false;
+    const d = new Date(s.date+"T00:00:00");
+    return d.getFullYear()===y && d.getMonth()===m;
+  }).length;
+  const kmMonth = state.runs.filter(r=>{
+    const d = new Date(r.date+"T00:00:00");
+    return d.getFullYear()===y && d.getMonth()===m;
+  }).reduce((a,r)=>a+(parseFloat(r.distance)||0),0);
+  let progCount = 0;
+  Object.values(state.progress).forEach(prog=>{
+    (prog.history||[]).forEach(d=>{
+      const dt = new Date(d+"T00:00:00");
+      if(dt.getFullYear()===y && dt.getMonth()===m) progCount++;
+    });
+  });
+  return {gymCount, kmMonth, progCount, label: MONTH_NAMES[m]};
+}
+
+/* ============ RENDER ROOT ============ */
+let statsBump = false;
+let shellBuilt = false;
+let lastRenderedScreen = null;
+function ensureShell(){
+  if(shellBuilt) return;
+  const app = document.getElementById("app");
+  app.innerHTML = `
+    <div class="pagehead" id="pagehead" style="display:none;"><span id="pageheadText"></span></div>
+    <main class="screen" id="mainContent"></main>
+    <div class="bottom-fade"></div>
+    <div class="tabbar-wrap">
+      <nav class="tabbar">
+        <div class="tab-pill" id="tabPill"></div>
+        ${tab('home', ICONS.home, 'Accueil')}
+        ${tab('gym', ICONS.dumbbell, 'Salle')}
+        ${tab('run', ICONS.run, 'Course')}
+        ${tab('programs', ICONS.list, 'Programmes')}
+      </nav>
+      <button class="stats-bubble" data-screen="stats" title="Statistiques">${ICONS.stats}</button>
+    </div>
+  `;
+  enableNavDrag();
+  document.querySelector(".stats-bubble").addEventListener("click", ()=>{
+    if(state.screen !== "stats") statsBump = true;
+    state.screen = "stats"; window.scrollTo(0,0); render();
+  });
+  shellBuilt = true;
+}
+function enableNavDrag(){
+  const nav = document.querySelector("nav.tabbar");
+  const pill = document.getElementById("tabPill");
+  const DRAG_THRESHOLD = 8;
+  let pointerId = null, startX = 0, startY = 0, dragEngaged = false;
+
+  function tabsList(){ return [...nav.querySelectorAll(".tab")]; }
+  function tabAt(clientX){
+    let closest = null, closestDist = Infinity;
+    tabsList().forEach(t=>{
+      const r = t.getBoundingClientRect();
+      const center = r.left + r.width/2;
+      const d = Math.abs(clientX - center);
+      if(d < closestDist){ closestDist = d; closest = t; }
+    });
+    return closest;
+  }
+  function movePillTo(t){
+    if(!t) return;
+    pill.style.left = t.offsetLeft + "px";
+    pill.style.width = t.offsetWidth + "px";
+  }
+  nav.addEventListener("pointerdown", (e)=>{
+    pointerId = e.pointerId;
+    startX = e.clientX; startY = e.clientY;
+    dragEngaged = false;
+    try{ nav.setPointerCapture(e.pointerId); }catch(err){}
+  });
+  nav.addEventListener("pointermove", (e)=>{
+    if(pointerId===null || e.pointerId!==pointerId) return;
+    if(!dragEngaged){
+      const dist = Math.hypot(e.clientX-startX, e.clientY-startY);
+      if(dist > DRAG_THRESHOLD){
+        dragEngaged = true;
+        pill.classList.add("dragging");
+      }
+    }
+    if(dragEngaged) movePillTo(tabAt(e.clientX));
+  });
+  function endDrag(e){
+    if(pointerId===null || e.pointerId!==pointerId) return;
+    pointerId = null;
+    const wasEngaged = dragEngaged;
+    dragEngaged = false;
+    pill.classList.remove("dragging");
+    const t = tabAt(e.clientX);
+    if(t && t.dataset.screen !== state.screen){
+      state.screen = t.dataset.screen;
+      window.scrollTo(0,0);
+      render();
+      lastPointerNavAt = Date.now();
+    } else if(wasEngaged){
+      positionTabPill();
+    }
+  }
+  nav.addEventListener("pointerup", endDrag);
+  nav.addEventListener("pointercancel", endDrag);
+  let lastPointerNavAt = 0;
+  nav.addEventListener("click", (e)=>{
+    if(Date.now() - lastPointerNavAt < 400) return;
+    const t = e.target.closest(".tab");
+    if(t && t.dataset.screen !== state.screen){
+      state.screen = t.dataset.screen;
+      window.scrollTo(0,0);
+      render();
+    }
+  });
+}
+const introPlayedScreens = new Set();
+function render(){
+  const app = document.getElementById("app");
+  if(!state.profile || !state.profile.onboarded){
+    state.profile = {name:"", casier:"", onboarded:true};
+    save(K.profile, state.profile);
+  }
+  ensureShell();
+  const pagehead = document.getElementById("pagehead");
+  const isFirstVisit = !introPlayedScreens.has(state.screen);
+  if(state.screen === "home"){
+    pagehead.style.display = "none";
+  } else {
+    pagehead.style.display = "";
+    const pageheadText = document.getElementById("pageheadText");
+    if(isFirstVisit){
+      pageheadText.innerHTML = renderTitleLetters(screenTitle());
+    } else {
+      pageheadText.textContent = screenTitle();
+    }
+  }
+  document.getElementById("mainContent").innerHTML = renderScreen();
+  bindScreen();
+  if(lastRenderedScreen !== state.screen){
+    if(isFirstVisit){
+      staggerEntrance();
+      introPlayedScreens.add(state.screen);
+    }
+    document.querySelectorAll("nav.tabbar .tab").forEach(b=>{
+      b.classList.toggle("active", b.dataset.screen === state.screen);
+    });
+    const bubble = document.querySelector(".stats-bubble");
+    bubble.classList.toggle("active", state.screen === "stats");
+    if(statsBump){
+      bubble.classList.add("bump");
+      statsBump = false;
+      setTimeout(()=>{ bubble.classList.remove("bump"); }, 400);
+    }
+    positionTabPill();
+    lastRenderedScreen = state.screen;
+  }
+}
+function renderTitleLetters(text){
+  return text.split("").map(ch=>{
+    const delay = Math.round(Math.random()*170);
+    const rise = Math.round(10 + Math.random()*10);
+    const content = ch===" " ? "&nbsp;" : ch;
+    return `<span class="title-letter" style="animation-delay:${delay}ms; --rise:${rise}px;">${content}</span>`;
+  }).join("");
+}
+function screenTitle(){
+  return {gym:"Salle", run:"Course", stats:"Statistiques", programs:"Programmes", settings:"Réglages", changelog:"Changelog"}[state.screen] || "SPORT";
+}
+function staggerEntrance(){
+  const kids = document.querySelectorAll("#mainContent > *");
+  kids.forEach((el, i)=>{
+    el.classList.remove("enter-block");
+    el.style.animationDelay = (i * 45) + "ms";
+    void el.offsetWidth;
+    el.classList.add("enter-block");
+  });
+}
+function tab(id, icon, label){
+  return `<button class="tab" data-screen="${id}">${icon}<span>${label}</span></button>`;
+}
+function positionTabPill(){
+  const nav = document.querySelector("nav.tabbar");
+  const pill = document.getElementById("tabPill");
+  if(!nav || !pill) return;
+  const active = nav.querySelector(".tab.active");
+  if(!active){ pill.style.opacity = "0"; return; }
+  pill.style.opacity = "1";
+  pill.style.left = active.offsetLeft + "px";
+  pill.style.width = active.offsetWidth + "px";
+}
+window.addEventListener("resize", positionTabPill);
+
+function renderScreen(){
+  if(state.screen==="home") return renderHome();
+  if(state.screen==="gym") return renderGym();
+  if(state.screen==="run") return renderRun();
+  if(state.screen==="stats") return renderStats();
+  if(state.screen==="programs") return renderPrograms();
+  if(state.screen==="settings") return renderSettings();
+  if(state.screen==="changelog") return renderChangelogScreen();
+  return "";
+}
+function bindScreen(){
+  if(state.screen==="home") bindHome();
+  if(state.screen==="gym") bindGym();
+  if(state.screen==="run") bindRun();
+  if(state.screen==="stats") bindStats();
+  if(state.screen==="programs") bindPrograms();
+  if(state.screen==="settings") bindSettings();
+  if(state.screen==="changelog") bindChangelogScreen();
+}
+
+/* ============ HOME ============ */
+function renderHome(){
+  const ws = monthSummary();
+  const rs = runStats();
+  const draft = getDraftSession();
+  const activeProgram = getActiveProgram();
+  const items = [
+    ...state.gym.map(s=>({type:"gym", date:s.date, data:s})),
+    ...state.runs.map(r=>({type:"run", date:r.date, data:r})),
+  ].sort((a,b)=> b.date.localeCompare(a.date)).slice(0,5);
+
+  return `
+    <div class="home-header">
+      <div class="home-logo">${LOGO_HORIZONTAL}</div>
+      <button class="icon-btn hero-settings" id="openSettings" title="Réglages">${ICONS.settings}</button>
+    </div>
+
+    ${draft ? `
+    <div class="card card-live">
+      <h2><span class="live-dot"></span>Séance en cours</h2>
+      <p class="stat-note" style="margin-top:0;">${fmtDate(draft.date)} · ${Object.keys(draft.exercises).length} machine${Object.keys(draft.exercises).length>1?'s':''} renseignée${Object.keys(draft.exercises).length>1?'s':''}</p>
+      <div class="btn-row">
+        <button class="btn btn-secondary" id="resumeDraft">Continuer la séance</button>
+        <button class="btn btn-primary" id="finishDraftHome">Terminer la séance</button>
+      </div>
+    </div>` : ""}
+
+    ${activeProgram ? (()=>{
+      const prog = state.progress[activeProgram.id];
+      const total = activeProgram.steps.length, doneCount = prog.done.length;
+      return `
+      <div class="card card-live">
+        <h2><span class="live-dot"></span>${activeProgram.title}</h2>
+        <p class="stat-note" style="margin-top:0;">${doneCount}/${total} étape${total>1?'s':''} cochée${total>1?'s':''}</p>
+        ${renderProgramStepsList(activeProgram, prog, true)}
+        <div class="btn-row" style="margin-top:12px;">
+          <button class="btn btn-secondary" id="resumeProgramHome">Continuer</button>
+          <button class="btn btn-primary" id="finishProgramHome">Terminer ✓</button>
+        </div>
+      </div>`;
+    })() : ""}
+
+    <div class="card">
+      <h2>En ${ws.label}</h2>
+      <div class="row-stats">
+        <div class="stat"><b>${ws.gymCount}</b><span>séances salle</span></div>
+        <div class="stat"><b>${ws.kmMonth.toFixed(1)}</b><span>km course</span></div>
+        <div class="stat"><b>${ws.progCount}</b><span>programme${ws.progCount!==1?'s':''}</span></div>
+      </div>
+    </div>
+
+    <div class="fab-row">
+      <button class="fab-item" id="quickGym"><div class="fab">${ICONS.dumbbell}</div><span>Nouvelle séance salle</span></button>
+      <button class="fab-item" id="quickRun"><div class="fab">${ICONS.run}</div><span>Nouvelle course à pied</span></button>
+      <button class="fab-item" id="quickVelo"><div class="fab">${ICONS.bike}</div><span>Nouvelle séance vélo</span></button>
+      <button class="fab-item" id="quickProgram"><div class="fab">${ICONS.list}</div><span>Lancer un programme</span></button>
+    </div>
+
+    <div class="card">
+      <h2>Records machines</h2>
+      <div class="grid-machines">
+        ${allMachines().map(m=>{
+          const pr = machinePR(m.id);
+          return `<div class="machine-pr"><span class="name">${m.label}</span><span class="val">${pr>0?pr+" kg":"—"}</span></div>`;
+        }).join("")}
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Course — records</h2>
+      <div class="row-stats">
+        <div class="stat"><b>${paceStr(rs.bestPace)}</b><span>meilleure allure</span></div>
+        <div class="stat"><b>${rs.longest.toFixed(1)} km</b><span>plus longue sortie</span></div>
+        <div class="stat"><b>${rs.totalKm.toFixed(1)} km</b><span>cumul total</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Activité récente</h2>
+      ${items.length===0 ? emptyState("🏋️","Aucune activité pour l'instant") : items.map(it=>{
+        if(it.type==="gym"){
+          const nb = Object.values(it.data.exercises).filter(e=>e.poids).length;
+          const isDraft = (it.data.status||"done")==="draft";
+          return activityRow("gym",ICONS.dumbbell, `Séance salle${isDraft?' · brouillon':''}`, `${fmtDate(it.date)} · ${nb} machine${nb>1?'s':''}`);
+        }else{
+          return activityRow("run",ICONS.run, `Course — ${it.data.distance} km`, `${fmtDate(it.date)} · ${it.data.duree} min`);
+        }
+      }).join("")}
+    </div>
+  `;
+}
+function emptyState(emoji, text){
+  return `<div class="empty-state"><div class="big">${emoji}</div><div>${text}</div></div>`;
+}
+function activityRow(cls, emoji, title, sub){
+  return `<div class="activity-item"><div class="activity-dot ${cls}">${emoji}</div><div class="activity-main"><div class="activity-title">${title}</div><div class="activity-sub">${sub}</div></div></div>`;
+}
+function bindHome(){
+  document.getElementById("openSettings").addEventListener("click", ()=>{ state.screen="settings"; render(); });
+  document.querySelectorAll(".step-check").forEach(el=>{
+    el.addEventListener("click", ()=>{
+      const pid = el.dataset.prog, idx = parseInt(el.dataset.idx);
+      if(!state.progress[pid]) state.progress[pid] = {done:[], sessions:0};
+      const done = state.progress[pid].done;
+      const pos = done.indexOf(idx);
+      if(pos>-1){ done.splice(pos,1); } else { done.push(idx); justToggledStepKey = pid+"-"+idx; }
+      save(K.progress, state.progress);
+      render();
+    });
+  });
+  document.getElementById("resumeDraft")?.addEventListener("click", ()=>{
+    state.screen="gym";
+    render();
+  });
+  document.getElementById("finishDraftHome")?.addEventListener("click", ()=>{
+    const d = getDraftSession();
+    if(d && Object.keys(d.exercises).length===0){
+      showToast("Renseigne au moins une machine", "error");
+      state.screen="gym";
+      render();
+      return;
+    }
+    if(d) d.status = "done";
+    save(K.gym, state.gym);
+    showCelebration("Séance terminée");
+    render();
+  });
+  document.getElementById("resumeProgramHome")?.addEventListener("click", ()=>{
+    state.screen="programs";
+    render();
+  });
+  document.getElementById("finishProgramHome")?.addEventListener("click", ()=>{
+    const ap = getActiveProgram();
+    if(!ap) return;
+    const prog = state.progress[ap.id];
+    prog.sessions += 1;
+    prog.history = prog.history || [];
+    prog.history.push(todayStr());
+    prog.done = [];
+    prog.active = false;
+    if(progType(ap)==="ponctuel") prog.completed = true;
+    save(K.progress, state.progress);
+    showCelebration("Programme terminé");
+    render();
+  });
+  document.getElementById("quickGym").addEventListener("click", ()=>{
+    if(getDraftSession()){
+      state.screen="gym";
+      render();
+      return;
+    }
+    if(startNewSession()){
+      state.screen="gym";
+    }
+    render();
+  });
+  document.getElementById("quickRun").addEventListener("click", ()=>{
+    state.screen="run";
+    runViewMode = "pied";
+    runFormOpen = true;
+    render();
+  });
+  document.getElementById("quickVelo").addEventListener("click", ()=>{
+    state.screen="run";
+    runViewMode = "velo";
+    runFormOpen = true;
+    render();
+  });
+  document.getElementById("quickProgram").addEventListener("click", ()=>{
+    state.screen="programs";
+    render();
+  });
+}
+
+/* ============ GYM ============ */
+let editingSessionId = null;
+function getEditingSession(){
+  return state.gym.find(s=>s.id===editingSessionId);
+}
+function getDraftSession(){
+  return state.gym.find(s=>(s.status||"done")==="draft");
+}
+function getActiveProgram(){
+  return state.programsList.find(p => state.progress[p.id] && state.progress[p.id].active);
+}
+function canStartGym(){
+  const ap = getActiveProgram();
+  if(ap){
+    showToast(`Termine ou annule le programme "${ap.title}" avant de commencer une séance salle`, "error");
+    return false;
+  }
+  return true;
+}
+function canStartProgram(excludeId){
+  const draft = getDraftSession();
+  if(draft){
+    showToast("Termine ou annule ta séance salle avant de démarrer un programme", "error");
+    return false;
+  }
+  const ap = getActiveProgram();
+  if(ap && ap.id !== excludeId){
+    showToast(`Le programme "${ap.title}" est déjà en cours`, "error");
+    return false;
+  }
+  return true;
+}
+let justActivatedKey = null;
+let justToggledStepKey = null;
+function startNewSession(){
+  if(!canStartGym()) return false;
+  const s = {id:uid(), date:todayStr(), exercises:{}, status:"draft"};
+  state.gym.push(s);
+  save(K.gym, state.gym);
+  editingSessionId = s.id;
+  justActivatedKey = "gym";
+  return true;
+}
+function closeSessionForm(discardIfEmpty){
+  if(discardIfEmpty){
+    const s = getEditingSession();
+    if(s && (s.status||"done")==="draft" && Object.keys(s.exercises).length===0){
+      state.gym = state.gym.filter(x=>x.id!==s.id);
+      save(K.gym, state.gym);
+    }
+  }
+  editingSessionId = null;
+}
+function renderGym(){
+  const draft = getDraftSession();
+  const displaySession = editingSessionId ? getEditingSession() : draft;
+  if(displaySession) editingSessionId = displaySession.id;
+
+  const sorted = [...state.gym].filter(s=>!displaySession || s.id!==displaySession.id).sort((a,b)=>b.date.localeCompare(a.date));
+  const machines = allMachines();
+  return `
+    ${displaySession ? renderGymForm() : `<button class="btn btn-primary" id="toggleGymForm" style="margin-bottom:14px;">+ Nouvelle séance</button>`}
+
+    <div class="card">
+      <h2>N° de casier</h2>
+      <div class="field" style="margin-bottom:0;">
+        <input type="text" inputmode="numeric" pattern="[0-9]*" id="lockerInput" value="${state.profile.casier || ''}" placeholder="Ex : 128">
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Records par machine</h2>
+      ${machines.length===0 ? emptyState("🏋️","Aucune machine active") : `
+      <div class="grid-machines">
+        ${machines.map(m=>{
+          const pr = machinePR(m.id);
+          return `<div class="machine-pr"><span class="name">${m.label}</span><span class="val">${pr>0?pr+" kg":"—"}</span></div>`;
+        }).join("")}
+      </div>`}
+    </div>
+
+    <div class="card">
+      <h2>Dernières séances à la salle</h2>
+      ${sorted.length===0 ? emptyState("📋","Aucune séance enregistrée") : sorted.map(s=>{
+        const ex = allMachinesRaw().filter(m=>s.exercises[m.id] && s.exercises[m.id].poids)
+          .map(m=>`${m.label} ${s.exercises[m.id].poids}kg×${s.exercises[m.id].reps||'?'}(${s.exercises[m.id].series||'?'}s)`).join(" · ");
+        return `<div class="history-item" data-edit="${s.id}">
+          <div class="history-main">
+            <div class="history-date">${fmtDate(s.date)}</div>
+            <div class="history-detail">${ex || 'Aucun détail'}</div>
+          </div>
+          <div class="history-actions">
+            <button class="del-btn" data-id="${s.id}" title="Supprimer">${ICONS.trash}</button>
+          </div>
+        </div>`;
+      }).join("")}
+    </div>
+  `;
+}
+function renderGymForm(){
+  const session = getEditingSession();
+  if(!session) return "";
+  const machines = allMachines();
+  const isDraft = (session.status||"done")==="draft";
+  let reveal = "";
+  if(isDraft && justActivatedKey === "gym"){ reveal = " reveal-in"; justActivatedKey = null; }
+  return `
+  <div class="card ${isDraft?'card-live':'card-editing'}${reveal}">
+    <h2>${isDraft? '<span class="live-dot"></span>Séance en cours' : "Modifier la séance"}</h2>
+    <div class="field">
+      <label class="field-label">Date</label>
+      <input type="date" id="gymDate" value="${session.date}">
+    </div>
+    ${machines.length===0 ? emptyState("🏋️","Ajoute une machine ci-dessous") : `
+    <div class="ex-head"><span>Machine</span><span>Kg</span><span>Reps</span><span>Séries</span><span></span></div>
+    ${machines.map(m=>{
+      const val = session.exercises[m.id] || {};
+      return `
+      <div class="exercise-row">
+        <div class="ex-name">${m.label}</div>
+        <input type="number" step="0.5" min="0" inputmode="decimal" data-machine="${m.id}" data-field="poids" value="${val.poids||''}" placeholder="—">
+        <input type="number" min="0" inputmode="numeric" data-machine="${m.id}" data-field="reps" value="${val.reps||''}" placeholder="—">
+        <input type="number" min="0" inputmode="numeric" data-machine="${m.id}" data-field="series" value="${val.series||''}" placeholder="—">
+        <button type="button" class="ex-remove" data-remove-machine="${m.id}" title="Retirer cette machine">✕</button>
+      </div>`;
+    }).join("")}`}
+    <div class="add-machine-row">
+      <input type="text" id="newMachineName" placeholder="Nouvelle machine (ex : Leg press)">
+      <button class="btn btn-ghost" id="addMachineBtn" type="button">+ Ajouter</button>
+    </div>
+    ${isDraft ? `
+    <div class="btn-row-3070" style="margin-top:8px;">
+      <button class="btn btn-cancel" id="discardGym">Annuler</button>
+      <button class="btn btn-primary" id="finishGym">Terminer ✓</button>
+    </div>` : `
+    <button class="btn btn-primary" id="closeEditGym" style="margin-top:8px;">Fermer</button>
+    `}
+  </div>`;
+}
+function bindGym(){
+  document.getElementById("toggleGymForm")?.addEventListener("click", ()=>{
+    startNewSession();
+    render();
+  });
+  if(editingSessionId){
+    document.getElementById("gymDate").addEventListener("change", e=>{
+      const s = getEditingSession();
+      if(s){ s.date = e.target.value || todayStr(); save(K.gym, state.gym); }
+    });
+    document.querySelectorAll("[data-machine]").forEach(inp=>{
+      inp.addEventListener("input", e=>{
+        const s = getEditingSession();
+        if(!s) return;
+        const machineId = inp.dataset.machine, field = inp.dataset.field;
+        if(!s.exercises[machineId]) s.exercises[machineId] = {};
+        s.exercises[machineId][field] = e.target.value;
+        save(K.gym, state.gym);
+      });
+    });
+    document.getElementById("addMachineBtn").addEventListener("click", ()=>{
+      const input = document.getElementById("newMachineName");
+      const label = input.value.trim();
+      if(!label){ showToast("Donne un nom à la machine", "error"); return; }
+      const id = "custom_" + slugify(label) + "_" + Date.now().toString(36).slice(-4);
+      state.customMachines.push({id, label});
+      save(K.customMachines, state.customMachines);
+      showToast(`"${label}" ajoutée`, "success");
+      render();
+    });
+    document.querySelectorAll("[data-remove-machine]").forEach(btn=>{
+      btn.addEventListener("click", ()=>{
+        const id = btn.dataset.removeMachine;
+        const isCustom = id.startsWith("custom_");
+        if(isCustom){
+          state.customMachines = state.customMachines.filter(m=>m.id!==id);
+          save(K.customMachines, state.customMachines);
+        } else {
+          if(!state.hiddenMachines.includes(id)) state.hiddenMachines.push(id);
+          save(K.hiddenMachines, state.hiddenMachines);
+        }
+        render();
+      });
+    });
+    document.getElementById("discardGym")?.addEventListener("click", ()=>{
+      closeSessionForm(true);
+      showToast("Séance annulée");
+      render();
+    });
+    document.getElementById("finishGym")?.addEventListener("click", ()=>{
+      const s = getEditingSession();
+      if(s && Object.keys(s.exercises).length===0){
+        showToast("Renseigne au moins une machine", "error");
+        return;
+      }
+      if(s) s.status = "done";
+      save(K.gym, state.gym);
+      closeSessionForm(false);
+      showCelebration("Séance terminée");
+      render();
+    });
+    document.getElementById("closeEditGym")?.addEventListener("click", ()=>{
+      closeSessionForm(false);
+      render();
+    });
+  }
+  const locker = document.getElementById("lockerInput");
+  if(locker){
+    locker.addEventListener("change", (e)=>{
+      state.profile.casier = e.target.value.trim();
+      save(K.profile, state.profile);
+      showToast("Numéro de casier enregistré", "success");
+    });
+  }
+  document.querySelectorAll("[data-edit]").forEach(b=>{
+    b.addEventListener("click", ()=>{
+      const s = state.gym.find(x=>x.id===b.dataset.edit);
+      if(!s) return;
+      showDetailPopup(renderGymDetailPopup(s));
+    });
+  });
+  document.querySelectorAll(".del-btn[data-id]").forEach(b=>{
+    b.addEventListener("click", (e)=>{
+      e.stopPropagation();
+      state.gym = state.gym.filter(s=>s.id !== b.dataset.id);
+      save(K.gym, state.gym);
+      render();
+    });
+  });
+}
+function renderGymDetailPopup(s){
+  const rows = allMachinesRaw().filter(m=>s.exercises[m.id] && s.exercises[m.id].poids)
+    .map(m=>{
+      const e = s.exercises[m.id];
+      return `<div class="settings-row"><span class="lbl">${m.label}</span><span class="val">${e.poids}kg × ${e.reps||'?'} (${e.series||'?'} séries)</span></div>`;
+    }).join("");
+  return `
+    <h2>${fmtDate(s.date)}</h2>
+    ${rows || `<p class="stat-note" style="margin:0;">Aucun détail enregistré</p>`}
+    <div class="popup-close-row">
+      <button class="btn btn-secondary" data-popup-close="1">Fermer</button>
+      <button class="btn btn-primary" data-popup-edit-gym="${s.id}">Modifier</button>
+    </div>
+  `;
+}
+function renderRunDetailPopup(r){
+  const isVelo = r.sport==="velo";
+  const dist = parseFloat(r.distance), dur = parseFloat(r.duree);
+  const perf = isVelo ? speedStr(dist/(dur/60)) : paceStr(dur/dist);
+  const rows = [
+    ["Distance", `${r.distance} km`],
+    ["Durée", `${r.duree} min`],
+    [isVelo?"Vitesse":"Allure", perf],
+  ];
+  if(r.type) rows.push(["Type", RUN_TYPES.find(t=>t.id===r.type)?.label || r.type]);
+  if(r.fc) rows.push(["FC moyenne", `${r.fc} bpm`]);
+  if(r.denivele) rows.push(["Dénivelé+", `${r.denivele} m`]);
+  if(r.calories) rows.push(["Calories", `${r.calories} kcal`]);
+  return `
+    <h2>${fmtDate(r.date)}</h2>
+    ${rows.map(([lbl,val])=>`<div class="settings-row"><span class="lbl">${lbl}</span><span class="val">${val}</span></div>`).join("")}
+    <div class="popup-close-row">
+      <button class="btn btn-secondary" data-popup-close="1">Fermer</button>
+      <button class="btn btn-primary" data-popup-edit-run="${r.id}">Modifier</button>
+    </div>
+  `;
+}
+
+/* ============ RUN ============ */
+let runFormOpen = false;
+let runViewMode = "pied";
+let editingRunId = null;
+function renderRun(){
+  const list = filterRunsBySport(runViewMode);
+  const sorted = [...list].sort((a,b)=>b.date.localeCompare(a.date));
+  const rs = computeRunStats(list);
+  const isVelo = runViewMode === "velo";
+  return `
+    <div class="choice-group" id="runViewSwitch" style="margin-bottom:14px;">
+      <div class="choice ${!isVelo?'active':''}" data-mode="pied">🏃 À pied</div>
+      <div class="choice ${isVelo?'active':''}" data-mode="velo">🚴 À vélo</div>
+    </div>
+    ${!runFormOpen ? `<button class="btn btn-primary" id="toggleRunForm" style="margin-bottom:14px;">${isVelo?"+ Nouvelle sortie vélo":"+ Nouvelle course"}</button>` : ""}
+    ${runFormOpen ? renderRunForm() : ""}
+    <div class="card">
+      <h2>Records</h2>
+      <div class="row-stats">
+        <div class="stat"><b>${isVelo? speedStr(rs.bestSpeed) : paceStr(rs.bestPace)}</b><span>${isVelo?"vitesse max":"meilleure allure"}</span></div>
+        <div class="stat"><b>${rs.longest.toFixed(1)} km</b><span>plus longue sortie</span></div>
+        <div class="stat"><b>${rs.totalKm.toFixed(1)} km</b><span>cumul total</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <h2>${isVelo ? "Dernières sorties vélo" : "Dernières courses"}</h2>
+      ${sorted.length===0 ? emptyState(isVelo?"🚴":"🏃", isVelo?"Aucune sortie vélo enregistrée":"Aucune course enregistrée") : sorted.map(r=>{
+        const dist = parseFloat(r.distance), dur = parseFloat(r.duree);
+        const perf = isVelo ? speedStr(dist/(dur/60)) : paceStr(dur/dist);
+        const extra = [];
+        if(r.fc) extra.push(`${r.fc} bpm`);
+        if(r.denivele) extra.push(`D+ ${r.denivele} m`);
+        if(r.calories) extra.push(`${r.calories} kcal`);
+        if(r.type) extra.push(RUN_TYPES.find(t=>t.id===r.type)?.label || r.type);
+        return `<div class="history-item" data-editrun="${r.id}">
+          <div class="history-main"><div class="history-date">${fmtDate(r.date)}</div><div class="history-detail">${r.distance} km · ${r.duree} min · ${perf}${extra.length? " · "+extra.join(" · "):""}</div></div>
+          <div class="history-actions"><button class="del-btn" data-id="${r.id}" title="Supprimer">${ICONS.trash}</button></div>
+        </div>`;
+      }).join("")}
+    </div>
+  `;
+}
+function renderRunForm(){
+  const editing = editingRunId ? state.runs.find(r=>r.id===editingRunId) : null;
+  const isVelo = editing ? editing.sport==="velo" : runViewMode === "velo";
+  return `
+  <div class="card reveal-in${editing?' card-editing':''}">
+    <h2>${editing ? "Modifier" : (isVelo?"Nouvelle sortie vélo":"Nouvelle course")}</h2>
+    <div class="field"><label class="field-label">Type</label><div class="choice-group" id="runSport">
+      <div class="choice ${!isVelo?'active':''}" data-val="pied">🏃 À pied</div>
+      <div class="choice ${isVelo?'active':''}" data-val="velo">🚴 À vélo</div>
+    </div></div>
+    <div class="field"><label class="field-label">Date</label><input type="date" id="runDate" value="${editing?editing.date:todayStr()}"></div>
+    <div class="field"><label class="field-label">Distance (km)</label><input type="number" step="0.01" min="0" id="runDist" value="${editing?editing.distance:''}" placeholder="Ex : 5.2"></div>
+    <div class="field"><label class="field-label">Durée (minutes)</label><input type="number" step="0.1" min="0" id="runDur" value="${editing?editing.duree:''}" placeholder="Ex : 28.5"></div>
+    <div class="field" id="runPacePreview" style="font-size:13px; color:var(--text-dim);"></div>
+    <div class="field"><label class="field-label">Type de sortie</label><div class="choice-group" id="runType">
+      ${RUN_TYPES.map((t)=>`<div class="choice ${(editing? editing.type===t.id : t.id===RUN_TYPES[0].id)?'active':''}" data-val="${t.id}">${t.label}</div>`).join("")}
+    </div></div>
+    <div class="field"><label class="field-label">FC moyenne (bpm, optionnel)</label><input type="number" min="0" id="runFc" value="${editing?(editing.fc||''):''}" placeholder="Ex : 152"></div>
+    <div class="field"><label class="field-label">Dénivelé positif (m, optionnel)</label><input type="number" min="0" id="runDenivele" value="${editing?(editing.denivele||''):''}" placeholder="Ex : 80"></div>
+    <div class="field"><label class="field-label">Calories (kcal, optionnel)</label><input type="number" min="0" id="runCalories" value="${editing?(editing.calories||''):''}" placeholder="Ex : 320"></div>
+    <div class="btn-row-3070">
+      <button class="btn btn-cancel" id="cancelRunForm">Annuler</button>
+      <button class="btn btn-primary" id="saveRun">Enregistrer</button>
+    </div>
+  </div>`;
+}
+function bindRun(){
+  document.querySelectorAll("#runViewSwitch .choice").forEach(c=>{
+    c.addEventListener("click", ()=>{
+      runViewMode = c.dataset.mode;
+      runFormOpen = false;
+      editingRunId = null;
+      render();
+    });
+  });
+  document.getElementById("toggleRunForm")?.addEventListener("click", ()=>{
+    runFormOpen = true;
+    editingRunId = null;
+    render();
+  });
+  if(runFormOpen){
+    document.getElementById("cancelRunForm").addEventListener("click", ()=>{
+      runFormOpen = false;
+      editingRunId = null;
+      render();
+    });
+    const dist = document.getElementById("runDist");
+    const dur = document.getElementById("runDur");
+    const preview = document.getElementById("runPacePreview");
+    const editing = editingRunId ? state.runs.find(r=>r.id===editingRunId) : null;
+    let runTypeVal = editing ? editing.type : RUN_TYPES[0].id;
+    let runSportVal = editing ? editing.sport : runViewMode;
+    document.querySelectorAll("#runSport .choice").forEach(c=>{
+      c.addEventListener("click", ()=>{
+        document.querySelectorAll("#runSport .choice").forEach(x=>x.classList.remove("active"));
+        c.classList.add("active");
+        runSportVal = c.dataset.val;
+        updatePreview();
+      });
+    });
+    document.querySelectorAll("#runType .choice").forEach(c=>{
+      c.addEventListener("click", ()=>{
+        document.querySelectorAll("#runType .choice").forEach(x=>x.classList.remove("active"));
+        c.classList.add("active");
+        runTypeVal = c.dataset.val;
+      });
+    });
+    function updatePreview(){
+      const d = parseFloat(dist.value), t = parseFloat(dur.value);
+      if(d>0 && t>0){
+        preview.textContent = runSportVal==="velo"
+          ? "Vitesse estimée : " + speedStr(d/(t/60))
+          : "Allure estimée : " + paceStr(t/d);
+      } else { preview.textContent = ""; }
+    }
+    updatePreview();
+    dist.addEventListener("input", updatePreview);
+    dur.addEventListener("input", updatePreview);
+    document.getElementById("saveRun").addEventListener("click", ()=>{
+      const date = document.getElementById("runDate").value || todayStr();
+      const distance = dist.value, duree = dur.value;
+      if(!distance || !duree){ showToast("Renseigne distance et durée", "error"); return; }
+      const fc = document.getElementById("runFc").value;
+      const denivele = document.getElementById("runDenivele").value;
+      const calories = document.getElementById("runCalories").value;
+      if(editing){
+        Object.assign(editing, {date, distance, duree, sport:runSportVal, type:runTypeVal, fc, denivele, calories});
+        showToast("Modifications enregistrées", "success");
+      } else {
+        state.runs.push({id:uid(), date, distance, duree, sport:runSportVal, type:runTypeVal, fc, denivele, calories});
+        showCelebration(runSportVal==="velo" ? "Sortie enregistrée" : "Course enregistrée");
+      }
+      save(K.runs, state.runs);
+      runFormOpen = false;
+      editingRunId = null;
+      runViewMode = runSportVal;
+      render();
+    });
+  }
+  document.querySelectorAll("[data-editrun]").forEach(item=>{
+    item.addEventListener("click", ()=>{
+      const r = state.runs.find(x=>x.id===item.dataset.editrun);
+      if(!r) return;
+      showDetailPopup(renderRunDetailPopup(r));
+    });
+  });
+  document.querySelectorAll(".del-btn").forEach(b=>{
+    b.addEventListener("click", (e)=>{
+      e.stopPropagation();
+      state.runs = state.runs.filter(r=>r.id !== b.dataset.id);
+      save(K.runs, state.runs);
+      render();
+    });
+  });
+}
+
+/* ============ PROGRAMS ============ */
+/* ============ STATS ============ */
+let statsMachine = null;
+let statsDetailOpen = {machine:false, pace:false, velo:false};
+function renderStatsDetail(items){
+  return `<div class="stats-detail">
+    ${[...items].reverse().map(it=>`<div class="settings-row"><span class="lbl">${fmtDate(it.date)}</span><span class="val">${it.label}</span></div>`).join("")}
+  </div>`;
+}
+function getWeekKey(dateStr){
+  const d = new Date(dateStr+"T00:00:00");
+  const day = (d.getDay()+6)%7;
+  d.setHours(0,0,0,0); d.setDate(d.getDate()-day);
+  return d.toISOString().slice(0,10);
+}
+function weeklyVolume(n){
+  const weeks = [];
+  const now = new Date();
+  const day = (now.getDay()+6)%7;
+  now.setHours(0,0,0,0); now.setDate(now.getDate()-day);
+  for(let i=n-1;i>=0;i--){
+    const start = new Date(now); start.setDate(start.getDate()-7*i);
+    weeks.push({key:start.toISOString().slice(0,10), start, gym:0, run:0, km:0});
+  }
+  state.gym.forEach(s=>{ if((s.status||"done")!=="done") return; const k=getWeekKey(s.date); const w=weeks.find(w=>w.key===k); if(w) w.gym++; });
+  state.runs.forEach(r=>{ const k=getWeekKey(r.date); const w=weeks.find(w=>w.key===k); if(w){ w.run++; w.km += parseFloat(r.distance)||0; } });
+  return weeks;
+}
+function machineSeries(machineId){
+  return state.gym.filter(s=>(s.status||"done")==="done" && s.exercises[machineId] && s.exercises[machineId].poids)
+    .sort((a,b)=>a.date.localeCompare(b.date))
+    .map(s=>({date:s.date, poids:parseFloat(s.exercises[machineId].poids)}));
+}
+function smoothPath(pts){
+  if(pts.length===2){
+    return `M${pts[0].x.toFixed(1)},${pts[0].y.toFixed(1)} L${pts[1].x.toFixed(1)},${pts[1].y.toFixed(1)}`;
+  }
+  let d = `M${pts[0].x.toFixed(1)},${pts[0].y.toFixed(1)} `;
+  for(let i=0;i<pts.length-1;i++){
+    const p0 = pts[i-1] || pts[i];
+    const p1 = pts[i];
+    const p2 = pts[i+1];
+    const p3 = pts[i+2] || p2;
+    const cp1x = p1.x + (p2.x - p0.x)/6;
+    const cp1y = p1.y + (p2.y - p0.y)/6;
+    const cp2x = p2.x - (p3.x - p1.x)/6;
+    const cp2y = p2.y - (p3.y - p1.y)/6;
+    d += `C${cp1x.toFixed(1)},${cp1y.toFixed(1)} ${cp2x.toFixed(1)},${cp2y.toFixed(1)} ${p2.x.toFixed(1)},${p2.y.toFixed(1)} `;
+  }
+  return d;
+}
+function sparklineSVG(values, colorClass){
+  if(values.length<2) return "";
+  const w=300,h=64,pad=6;
+  const max=Math.max(...values), min=Math.min(...values);
+  const range=(max-min)||1;
+  const step=(w-2*pad)/(values.length-1);
+  const pts = values.map((v,i)=>{
+    const x=pad+i*step;
+    const y=h-pad-((v-min)/range)*(h-2*pad);
+    return {x,y};
+  });
+  const d = smoothPath(pts);
+  return `<svg viewBox="0 0 ${w} ${h}" class="sparkline ${colorClass}"><path class="spark-path" d="${d}" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" pathLength="1"/></svg>`;
+}
+function renderStats(){
+  const totalGym = state.gym.filter(s=>(s.status||"done")==="done").length;
+  const totalKm = state.runs.reduce((a,r)=>a+(parseFloat(r.distance)||0),0);
+  const totalPrograms = Object.values(state.progress).reduce((a,p)=>a+(p.sessions||0),0);
+  const weeks = weeklyVolume(8);
+  const maxWeek = Math.max(1, ...weeks.map(w=>Math.max(w.gym,w.run)));
+  const machinesWithData = allMachines().filter(m=>machineSeries(m.id).length>=2);
+  if(!statsMachine || !machinesWithData.find(m=>m.id===statsMachine)){
+    statsMachine = machinesWithData[0] ? machinesWithData[0].id : null;
+  }
+  const series = statsMachine ? machineSeries(statsMachine) : [];
+  const paceRuns = [...state.runs].filter(r=>(r.sport||"pied")==="pied")
+    .sort((a,b)=>a.date.localeCompare(b.date))
+    .filter(r=>parseFloat(r.distance)>0 && parseFloat(r.duree)>0);
+  const paceSeries = paceRuns.map(r=> -(parseFloat(r.duree)/parseFloat(r.distance)));
+  const veloRuns = [...state.runs].filter(r=>r.sport==="velo")
+    .sort((a,b)=>a.date.localeCompare(b.date))
+    .filter(r=>parseFloat(r.distance)>0 && parseFloat(r.duree)>0);
+  const veloSeries = veloRuns.map(r=> parseFloat(r.distance)/(parseFloat(r.duree)/60));
+  const fcRuns = state.runs.filter(r=>r.fc);
+  const avgFc = fcRuns.length ? Math.round(fcRuns.reduce((a,r)=>a+parseFloat(r.fc),0)/fcRuns.length) : null;
+  const finishedPrograms = Object.entries(state.progress)
+    .filter(([id,prog])=>(prog.sessions||0)>0)
+    .map(([id,prog])=>{
+      const live = state.programsList.find(p=>p.id===id);
+      return {title: live ? live.title : (prog.title || "Programme supprimé"), sessions: prog.sessions||0, deleted: !live};
+    })
+    .sort((a,b)=>b.sessions-a.sessions);
+  const tonnage = computeTonnage();
+  const favMachine = mostUsedMachine();
+  const streakWeeks = computeStreakWeeks();
+  const piedCount = state.runs.filter(r=>(r.sport||"pied")==="pied").length;
+  const veloCount = state.runs.filter(r=>r.sport==="velo").length;
+  const activeProgram = getActiveProgram();
+
+  return `
+    <div class="card">
+      <h2>Vue d'ensemble</h2>
+      <div class="row-stats">
+        <div class="stat"><b>${totalGym}</b><span>séances salle</span></div>
+        <div class="stat"><b>${totalKm.toFixed(1)}</b><span>km course</span></div>
+        <div class="stat"><b>${totalPrograms}</b><span>programmes finis</span></div>
+      </div>
+      ${avgFc ? `<div class="stat-note">FC moyenne sur tes courses : ${avgFc} bpm</div>` : ""}
+      ${activeProgram ? `<div class="stat-note">🔵 Programme en cours : ${activeProgram.title} (${state.progress[activeProgram.id].done.length}/${activeProgram.steps.length} étapes)</div>` : ""}
+    </div>
+
+    <div class="card">
+      <h2>Records & tendances</h2>
+      <div class="row-stats">
+        <div class="stat"><b>${tonnage>=1000?(tonnage/1000).toFixed(1)+'t':Math.round(tonnage)+'kg'}</b><span>volume soulevé</span></div>
+        <div class="stat"><b>${streakWeeks}</b><span>semaine${streakWeeks!==1?'s':''} d'affilée</span></div>
+        <div class="stat"><b>${piedCount}/${veloCount}</b><span>courses pied/vélo</span></div>
+      </div>
+      ${favMachine ? `<div class="stat-note">Machine la plus pratiquée : ${favMachine.label} (${favMachine.count}×)</div>` : ""}
+    </div>
+
+    <div class="card">
+      <h2>Programmes terminés</h2>
+      ${finishedPrograms.length===0 ? emptyState("📝","Aucun programme terminé pour l'instant") : finishedPrograms.map(p=>`
+        <div class="settings-row">
+          <span class="lbl">${p.title}${p.deleted?' <span class="tag alt">Supprimé</span>':''}</span>
+          <span class="val">${p.sessions} séance${p.sessions!==1?'s':''}</span>
+        </div>
+      `).join("")}
+    </div>
+
+    <div class="card">
+      <h2>Activité récente</h2>
+      <div class="heatmap-grid">
+        ${computeActivityHeatmap(20).map(week => `
+          <div class="heatmap-col">
+            ${week.map(day => {
+              if(day.future) return `<div class="heatmap-cell future"></div>`;
+              const style = heatmapCellBg(day.types);
+              const label = day.types.length===0 ? "Aucune activité" : day.types.map(t=>({gym:"Salle",run:"Course",program:"Programme"}[t])).join(" + ");
+              return `<div class="heatmap-cell" style="${style}" title="${fmtDate(day.date)} · ${label}"></div>`;
+            }).join("")}
+          </div>
+        `).join("")}
+      </div>
+      <div class="heatmap-legend">
+        <span class="heatmap-cell" style="background:var(--blue);"></span><span>Salle</span>
+        <span class="heatmap-cell" style="background:var(--red); margin-left:8px;"></span><span>Course</span>
+        <span class="heatmap-cell" style="background:#ffd23f; margin-left:8px;"></span><span>Programme</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Volume hebdomadaire (8 semaines)</h2>
+      <div class="week-chart">
+        ${weeks.map(w=>`
+          <div class="week-col">
+            <div class="week-bars">
+              <div class="week-bar gym" style="height:${Math.max(3,Math.round((w.gym/maxWeek)*54))}px"></div>
+              <div class="week-bar run" style="height:${Math.max(3,Math.round((w.run/maxWeek)*54))}px"></div>
+            </div>
+            <span>${w.start.toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit'})}</span>
+          </div>`).join("")}
+      </div>
+      <div class="legend"><span><i class="dot gym"></i>Salle</span><span><i class="dot run"></i>Course</span></div>
+    </div>
+
+    <div class="card">
+      <h2>Progression par machine</h2>
+      ${machinesWithData.length===0 ? emptyState("📈","Pas encore assez de données (2 séances min. par machine)") : `
+        <div class="choice-group" id="statsMachineChoice">
+          ${machinesWithData.map(m=>`<div class="choice ${m.id===statsMachine?'active':''}" data-val="${m.id}">${m.label}</div>`).join("")}
+        </div>
+        <div class="chart-click-area" data-toggle-detail="machine">
+          ${sparklineSVG(series.map(s=>s.poids), 'spark-accent')}
+          <div class="chart-hint">${statsDetailOpen.machine ? "Masquer le détail" : "Toucher pour voir le détail"}</div>
+        </div>
+        ${statsDetailOpen.machine ? renderStatsDetail(series.map(s=>({date:s.date, label:s.poids+' kg'}))) : ""}
+        ${(()=>{
+          const first = series[0].poids, last = series[series.length-1].poids, max = Math.max(...series.map(s=>s.poids));
+          const delta = last - first;
+          return `<div class="row-stats" style="margin-top:10px;">
+            <div class="stat"><b>${last} kg</b><span>actuel</span></div>
+            <div class="stat"><b>${max} kg</b><span>record</span></div>
+            <div class="stat"><b>${delta>=0?'+':''}${delta} kg</b><span>depuis le début</span></div>
+          </div>`;
+        })()}
+      `}
+    </div>
+
+    <div class="card">
+      <h2>Progression allure course à pied</h2>
+      ${paceSeries.length<2 ? emptyState("🏃","Pas encore assez de courses enregistrées") : `
+        <div class="chart-click-area" data-toggle-detail="pace">
+          ${sparklineSVG(paceSeries, 'spark-accent2')}
+          <div class="chart-hint">${statsDetailOpen.pace ? "Masquer le détail" : "Toucher pour voir le détail"}</div>
+        </div>
+        ${statsDetailOpen.pace ? renderStatsDetail(paceRuns.map(r=>({date:r.date, label:paceStr(parseFloat(r.duree)/parseFloat(r.distance))}))) : ""}
+        ${(()=>{
+          const paces = paceRuns.map(r=>parseFloat(r.duree)/parseFloat(r.distance));
+          const current = paces[paces.length-1], best = Math.min(...paces), delta = paces[0]-current;
+          return `<div class="row-stats" style="margin-top:10px;">
+            <div class="stat"><b>${paceStr(current)}</b><span>actuelle</span></div>
+            <div class="stat"><b>${paceStr(best)}</b><span>record</span></div>
+            <div class="stat"><b>${delta>=0?'-':'+'}${paceStr(Math.abs(delta)).replace('/km','')}</b><span>depuis le début</span></div>
+          </div>`;
+        })()}
+      `}
+    </div>
+
+    <div class="card">
+      <h2>Progression vitesse vélo</h2>
+      ${veloSeries.length<2 ? emptyState("🚴","Pas encore assez de sorties vélo enregistrées") : `
+        <div class="chart-click-area" data-toggle-detail="velo">
+          ${sparklineSVG(veloSeries, 'spark-accent')}
+          <div class="chart-hint">${statsDetailOpen.velo ? "Masquer le détail" : "Toucher pour voir le détail"}</div>
+        </div>
+        ${statsDetailOpen.velo ? renderStatsDetail(veloRuns.map(r=>({date:r.date, label:speedStr(parseFloat(r.distance)/(parseFloat(r.duree)/60))}))) : ""}
+        ${(()=>{
+          const current = veloSeries[veloSeries.length-1], best = Math.max(...veloSeries), delta = current-veloSeries[0];
+          return `<div class="row-stats" style="margin-top:10px;">
+            <div class="stat"><b>${speedStr(current)}</b><span>actuelle</span></div>
+            <div class="stat"><b>${speedStr(best)}</b><span>record</span></div>
+            <div class="stat"><b>${delta>=0?'+':''}${delta.toFixed(1)} km/h</b><span>depuis le début</span></div>
+          </div>`;
+        })()}
+      `}
+    </div>
+
+    <button class="btn btn-cancel" id="resetStatsBtn" style="margin-top:4px;">Réinitialiser les statistiques</button>
+  `;
+}
+function bindStats(){
+  const group = document.getElementById("statsMachineChoice");
+  if(group){
+    group.querySelectorAll(".choice").forEach(c=>{
+      c.addEventListener("click", ()=>{ statsMachine = c.dataset.val; render(); });
+    });
+  }
+  document.querySelectorAll("[data-toggle-detail]").forEach(el=>{
+    el.addEventListener("click", ()=>{
+      const key = el.dataset.toggleDetail;
+      statsDetailOpen[key] = !statsDetailOpen[key];
+      render();
+    });
+  });
+  document.getElementById("resetStatsBtn")?.addEventListener("click", ()=>{
+    if(confirm("Réinitialiser toutes les statistiques ? Ça effacera tes séances salle, tes courses et l'historique des programmes. Cette action est irréversible.")){
+      state.gym = [];
+      state.runs = [];
+      state.progress = {};
+      save(K.gym, state.gym);
+      save(K.runs, state.runs);
+      save(K.progress, state.progress);
+      showToast("Statistiques réinitialisées", "success");
+      render();
+    }
+  });
+}
+
+let programFormOpen = false;
+let programFormJustOpened = false;
+let programEditingId = null;
+let programDraftTitle = "";
+let programDraftSteps = [""];
+let programDraftStepMachines = [null];
+let programDraftStepDetails = [{series:"",reps:"",temps:""}];
+let programDraftType = "recurrent";
+let programMachinePickerOpen = false;
+function esc(str){ return (str||"").replace(/"/g,"&quot;").replace(/</g,"&lt;"); }
+function stepMetaChips(detail){
+  if(!detail) return "";
+  const parts = [];
+  if(detail.series && detail.reps){
+    parts.push(`${detail.series}×${detail.reps}`);
+  } else if(detail.reps){
+    parts.push(`${detail.reps} reps`);
+  } else if(detail.series){
+    parts.push(`${detail.series} séries`);
+  }
+  if(detail.temps) parts.push(`⏱ ${detail.temps}s`);
+  if(parts.length===0) return "";
+  return `<div class="step-meta">${parts.map(p=>`<span class="step-chip">${p}</span>`).join("")}</div>`;
+}
+let programViewingId = null;
+function previewText(p){
+  if(!p.steps || p.steps.length===0) return "Aucune étape";
+  const names = p.steps.slice(0,2).join(", ");
+  return p.steps.length > 2 ? `${names} +${p.steps.length-2} autre${p.steps.length-2>1?'s':''}` : names;
+}
+function renderProgramStepsList(p, prog, interactive){
+  return p.steps.map((s,i)=>{
+    const mId = (p.stepMachines||[])[i];
+    const m = mId ? allMachinesRaw().find(m=>m.id===mId) : null;
+    const pr = m ? machinePR(m.id) : 0;
+    const detail = (p.stepDetails||[])[i];
+    const done = !!(prog && prog.done.includes(i));
+    let justDone = "";
+    if(done && justToggledStepKey === (p.id+"-"+i)){ justDone = " just-done"; justToggledStepKey = null; }
+    return `
+    <div class="step ${done?'done':''}${justDone}">
+      ${interactive
+        ? `<div class="step-check ${done?'done':''}" data-prog="${p.id}" data-idx="${i}">${ICONS.check}</div>`
+        : `<div class="step-bullet"></div>`}
+      <div class="step-body">
+        <div class="step-label">${s}${(m&&pr>0)?` <span class="tag alt">${pr} kg PR</span>`:''}</div>
+        ${stepMetaChips(detail)}
+      </div>
+    </div>`;
+  }).join("");
+}
+function renderProgHistory(history){
+  return `
+  <details class="changelog-group" style="margin-top:12px;">
+    <summary>Historique (${history.length})</summary>
+    <div style="margin-top:8px;">
+      ${[...history].reverse().slice(0,10).map(d=>`<div class="history-item" style="cursor:default;"><div class="history-main"><div class="history-date">${fmtDate(d)}</div></div></div>`).join("")}
+    </div>
+  </details>`;
+}
+function renderActiveProgramCard(p){
+  const prog = state.progress[p.id];
+  const total = p.steps.length, doneCount = prog.done.length;
+  let reveal = "";
+  if(justActivatedKey === p.id){ reveal = " reveal-in"; justActivatedKey = null; }
+  return `
+  <div class="card card-live${reveal}">
+    <h2><span class="live-dot"></span>${p.title}</h2>
+    ${renderProgramStepsList(p, prog, true)}
+    <div class="btn-row-3070" style="margin-top:12px;">
+      <button class="btn btn-cancel" data-cancel-active="${p.id}">Annuler</button>
+      <button class="btn btn-primary" data-finish="${p.id}">Terminer ✓</button>
+    </div>
+  </div>`;
+}
+let programsViewMode = "recurrent";
+function progType(p){ return p.progType || "ponctuel"; }
+function renderPrograms(){
+  const activeProgram = getActiveProgram();
+  const others = state.programsList.filter(p => !activeProgram || p.id !== activeProgram.id);
+  const total = state.programsList.length;
+  const recurrents = others.filter(p=>progType(p)==="recurrent");
+  const ponctuelsAll = others.filter(p=>progType(p)==="ponctuel");
+  const ponctuelsDone = ponctuelsAll.filter(p=> state.progress[p.id] && state.progress[p.id].completed);
+  const ponctuelsTodo = ponctuelsAll.filter(p=> !(state.progress[p.id] && state.progress[p.id].completed));
+  const list = programsViewMode === "recurrent" ? recurrents : ponctuelsTodo;
+
+  function renderCard(p){
+    const idx = state.programsList.findIndex(x=>x.id===p.id);
+    const prog = state.progress[p.id] || {done:[], sessions:0, history:[]};
+    const history = prog.history || [];
+    const type = progType(p);
+    const editBtn = `<button class="edit-program-btn" data-view-program-btn="${p.id}" title="Voir / modifier">${ICONS.edit}</button>`;
+    const reorderBtns = `
+      <div class="reorder-col">
+        <button class="reorder-btn" data-move-up="${p.id}" ${idx===0?'disabled':''} title="Monter">${ICONS.chevronUp}</button>
+        <button class="reorder-btn" data-move-down="${p.id}" ${idx===total-1?'disabled':''} title="Descendre">${ICONS.chevronDown}</button>
+      </div>`;
+
+    if(programViewingId === p.id){
+      const completed = !!(state.progress[p.id] && state.progress[p.id].completed);
+      return `
+      <div class="program-card reveal-in">
+        <div class="program-head">
+          <div class="program-head-main">
+            <div class="program-title">${p.title}${completed ? ' <span class="tag done-badge">Terminé</span>' : ''}</div>
+            <span class="program-count">${prog.sessions} séance${prog.sessions!==1?'s':''} terminée${prog.sessions!==1?'s':''}</span>
+          </div>
+          <div class="program-actions">
+            ${reorderBtns}
+            <button class="del-btn" data-delprog="${p.id}" title="Supprimer le programme">${ICONS.trash}</button>
+          </div>
+        </div>
+        ${renderProgramStepsList(p, prog, false)}
+        <div class="btn-row" style="margin-top:12px;">
+          <button class="btn btn-secondary" data-close-preview="1">Fermer</button>
+          ${completed
+            ? `<button class="btn btn-primary" data-reset-ponctuel="${p.id}">Réinitialiser</button>`
+            : `<button class="btn btn-primary" data-start-program="${p.id}">Démarrer</button>`}
+        </div>
+        <button class="btn btn-secondary" data-edit-program="${p.id}" style="margin-top:8px;">✎ Modifier le programme</button>
+        <div class="btn-row" style="margin-top:8px;">
+          <button class="btn btn-ghost" data-toggle-type="${p.id}">Passer en ${type==='recurrent'?'Ponctuel':'Récurrent'}</button>
+          <button class="btn btn-ghost" data-duplicate-program="${p.id}">Dupliquer</button>
+        </div>
+        ${history.length>0 ? renderProgHistory(history) : ""}
+        <button class="program-export-link" data-export-program="${p.id}">Exporter ce programme (.json)</button>
+      </div>`;
+    }
+
+    return `
+    <div class="program-card program-preview" data-view-program="${p.id}">
+      <div class="program-head">
+        <div class="program-head-main">
+          <div class="program-title">${p.title}</div>
+          <span class="program-count">${previewText(p)}</span>
+        </div>
+        <div class="program-actions">
+          ${editBtn}
+          ${reorderBtns}
+          <button class="del-btn" data-delprog="${p.id}" title="Supprimer le programme">${ICONS.trash}</button>
+        </div>
+      </div>
+      <button class="btn btn-primary" data-start-program="${p.id}" style="margin-top:6px;">Démarrer</button>
+    </div>`;
+  }
+
+  return `
+    ${!programFormOpen ? `
+    <div class="btn-row-7030" style="margin-bottom:14px;">
+      <button class="btn btn-primary" id="toggleProgramForm">+ Nouveau programme</button>
+      <button class="btn btn-secondary" id="importProgramBtn">Importer</button>
+    </div>
+    <input type="file" id="importProgramFile" accept="application/json,.json" style="display:none;">
+    ` : ""}
+    ${programFormOpen ? renderProgramForm() : ""}
+
+    ${activeProgram ? renderActiveProgramCard(activeProgram) : ""}
+
+    ${!programFormOpen ? `
+    <div class="choice-group" id="programsViewSwitch" style="margin-bottom:6px;">
+      <div class="choice ${programsViewMode==='recurrent'?'active':''}" data-mode="recurrent">Récurrents</div>
+      <div class="choice ${programsViewMode==='ponctuel'?'active':''}" data-mode="ponctuel">Ponctuels</div>
+    </div>
+    <p class="stat-note" style="margin:0 0 14px;">${programsViewMode==='recurrent' ? "Récurrent : à refaire régulièrement, se réinitialise après chaque séance." : "Ponctuel : à usage unique, reste marqué comme terminé une fois fait."}</p>
+    ` : ""}
+
+    ${(!programFormOpen && total===0) ? emptyState("📝","Aucun programme pour l'instant") : ""}
+
+    ${(!programFormOpen && programsViewMode==='ponctuel' && ponctuelsDone.length>0) ? `
+    <div class="program-done-list">
+      ${ponctuelsDone.map(p=> programViewingId===p.id ? renderCard(p) : `
+        <div class="program-done-row" data-view-program="${p.id}">
+          <span class="program-done-check">✓</span>
+          <span class="program-done-title">${p.title}</span>
+          <span class="program-done-chevron">${ICONS.chevronUp}</span>
+        </div>
+      `).join("")}
+    </div>
+    ` : ""}
+
+    ${!programFormOpen ? list.map(renderCard).join("") : ""}
+
+    ${(!programFormOpen && total>0) ? `<button class="btn btn-cancel" id="deleteAllPrograms" style="margin-top:10px;">Supprimer tous les programmes</button>` : ""}
+  `;
+}
+function renderProgramForm(){
+  const machines = allMachines();
+  let reveal = "";
+  if(programFormJustOpened){ reveal = " reveal-in"; programFormJustOpened = false; }
+  return `
+  <div class="card${reveal}">
+    <h2>${programEditingId ? "Modifier le programme" : "Nouveau programme"}</h2>
+    <div class="field"><label class="field-label">Nom du programme</label><input type="text" id="progTitle" value="${esc(programDraftTitle)}" placeholder="Ex : Hyrox"></div>
+    <div class="field"><label class="field-label">Type</label><div class="choice-group" id="progTypeChoice">
+      <div class="choice ${programDraftType==='recurrent'?'active':''}" data-val="recurrent">Récurrent</div>
+      <div class="choice ${programDraftType==='ponctuel'?'active':''}" data-val="ponctuel">Ponctuel</div>
+    </div></div>
+    <label class="field-label">Étapes</label>
+    ${programDraftSteps.map((s,i)=>`
+      <div class="step-edit-row">
+        <input type="text" data-step-idx="${i}" value="${esc(s)}" placeholder="Ex : 1 km de course">
+        ${programDraftStepMachines[i] ? `<span class="tag alt" style="flex-shrink:0;">${ICONS.dumbbell}</span>` : ""}
+        ${programDraftSteps.length>1 ? `<button class="step-remove" data-remove-idx="${i}" type="button">✕</button>` : ""}
+      </div>
+      <div class="step-detail-row">
+        <input type="number" min="0" inputmode="numeric" data-detail-idx="${i}" data-detail-field="series" value="${esc(programDraftStepDetails[i]?.series||'')}" placeholder="Séries">
+        <input type="number" min="0" inputmode="numeric" data-detail-idx="${i}" data-detail-field="reps" value="${esc(programDraftStepDetails[i]?.reps||'')}" placeholder="Reps">
+        <input type="number" min="0" inputmode="numeric" data-detail-idx="${i}" data-detail-field="temps" value="${esc(programDraftStepDetails[i]?.temps||'')}" placeholder="Sec.">
+      </div>
+    `).join("")}
+    <div class="btn-row" style="margin:8px 0 0;">
+      <button class="btn btn-ghost" id="addStepBtn" type="button">+ Étape libre</button>
+      <button class="btn btn-ghost" id="pickMachineBtn" type="button">+ Machine</button>
+    </div>
+    ${programMachinePickerOpen ? `
+    <div class="card reveal-in" style="margin-top:10px; box-shadow:none; background:var(--bg-input);">
+      <h2 style="font-size:13px;">Choisis une machine</h2>
+      ${machines.length===0 ? emptyState("🏋️","Aucune machine active") : `
+      <div class="choice-group">
+        ${machines.map(m=>`<div class="choice" data-pick-machine="${m.id}">${m.label}</div>`).join("")}
+      </div>`}
+      <div class="add-machine-row" style="margin-top:12px;">
+        <input type="text" id="newMachineFromProgram" placeholder="Nouvelle machine (ex : Leg press)">
+        <button class="btn btn-ghost" id="addMachineFromProgramBtn" type="button">+ Ajouter</button>
+      </div>
+    </div>` : ""}
+    <div class="btn-row-3070" style="margin-top:14px;">
+      <button class="btn btn-cancel" id="cancelProgramForm">Annuler</button>
+      <button class="btn btn-primary" id="saveProgram">Enregistrer</button>
+    </div>
+  </div>`;
+}
+function bindPrograms(){
+  document.getElementById("toggleProgramForm")?.addEventListener("click", ()=>{
+    programFormOpen = true;
+    programFormJustOpened = true;
+    programEditingId = null;
+    programDraftTitle=""; programDraftSteps=[""]; programDraftStepMachines=[null]; programDraftStepDetails=[{series:"",reps:"",temps:""}]; programMachinePickerOpen=false; programDraftType="recurrent";
+    render();
+  });
+  document.getElementById("importProgramBtn")?.addEventListener("click", ()=>{
+    document.getElementById("importProgramFile").click();
+  });
+  document.getElementById("importProgramFile")?.addEventListener("change", (e)=>{
+    const file = e.target.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = () => importProgramsFromText(reader.result);
+    reader.readAsText(file);
+    e.target.value = "";
+  });
+  document.querySelectorAll("[data-export-program]").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      exportProgram(btn.dataset.exportProgram);
+    });
+  });
+  document.querySelectorAll("#programsViewSwitch .choice").forEach(c=>{
+    c.addEventListener("click", ()=>{
+      programsViewMode = c.dataset.mode;
+      programViewingId = null;
+      render();
+    });
+  });
+  document.querySelectorAll("[data-edit-program]").forEach(btn=>{
+    btn.addEventListener("click", (e)=>{
+      e.stopPropagation();
+      const p = state.programsList.find(x=>x.id===btn.dataset.editProgram);
+      if(!p) return;
+      programEditingId = p.id;
+      programDraftTitle = p.title;
+      programDraftSteps = [...p.steps];
+      programDraftStepMachines = p.steps.map((_,i)=> (p.stepMachines||[])[i] || null);
+      programDraftStepDetails = p.steps.map((_,i)=> (p.stepDetails||[])[i] || {series:"",reps:"",temps:""});
+      programDraftType = progType(p);
+      programMachinePickerOpen = false;
+      programViewingId = null;
+      programFormOpen = true;
+      programFormJustOpened = true;
+      render();
+    });
+  });
+  if(programFormOpen){
+    document.getElementById("cancelProgramForm").addEventListener("click", ()=>{
+      programFormOpen = false;
+      programEditingId = null;
+      render();
+    });
+    document.getElementById("progTitle").addEventListener("input", e=>{ programDraftTitle = e.target.value; });
+    document.querySelectorAll("#progTypeChoice .choice").forEach(c=>{
+      c.addEventListener("click", ()=>{
+        programDraftType = c.dataset.val;
+        render();
+      });
+    });
+    document.querySelectorAll("[data-step-idx]").forEach(inp=>{
+      inp.addEventListener("input", e=>{ programDraftSteps[parseInt(inp.dataset.stepIdx)] = e.target.value; });
+    });
+    document.querySelectorAll("[data-detail-idx]").forEach(inp=>{
+      inp.addEventListener("input", e=>{
+        const idx = parseInt(inp.dataset.detailIdx), field = inp.dataset.detailField;
+        if(!programDraftStepDetails[idx]) programDraftStepDetails[idx] = {series:"",reps:"",temps:""};
+        programDraftStepDetails[idx][field] = e.target.value;
+      });
+    });
+    document.querySelectorAll("[data-remove-idx]").forEach(btn=>{
+      btn.addEventListener("click", ()=>{
+        const idx = parseInt(btn.dataset.removeIdx);
+        programDraftSteps.splice(idx,1);
+        programDraftStepMachines.splice(idx,1);
+        programDraftStepDetails.splice(idx,1);
+        render();
+      });
+    });
+    document.getElementById("addStepBtn").addEventListener("click", ()=>{
+      programDraftSteps.push(""); programDraftStepMachines.push(null); programDraftStepDetails.push({series:"",reps:"",temps:""}); render();
+    });
+    document.getElementById("pickMachineBtn").addEventListener("click", ()=>{
+      programMachinePickerOpen = !programMachinePickerOpen;
+      render();
+    });
+    document.getElementById("addMachineFromProgramBtn")?.addEventListener("click", ()=>{
+      const input = document.getElementById("newMachineFromProgram");
+      const label = input.value.trim();
+      if(!label){ showToast("Donne un nom à la machine", "error"); return; }
+      const id = "custom_" + slugify(label) + "_" + Date.now().toString(36).slice(-4);
+      state.customMachines.push({id, label});
+      save(K.customMachines, state.customMachines);
+      showToast(`"${label}" ajoutée`, "success");
+      render();
+    });
+    document.querySelectorAll("[data-pick-machine]").forEach(el=>{
+      el.addEventListener("click", ()=>{
+        const m = allMachines().find(m=>m.id===el.dataset.pickMachine);
+        if(!m) return;
+        // remplace la dernière étape si elle est vide, sinon ajoute une nouvelle étape
+        const lastIdx = programDraftSteps.length-1;
+        if(programDraftSteps[lastIdx].trim()===""){
+          programDraftSteps[lastIdx] = m.label;
+          programDraftStepMachines[lastIdx] = m.id;
+        } else {
+          programDraftSteps.push(m.label);
+          programDraftStepMachines.push(m.id);
+          programDraftStepDetails.push({series:"",reps:"",temps:""});
+        }
+        programMachinePickerOpen = false;
+        render();
+      });
+    });
+    document.getElementById("saveProgram").addEventListener("click", ()=>{
+      const title = programDraftTitle.trim();
+      const pairs = programDraftSteps
+        .map((s,i)=>({
+          text:s.trim(),
+          machineId: programDraftStepMachines[i]||null,
+          detail: programDraftStepDetails[i] || {series:"",reps:"",temps:""},
+        }))
+        .filter(p=>p.text);
+      if(!title){ showToast("Donne un nom au programme", "error"); return; }
+      if(pairs.length===0){ showToast("Ajoute au moins une étape", "error"); return; }
+      const steps = pairs.map(p=>p.text);
+      const stepMachines = pairs.map(p=>p.machineId);
+      const stepDetails = pairs.map(p=>(p.detail.series||p.detail.reps||p.detail.temps) ? p.detail : null);
+      if(programEditingId){
+        const existing = state.programsList.find(p=>p.id===programEditingId);
+        if(existing){
+          existing.title = title;
+          existing.steps = steps;
+          existing.stepMachines = stepMachines;
+          existing.stepDetails = stepDetails;
+          existing.progType = programDraftType;
+        }
+        showToast("Programme mis à jour", "success");
+      } else {
+        state.programsList.push({ id:uid(), title, steps, stepMachines, stepDetails, progType: programDraftType });
+        showToast("Programme créé 🎉", "success");
+      }
+      save(K.programsList, state.programsList);
+      programFormOpen = false; programEditingId = null;
+      programDraftTitle=""; programDraftSteps=[""]; programDraftStepMachines=[null]; programDraftStepDetails=[{series:"",reps:"",temps:""}]; programMachinePickerOpen=false; programDraftType="recurrent";
+      render();
+    });
+  }
+  document.querySelectorAll("[data-delprog]").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      if(confirm("Supprimer ce programme ? Ses statistiques resteront visibles dans Statistiques.")){
+        const pid = btn.dataset.delprog;
+        const prog = state.programsList.find(p=>p.id===pid);
+        if(prog && state.progress[pid]){
+          state.progress[pid].title = prog.title;
+        }
+        state.programsList = state.programsList.filter(p=>p.id!==pid);
+        save(K.programsList, state.programsList);
+        save(K.progress, state.progress);
+        render();
+      }
+    });
+  });
+  document.querySelectorAll("[data-move-up]").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      const id = btn.dataset.moveUp;
+      const i = state.programsList.findIndex(p=>p.id===id);
+      if(i>0){
+        [state.programsList[i-1], state.programsList[i]] = [state.programsList[i], state.programsList[i-1]];
+        save(K.programsList, state.programsList);
+        render();
+      }
+    });
+  });
+  document.querySelectorAll("[data-move-down]").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      const id = btn.dataset.moveDown;
+      const i = state.programsList.findIndex(p=>p.id===id);
+      if(i>-1 && i<state.programsList.length-1){
+        [state.programsList[i+1], state.programsList[i]] = [state.programsList[i], state.programsList[i+1]];
+        save(K.programsList, state.programsList);
+        render();
+      }
+    });
+  });
+  document.querySelectorAll(".step-check").forEach(el=>{
+    el.addEventListener("click", ()=>{
+      const pid = el.dataset.prog, idx = parseInt(el.dataset.idx);
+      if(!state.progress[pid]) state.progress[pid] = {done:[], sessions:0};
+      const done = state.progress[pid].done;
+      const pos = done.indexOf(idx);
+      if(pos>-1){ done.splice(pos,1); } else { done.push(idx); justToggledStepKey = pid+"-"+idx; }
+      save(K.progress, state.progress);
+      render();
+    });
+  });
+  document.querySelectorAll("[data-finish]").forEach(el=>{
+    el.addEventListener("click", ()=>{
+      const pid = el.dataset.finish;
+      const p = state.programsList.find(x=>x.id===pid);
+      if(!state.progress[pid]) state.progress[pid] = {done:[], sessions:0, history:[]};
+      if(!state.progress[pid].history) state.progress[pid].history = [];
+      state.progress[pid].sessions += 1;
+      state.progress[pid].history.push(todayStr());
+      state.progress[pid].done = [];
+      state.progress[pid].active = false;
+      if(p && progType(p)==="ponctuel") state.progress[pid].completed = true;
+      save(K.progress, state.progress);
+      showCelebration("Programme terminé");
+      render();
+    });
+  });
+  document.querySelectorAll("[data-cancel-active]").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      const pid = btn.dataset.cancelActive;
+      if(state.progress[pid]){
+        state.progress[pid].active = false;
+        state.progress[pid].done = [];
+        save(K.progress, state.progress);
+      }
+      showToast("Programme annulé");
+      render();
+    });
+  });
+  document.querySelectorAll("[data-toggle-type]").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      const p = state.programsList.find(x=>x.id===btn.dataset.toggleType);
+      if(!p) return;
+      const newType = progType(p)==="recurrent" ? "ponctuel" : "recurrent";
+      p.progType = newType;
+      save(K.programsList, state.programsList);
+      programsViewMode = newType;
+      programViewingId = null;
+      showToast(`Passé en ${newType==='recurrent'?'Récurrent':'Ponctuel'}`, "success");
+      render();
+    });
+  });
+  document.querySelectorAll("[data-duplicate-program]").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      const p = state.programsList.find(x=>x.id===btn.dataset.duplicateProgram);
+      if(!p) return;
+      const copy = {
+        ...JSON.parse(JSON.stringify(p)),
+        id: uid(),
+        title: p.title + " (copie)",
+      };
+      const idx = state.programsList.findIndex(x=>x.id===p.id);
+      state.programsList.splice(idx+1, 0, copy);
+      save(K.programsList, state.programsList);
+      programViewingId = null;
+      showToast("Programme dupliqué", "success");
+      render();
+    });
+  });
+  document.querySelectorAll("[data-reset-ponctuel]").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      const pid = btn.dataset.resetPonctuel;
+      if(state.progress[pid]){
+        state.progress[pid].completed = false;
+        state.progress[pid].done = [];
+        save(K.progress, state.progress);
+      }
+      showToast("Programme réinitialisé", "success");
+      render();
+    });
+  });
+  document.getElementById("deleteAllPrograms")?.addEventListener("click", ()=>{
+    if(confirm("Supprimer TOUS les programmes ? Leurs statistiques resteront visibles dans Statistiques. Cette action est irréversible.")){
+      state.programsList.forEach(p=>{
+        if(state.progress[p.id]) state.progress[p.id].title = p.title;
+      });
+      state.programsList = [];
+      save(K.programsList, state.programsList);
+      save(K.progress, state.progress);
+      showToast("Tous les programmes ont été supprimés", "success");
+      render();
+    }
+  });
+  document.querySelectorAll("[data-start-program]").forEach(btn=>{
+    btn.addEventListener("click", (e)=>{
+      e.stopPropagation();
+      startProgram(btn.dataset.startProgram);
+    });
+  });
+  document.querySelectorAll("[data-view-program]").forEach(card=>{
+    card.addEventListener("click", (e)=>{
+      if(e.target.closest("button")) return;
+      programViewingId = card.dataset.viewProgram;
+      render();
+    });
+  });
+  document.querySelectorAll("[data-view-program-btn]").forEach(btn=>{
+    btn.addEventListener("click", (e)=>{
+      e.stopPropagation();
+      programViewingId = btn.dataset.viewProgramBtn;
+      render();
+    });
+  });
+  document.querySelectorAll("[data-close-preview]").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      programViewingId = null;
+      render();
+    });
+  });
+}
+function startProgram(id){
+  if(!canStartProgram(id)){ render(); return; }
+  if(!state.progress[id]) state.progress[id] = {done:[], sessions:0, history:[]};
+  state.progress[id].done = [];
+  state.progress[id].active = true;
+  save(K.progress, state.progress);
+  programViewingId = null;
+  justActivatedKey = id;
+  showToast("Programme démarré 💪", "success");
+  render();
+}
+
+/* ============ IMPORT / EXPORT PROGRAMMES ============ */
+function normalizeImportedProgram(raw){
+  if(!raw || typeof raw !== "object") return null;
+  const title = (raw.title || raw.name || "").toString().trim();
+  if(!title) return null;
+  const rawSteps = Array.isArray(raw.steps) ? raw.steps : null;
+  if(!rawSteps || rawSteps.length===0) return null;
+
+  const steps = [], stepMachines = [], stepDetails = [];
+  rawSteps.forEach(s=>{
+    let text = "", series = "", reps = "", temps = "", machineLabel = "";
+    if(typeof s === "string"){
+      text = s.trim();
+    } else if(s && typeof s === "object"){
+      text = (s.text || s.label || s.name || "").toString().trim();
+      series = s.series!=null ? String(s.series).trim() : "";
+      reps = s.reps!=null ? String(s.reps).trim() : "";
+      temps = s.temps!=null ? String(s.temps).trim() : (s.time!=null ? String(s.time).trim() : "");
+      machineLabel = (s.machine || s.machineName || "").toString().trim();
+    }
+    if(!text) return;
+    let machineId = null;
+    if(machineLabel){
+      let existing = allMachinesRaw().find(m=> m.label.toLowerCase() === machineLabel.toLowerCase());
+      if(!existing){
+        existing = {id: "custom_" + slugify(machineLabel) + "_" + Date.now().toString(36).slice(-4) + Math.random().toString(36).slice(2,4), label: machineLabel};
+        state.customMachines.push(existing);
+      }
+      machineId = existing.id;
+    }
+    steps.push(text);
+    stepMachines.push(machineId);
+    const detail = {series, reps, temps};
+    stepDetails.push((series||reps||temps) ? detail : null);
+  });
+  if(steps.length===0) return null;
+  return {id: uid(), title, steps, stepMachines, stepDetails};
+}
+function importProgramsFromText(text){
+  let data;
+  try{
+    data = JSON.parse(text);
+  }catch(e){
+    showToast("Fichier JSON invalide", "error");
+    return;
+  }
+  const list = Array.isArray(data) ? data : [data];
+  let count = 0;
+  list.forEach(raw=>{
+    const prog = normalizeImportedProgram(raw);
+    if(prog){ state.programsList.push(prog); count++; }
+  });
+  if(count===0){
+    showToast("Aucun programme valide trouvé dans ce fichier", "error");
+    return;
+  }
+  save(K.programsList, state.programsList);
+  save(K.customMachines, state.customMachines);
+  showToast(`${count} programme${count>1?'s':''} importé${count>1?'s':''} 🎉`, "success");
+  render();
+}
+function exportProgram(id){
+  const p = state.programsList.find(x=>x.id===id);
+  if(!p) return;
+  const data = {
+    title: p.title,
+    steps: p.steps.map((s,i)=>{
+      const mId = (p.stepMachines||[])[i];
+      const m = mId ? allMachinesRaw().find(m=>m.id===mId) : null;
+      const detail = (p.stepDetails||[])[i] || {};
+      const obj = {text: s};
+      if(m) obj.machine = m.label;
+      if(detail.series) obj.series = detail.series;
+      if(detail.reps) obj.reps = detail.reps;
+      if(detail.temps) obj.temps = detail.temps;
+      return obj;
+    })
+  };
+  const blob = new Blob([JSON.stringify(data, null, 2)], {type:"application/json"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `programme-${slugify(p.title)}.json`;
+  document.body.appendChild(a); a.click(); a.remove();
+  URL.revokeObjectURL(url);
+  showToast("Programme exporté", "success");
+}
+
+/* ============ SETTINGS ============ */
+function renderSettings(){
+  return `
+    <div class="card">
+      <h2>Gestion des machines par défaut</h2>
+      <div class="mm-list">
+        ${allMachinesRaw().map(m=>{
+          const hidden = state.hiddenMachines.includes(m.id);
+          const isCustom = m.id.startsWith("custom_");
+          return `<div class="machine-manage-row">
+            <span class="mm-name">${m.label}</span>
+            <div class="mm-actions">
+              <button class="mm-toggle ${hidden?'':'on'}" data-toggle-machine="${m.id}">${hidden ? "Masquée" : "Active"}</button>
+              ${isCustom ? `<button class="del-btn" data-delmachine="${m.id}" title="Supprimer définitivement">${ICONS.trash}</button>` : ""}
+            </div>
+          </div>`;
+        }).join("")}
+      </div>
+      <div class="add-machine-row" style="margin-top:10px;">
+        <input type="text" id="newMachineFromSettings" placeholder="Nouvelle machine (ex : Leg press)">
+        <button class="btn btn-ghost" id="addMachineFromSettingsBtn" type="button">+ Ajouter</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Statistiques</h2>
+      <p class="stat-note" style="margin:0 0 10px;">Supprimer les statistiques d'un seul type, sans toucher aux autres.</p>
+      <button class="btn btn-cancel" id="resetStatsGym" style="margin-bottom:8px;">Supprimer les statistiques Salle</button>
+      <button class="btn btn-cancel" id="resetStatsRun" style="margin-bottom:8px;">Supprimer les statistiques Course</button>
+      <button class="btn btn-cancel" id="resetStatsPrograms">Supprimer les statistiques Programmes</button>
+    </div>
+
+    <div class="card">
+      <h2>Données</h2>
+      <div class="btn-row">
+        <button class="btn btn-secondary" id="exportBtn">Exporter</button>
+        <button class="btn btn-secondary" id="importBtn">Importer</button>
+      </div>
+      <input type="file" id="importFile" accept="application/json" style="display:none;">
+      <button class="btn btn-ghost" id="resetBtn">Réinitialiser toutes les données</button>
+    </div>
+
+    <div class="card">
+      <h2>À propos</h2>
+      <div class="settings-row settings-row-link" id="openChangelog"><span class="lbl">Version</span><span class="val">${APP_VERSION} — ${APP_VERSION_NAME} ›</span></div>
+      <div class="settings-row"><span class="lbl">Poids de l'app</span><span class="val" id="appSizeVal">…</span></div>
+      <button class="btn btn-secondary" id="checkUpdateBtn" style="margin-top:10px; gap:8px;"><span class="spin-wrap">${ICONS.refresh}</span>Rechercher une mise à jour</button>
+    </div>
+  `;
+}
+function renderChangelogScreen(){
+  return `
+    <button class="btn btn-secondary" id="backToSettings" style="margin-bottom:14px;">← Retour aux réglages</button>
+    <div class="card">
+      ${CHANGELOG.map((c,i)=>`
+        <details class="changelog-group" ${i===0?'open':''}>
+          <summary>v${c.version}${c.name?' — '+c.name:''}</summary>
+          <div class="changelog-entry"><ul>${c.items.map(i=>`<li>${i}</li>`).join("")}</ul></div>
+        </details>
+      `).join("")}
+    </div>
+  `;
+}
+function bindChangelogScreen(){
+  document.getElementById("backToSettings").addEventListener("click", ()=>{
+    state.screen = "settings";
+    render();
+  });
+}
+function bindSettings(){
+  document.getElementById("openChangelog")?.addEventListener("click", ()=>{
+    state.screen = "changelog";
+    render();
+  });
+  document.getElementById("resetStatsGym")?.addEventListener("click", ()=>{
+    if(confirm("Supprimer toutes les statistiques Salle ? Cette action est irréversible.")){
+      state.gym = [];
+      save(K.gym, state.gym);
+      showToast("Statistiques Salle supprimées", "success");
+      render();
+    }
+  });
+  document.getElementById("resetStatsRun")?.addEventListener("click", ()=>{
+    if(confirm("Supprimer toutes les statistiques Course ? Cette action est irréversible.")){
+      state.runs = [];
+      save(K.runs, state.runs);
+      showToast("Statistiques Course supprimées", "success");
+      render();
+    }
+  });
+  document.getElementById("resetStatsPrograms")?.addEventListener("click", ()=>{
+    if(confirm("Supprimer toutes les statistiques Programmes (sessions, historique) ? Tes programmes resteront, seuls leurs stats seront effacées.")){
+      state.progress = {};
+      save(K.progress, state.progress);
+      showToast("Statistiques Programmes supprimées", "success");
+      render();
+    }
+  });
+  document.querySelectorAll("[data-toggle-machine]").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      const id = btn.dataset.toggleMachine;
+      const pos = state.hiddenMachines.indexOf(id);
+      if(pos>-1) state.hiddenMachines.splice(pos,1); else state.hiddenMachines.push(id);
+      save(K.hiddenMachines, state.hiddenMachines);
+      render();
+    });
+  });
+  document.querySelectorAll("[data-delmachine]").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      if(confirm("Supprimer définitivement cette machine personnalisée ?")){
+        const id = btn.dataset.delmachine;
+        state.customMachines = state.customMachines.filter(m=>m.id!==id);
+        state.hiddenMachines = state.hiddenMachines.filter(h=>h!==id);
+        save(K.customMachines, state.customMachines);
+        save(K.hiddenMachines, state.hiddenMachines);
+        render();
+      }
+    });
+  });
+  document.getElementById("addMachineFromSettingsBtn")?.addEventListener("click", ()=>{
+    const input = document.getElementById("newMachineFromSettings");
+    const label = input.value.trim();
+    if(!label){ showToast("Donne un nom à la machine", "error"); return; }
+    const id = "custom_" + slugify(label) + "_" + Date.now().toString(36).slice(-4);
+    state.customMachines.push({id, label});
+    save(K.customMachines, state.customMachines);
+    showToast(`"${label}" ajoutée`, "success");
+    render();
+  });
+  const sizeEl = document.getElementById("appSizeVal");
+  if(sizeEl){
+    fetch("./index.html", {cache:"no-store"})
+      .then(r=> r.ok ? r.blob() : null)
+      .then(blob=>{
+        if(blob){ sizeEl.textContent = (blob.size/1024).toFixed(0) + " Ko"; }
+        else { sizeEl.textContent = (new Blob([document.documentElement.outerHTML]).size/1024).toFixed(0) + " Ko (estimé)"; }
+      })
+      .catch(()=>{
+        sizeEl.textContent = (new Blob([document.documentElement.outerHTML]).size/1024).toFixed(0) + " Ko (estimé)";
+      });
+  }
+  document.getElementById("exportBtn").addEventListener("click", ()=>{
+    const data = {profile:state.profile, gym:state.gym, runs:state.runs, progress:state.progress, programsList:state.programsList, customMachines:state.customMachines, exportedAt:new Date().toISOString()};
+    const blob = new Blob([JSON.stringify(data,null,2)], {type:"application/json"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url; a.download = `sport-export-${todayStr()}.json`;
+    document.body.appendChild(a); a.click(); a.remove();
+    URL.revokeObjectURL(url);
+    showToast("Export téléchargé", "success");
+  });
+  document.getElementById("importBtn").addEventListener("click", ()=>{
+    document.getElementById("importFile").click();
+  });
+  document.getElementById("importFile").addEventListener("change", (e)=>{
+    const file = e.target.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      try{
+        const data = JSON.parse(reader.result);
+        if(data.profile) { state.profile = data.profile; save(K.profile, state.profile); }
+        if(data.gym) { state.gym = data.gym; save(K.gym, state.gym); }
+        if(data.runs) { state.runs = data.runs; save(K.runs, state.runs); }
+        if(data.progress) { state.progress = data.progress; save(K.progress, state.progress); }
+        if(data.programsList) { state.programsList = data.programsList; save(K.programsList, state.programsList); }
+        if(data.customMachines) { state.customMachines = data.customMachines; save(K.customMachines, state.customMachines); }
+        showToast("Import réussi", "success");
+        render();
+      }catch(err){ showToast("Fichier invalide", "error"); }
+    };
+    reader.readAsText(file);
+  });
+  document.getElementById("resetBtn").addEventListener("click", ()=>{
+    if(confirm("Supprimer toutes les données de l'app ? Cette action est irréversible.")){
+      localStorage.clear();
+      location.reload();
+    }
+  });
+  document.getElementById("checkUpdateBtn").addEventListener("click", ()=>checkForUpdate(true));
+}
+
+/* ============ UPDATE CHECK ============ */
+function checkForUpdate(manual){
+  const btn = document.getElementById("checkUpdateBtn");
+  if(btn) btn.classList.add("spinning");
+  fetch("./index.html?_=" + Date.now(), {cache:"no-store"})
+    .then(r=> r.ok ? r.text() : null)
+    .then(text=>{
+      if(btn) btn.classList.remove("spinning");
+      if(!text){
+        if(manual) showToast("Impossible de vérifier (hors ligne ?)", "error");
+        return;
+      }
+      const match = text.match(/APP_VERSION\s*=\s*"([^"]+)"/);
+      const remote = match ? match[1] : null;
+      if(remote && remote !== APP_VERSION){
+        showToast("Nouvelle version disponible, mise à jour…", "success");
+        setTimeout(()=>{
+          location.href = location.pathname + "?v=" + remote + "&_=" + Date.now();
+        }, 700);
+      } else if(manual){
+        showToast("Tu as déjà la dernière version (" + APP_VERSION + ")");
+      }
+    })
+    .catch(()=>{
+      if(btn) btn.classList.remove("spinning");
+      if(manual) showToast("Impossible de vérifier (hors ligne ?)", "error");
+    });
+}
+
+/* ============ BOOT ============ */
+document.getElementById("celebrateContinue").addEventListener("click", hideCelebration);
+document.body.addEventListener("click", (e)=>{
+  if(e.target.closest("[data-popup-close]")){ closeDetailPopup(); return; }
+  const editGymBtn = e.target.closest("[data-popup-edit-gym]");
+  if(editGymBtn){
+    closeDetailPopup();
+    editingSessionId = editGymBtn.dataset.popupEditGym;
+    state.screen = "gym";
+    render();
+    return;
+  }
+  const editRunBtn = e.target.closest("[data-popup-edit-run]");
+  if(editRunBtn){
+    closeDetailPopup();
+    editingRunId = editRunBtn.dataset.popupEditRun;
+    runFormOpen = true;
+    state.screen = "run";
+    render();
+    return;
+  }
+});
+render();
+checkForUpdate(false);
+
+if ("serviceWorker" in navigator) {
+  // pas de service worker dédié : on garde le fetch manuel ci-dessus pour rester simple et fiable
+}
+</script>
+</body>
+</html>
