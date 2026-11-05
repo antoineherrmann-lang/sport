@@ -574,6 +574,21 @@ details.changelog-group summary{font-weight:800; font-size:13px; cursor:pointer;
 :root[data-theme="dark"] .stats-bubble{
   backdrop-filter:blur(20px) saturate(150%); -webkit-backdrop-filter:blur(20px) saturate(150%);
 }
+.sub-h{font-family:'Space Grotesk',sans-serif; font-size:12px; color:var(--text-dim); text-transform:uppercase; letter-spacing:.3px; font-weight:700; margin:18px 0 8px;}
+.sg-row{
+  --lg-accent:var(--accent-text);
+  display:flex; align-items:center; justify-content:center; gap:8px; pointer-events:auto;
+}
+:root[data-theme="light"] .sg-row{--lg-fill:rgb(255 255 255 / .8); --lg-blur:12px;}
+:root[data-theme="dark"] .sg-row{--lg-fill:rgb(36 36 40 / .72); --lg-blur:14px;}
+.sg-row .lg-nav{--lg-item-w:58px; font-size:9.5px; letter-spacing:0;}
+.sg-row .lg-track__item{padding:0 3px;}
+.sg-ico{display:block; width:100%; height:100%;}
+.sg-ico svg{display:block; width:100%; height:100%;}
+.sg-row .sg-stats{--lg-h:68px; flex-shrink:0;}
+.sg-none .lg-track__select{opacity:0 !important;}
+html.sg-on .tabbar-wrap > nav.tabbar,
+html.sg-on .tabbar-wrap > .stats-bubble{display:none;}
 .tabbar-wrap{
   position:fixed; left:0; right:0; z-index:30;
   bottom:calc(var(--nav-margin) + env(safe-area-inset-bottom));
@@ -727,8 +742,8 @@ nav.tabbar .tab.active svg{transform:translateY(-1px);}
 <script>
 /* ============ CONFIG ============ */
 const APP_NAME = "Sport";
-const APP_VERSION = "2.0.0";
-const APP_VERSION_NAME = "Night Update";
+const APP_VERSION = "2.1.0";
+const APP_VERSION_NAME = "Glass Update";
 
 const MACHINES = [
   {id:"chestPress", label:"Chest press"},
@@ -749,6 +764,13 @@ const RUN_TYPES = [
 ];
 
 const CHANGELOG = [
+  {version:"2.1.0", name:"Glass Update", date:"2026-11-05", items:[
+    "Menu flottant refait avec la bibliothèque Liquid Glass : la sélection devient une lentille de verre que tu peux faire glisser d'un onglet à l'autre, la barre gonfle sous le doigt",
+    "Le bouton Statistiques devient un bouton de verre à part, aligné sur la hauteur de la barre",
+    "Nouveau fichier glass-lib.js à envoyer sur GitHub avec index.html (facultatif : sans lui, l'ancien menu reste en place)",
+    "Réglages > Apparence > Menu flottant : choisis Liquid glass ou Simple, avec un diagnostic de ce que fait ton navigateur",
+    "Fonctionne en clair comme en sombre",
+  ]},
   {version:"2.0.0", name:"Night Update", date:"2026-08-03", items:[
     "Nouveau mode sombre OLED : fond noir pur, cartes à peine relevées, ombres ton sur ton qui gardent le style affiche de l'app",
     "Réglages > Apparence : Auto (suit ton iPhone en direct, y compris le passage jour/nuit), Clair ou Sombre",
@@ -1662,6 +1684,7 @@ function render(){
       setTimeout(()=>{ bubble.classList.remove("bump"); }, 400);
     }
     positionTabPill();
+    syncGlassNav();
     lastRenderedScreen = state.screen;
   }
 }
@@ -1699,6 +1722,88 @@ function positionTabPill(){
   pill.style.width = active.offsetWidth + "px";
 }
 window.addEventListener("resize", positionTabPill);
+
+/* ============ MENU LIQUID GLASS (glass-lib.js, facultatif) ============ */
+const GLASS_KEY = "sport_glass";
+const NAV_ITEMS = [
+  {id:"home", label:"Accueil", icon:ICONS.home},
+  {id:"gym", label:"Salle", icon:ICONS.dumbbell},
+  {id:"run", label:"Course", icon:ICONS.run},
+  {id:"programs", label:"Programmes", icon:ICONS.list},
+];
+let glassState = "idle"; // idle | loading | ready | failed
+function glassPref(){
+  try{ return localStorage.getItem(GLASS_KEY) || "lib"; }catch(e){ return "lib"; }
+}
+function navTo(id){
+  if(state.screen === id) return;
+  if(id === "stats") statsBump = true;
+  state.screen = id;
+  window.scrollTo(0,0);
+  render();
+}
+function glassNavProps(){
+  return {
+    items: NAV_ITEMS,
+    active: NAV_ITEMS.findIndex(it=>it.id===state.screen),
+    statsActive: state.screen === "stats",
+    statsIcon: ICONS.stats,
+    statsLabel: "Statistiques",
+    showLabels: true,
+    intensity: 5,
+    onNavigate: navTo,
+  };
+}
+function mountGlassNav(){
+  const wrap = document.querySelector(".tabbar-wrap");
+  if(!wrap || !window.SportGlass || window.SportGlass.mounted || glassPref() !== "lib") return;
+  const host = document.createElement("div");
+  host.id = "glassNavHost";
+  wrap.appendChild(host);
+  window.SportGlass.mount(host, glassNavProps());
+  document.documentElement.classList.add("sg-on");
+}
+function unmountGlassNav(){
+  if(window.SportGlass && window.SportGlass.mounted) window.SportGlass.unmount();
+  const host = document.getElementById("glassNavHost");
+  if(host) host.remove();
+  document.documentElement.classList.remove("sg-on");
+  positionTabPill();
+}
+function syncGlassNav(){
+  if(window.SportGlass && window.SportGlass.mounted) window.SportGlass.update(glassNavProps());
+}
+function glassStatusText(){
+  if(glassPref() !== "lib") return "Menu simple : verre léger intégré à l'app.";
+  if(glassState === "loading") return "Chargement de glass-lib.js…";
+  if(glassState === "failed") return "glass-lib.js est introuvable : le menu simple est utilisé. Envoie ce fichier sur GitHub avec index.html.";
+  if(glassState === "ready" && window.SportGlass){
+    return window.SportGlass.info().refract
+      ? "Liquid glass actif : le fond est déformé par le verre (Chrome)."
+      : "Liquid glass actif : verre translucide et lentille animée (Safari).";
+  }
+  return "Liquid glass : verre animé et lentille qui suit ton doigt.";
+}
+function refreshGlassNote(){
+  const note = document.getElementById("glassNote");
+  if(note) note.textContent = glassStatusText();
+}
+function loadGlassLib(){
+  if(glassPref() !== "lib") return;
+  if(window.SportGlass){ glassState = "ready"; mountGlassNav(); refreshGlassNote(); return; }
+  if(glassState === "loading") return;
+  glassState = "loading";
+  const s = document.createElement("script");
+  s.src = "glass-lib.js?v=" + APP_VERSION;
+  s.async = true;
+  s.onload = ()=>{
+    if(window.SportGlass){ glassState = "ready"; mountGlassNav(); }
+    else glassState = "failed";
+    refreshGlassNote();
+  };
+  s.onerror = ()=>{ glassState = "failed"; s.remove(); refreshGlassNote(); };
+  document.head.appendChild(s);
+}
 
 function renderScreen(){
   if(state.screen==="home") return renderHome();
@@ -3477,6 +3582,11 @@ function renderSettings(){
         ${[["auto","Auto"],["light","Clair"],["dark","Sombre"]].map(([v,l])=>`<div class="choice ${themePref()===v?'active':''}" data-theme-pref="${v}">${l}</div>`).join("")}
       </div>
       <p class="stat-note" id="themeNote" style="margin:10px 0 0;">${themePref()==="auto" ? "Suit le réglage de ton iPhone (actuellement " + (resolveTheme()==="dark" ? "sombre" : "clair") + ")." : "Thème fixé manuellement."}</p>
+      <h3 class="sub-h">Menu flottant</h3>
+      <div class="choice-group" id="glassChoice">
+        ${[["lib","Liquid glass"],["off","Simple"]].map(([v,l])=>`<div class="choice ${glassPref()===v?'active':''}" data-glass-pref="${v}">${l}</div>`).join("")}
+      </div>
+      <p class="stat-note" id="glassNote" style="margin:10px 0 0;">${glassStatusText()}</p>
     </div>
 
     <div class="card">
@@ -3551,6 +3661,20 @@ function bindChangelogScreen(){
   });
 }
 function bindSettings(){
+  document.querySelectorAll("[data-glass-pref]").forEach(el=>{
+    el.addEventListener("click", ()=>{
+      const v = el.dataset.glassPref;
+      try{ localStorage.setItem(GLASS_KEY, v); }catch(e){}
+      document.querySelectorAll("[data-glass-pref]").forEach(x=>x.classList.toggle("active", x.dataset.glassPref===v));
+      if(v === "lib"){
+        if(glassState === "failed") glassState = "idle";
+        loadGlassLib();
+      } else {
+        unmountGlassNav();
+      }
+      refreshGlassNote();
+    });
+  });
   document.querySelectorAll("[data-theme-pref]").forEach(el=>{
     el.addEventListener("click", ()=>{
       const v = el.dataset.themePref;
@@ -3783,6 +3907,7 @@ document.body.addEventListener("click", (e)=>{
   }
 });
 render();
+loadGlassLib();
 checkForUpdate(false);
 
 if ("serviceWorker" in navigator) {
