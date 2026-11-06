@@ -37,6 +37,8 @@
   --red:#ff2d3e;
   --yellow:#ffd23f;
   --on-accent:#ffffff;
+  --swim:#8b5cf6;
+  --safe-b:env(safe-area-inset-bottom, 0px);
 }
 :root[data-theme="light"]{
   color-scheme:light;
@@ -58,6 +60,7 @@
   --accent-dim: rgba(0,134,255,.1);
   --accent-dim-2: rgba(0,134,255,.22);
   --accent-2-dim: rgba(255,45,62,.14);
+  --swim-dim: rgba(139,92,246,.16);
   --yellow-dim: rgba(255,210,63,.3);
   --shadow-hard: 4px 4px 0 var(--edge-shadow);
   --shadow-hard-red: 4px 4px 0 var(--red);
@@ -88,6 +91,7 @@
   --accent-dim: #001529;
   --accent-dim-2: rgba(0,134,255,.3);
   --accent-2-dim: rgba(255,45,62,.2);
+  --swim-dim: rgba(139,92,246,.24);
   --yellow-dim: rgba(255,210,63,.22);
   --shadow-hard: 4px 4px 0 var(--edge-shadow);
   --shadow-hard-red: 4px 4px 0 var(--red);
@@ -219,6 +223,7 @@ main{padding:18px;}
 .activity-dot svg{width:16px; height:16px;}
 .activity-dot.gym{background:var(--accent-dim); color:var(--accent-text);}
 .activity-dot.run{background:var(--accent-2-dim); color:var(--accent-2-text);}
+.activity-dot.swim{background:var(--swim-dim); color:var(--swim);}
 .activity-main{flex:1; min-width:0;}
 .activity-title{font-weight:700; font-size:14px;}
 .activity-sub{font-size:12px; color:var(--text-dim);}
@@ -577,11 +582,12 @@ details.changelog-group summary{font-weight:800; font-size:13px; cursor:pointer;
 .sub-h{font-family:'Space Grotesk',sans-serif; font-size:12px; color:var(--text-dim); text-transform:uppercase; letter-spacing:.3px; font-weight:700; margin:18px 0 8px;}
 .sg-row{
   --lg-accent:var(--accent-text);
-  display:flex; align-items:center; justify-content:center; gap:8px; pointer-events:auto;
+  display:flex; align-items:center; justify-content:center; gap:8px; pointer-events:auto; width:100%;
 }
+#glassNavHost{flex:1 1 auto; min-width:0; max-width:440px; margin:0 10px; pointer-events:auto;}
 :root[data-theme="light"] .sg-row{--lg-fill:rgb(255 255 255 / .8); --lg-blur:12px;}
 :root[data-theme="dark"] .sg-row{--lg-fill:rgb(36 36 40 / .72); --lg-blur:14px;}
-.sg-row .lg-nav{--lg-item-w:56px; --lg-item-h:46px;}
+.sg-row .lg-nav{--lg-item-w:44px; --lg-item-h:46px; display:grid; flex:1 1 auto; min-width:0;}
 .sg-row .lg-track__item{padding:0 3px;}
 .sg-ico{display:block; width:100%; height:100%;}
 .sg-ico svg{display:block; width:100%; height:100%;}
@@ -591,12 +597,12 @@ html.sg-on .tabbar-wrap > nav.tabbar,
 html.sg-on .tabbar-wrap > .stats-bubble{display:none;}
 .tabbar-wrap{
   position:fixed; left:0; right:0; z-index:30;
-  bottom:calc(var(--nav-margin) + env(safe-area-inset-bottom));
+  bottom:max(var(--nav-margin), calc(var(--nav-margin) + var(--safe-b) - 14px));
   display:flex; justify-content:center; align-items:center; gap:10px; padding:0 var(--nav-margin);
   pointer-events:none;
 }
 nav.tabbar{
-  position:relative; height:var(--nav-h); flex:0 1 293px; max-width:293px; min-width:0;
+  position:relative; height:var(--nav-h); flex:0 1 330px; max-width:330px; min-width:0;
   display:flex; align-items:stretch; padding:5px;
   border-radius:999px; overflow:hidden;
   background:var(--glass-bg);
@@ -644,6 +650,10 @@ nav.tabbar .tab{
   transition:color .25s ease, opacity .25s ease, transform .15s ease; padding:0 2px;
 }
 nav.tabbar .tab:active{transform:scale(.93);}
+@media (max-width:400px){
+  nav.tabbar{padding:4px;}
+  nav.tabbar .tab{font-size:9px; padding:0; letter-spacing:-.1px;}
+}
 nav.tabbar .tab span{white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:100%;}
 nav.tabbar .tab svg{width:20px; height:20px; transition:transform .25s ease;}
 nav.tabbar .tab.active{color:var(--on-accent); opacity:1;}
@@ -661,7 +671,7 @@ nav.tabbar .tab.active svg{transform:translateY(-1px);}
 .empty-state .big{font-size:34px; margin-bottom:8px;}
 
 /* Boutons d'action rapide sur l'accueil */
-.fab-row{display:grid; grid-template-columns:repeat(4,1fr); gap:6px; margin:6px 0 20px;}
+.fab-row{display:grid; grid-template-columns:repeat(5,1fr); gap:6px; margin:6px 0 20px;}
 .fab-item{display:flex; flex-direction:column; align-items:center; gap:6px; background:none; border:none; cursor:pointer; color:var(--text); min-width:0;}
 .fab{
   width:52px; height:52px; border-radius:50%;
@@ -699,12 +709,13 @@ nav.tabbar .tab.active svg{transform:translateY(-1px);}
 .heatmap-legend{display:flex; align-items:center; gap:4px; margin-top:10px; font-size:10.5px; color:var(--text-dim); font-family:'Space Grotesk',sans-serif; flex-wrap:wrap;}
 .heatmap-legend .heatmap-cell{width:10px; height:10px; flex-shrink:0;}
 .week-chart{display:flex; gap:8px; overflow-x:auto; padding-bottom:4px;}
-.week-col{display:flex; flex-direction:column; align-items:center; gap:6px; flex-shrink:0; width:38px;}
+.week-col{display:flex; flex-direction:column; align-items:center; gap:6px; flex-shrink:0; width:44px;}
 .week-bars{display:flex; align-items:flex-end; gap:2px; height:58px;}
 .week-bar{width:6px; border-radius:2px 2px 1px 1px;}
 .week-bar.gym{background:var(--accent);}
 .week-bar.run{background:var(--accent-2);}
 .week-bar.velo{background:var(--green);}
+.week-bar.swim{background:var(--swim);}
 .week-bar.program{background:var(--yellow);}
 .week-col span{font-size:9px; color:var(--text-dim); font-family:'IBM Plex Mono',monospace;}
 .legend{display:flex; gap:16px; margin-top:12px; flex-wrap:wrap;}
@@ -713,6 +724,7 @@ nav.tabbar .tab.active svg{transform:translateY(-1px);}
 .legend .dot.gym{background:var(--accent);}
 .legend .dot.run{background:var(--accent-2);}
 .legend .dot.velo{background:var(--green);}
+.legend .dot.swim{background:var(--swim);}
 .legend .dot.program{background:var(--yellow);}
 .chart-click-area{cursor:pointer;}
 .chart-hint{font-size:10.5px; color:var(--text-dim); text-align:center; margin-top:2px; opacity:.7;}
@@ -722,6 +734,7 @@ nav.tabbar .tab.active svg{transform:translateY(-1px);}
 @keyframes sparkDraw{to{stroke-dashoffset:0;}}
 .sparkline.spark-accent .spark-path{stroke:var(--accent);}
 .sparkline.spark-accent2 .spark-path{stroke:var(--accent-2);}
+.sparkline.spark-swim .spark-path{stroke:var(--swim);}
 
 ::-webkit-scrollbar{display:none;}
 </style>
@@ -742,8 +755,8 @@ nav.tabbar .tab.active svg{transform:translateY(-1px);}
 <script>
 /* ============ CONFIG ============ */
 const APP_NAME = "Sport";
-const APP_VERSION = "2.1.1";
-const APP_VERSION_NAME = "Glass Update";
+const APP_VERSION = "2.3.2";
+const APP_VERSION_NAME = "Swim Update";
 
 const MACHINES = [
   {id:"chestPress", label:"Chest press"},
@@ -763,7 +776,41 @@ const RUN_TYPES = [
   {id:"course", label:"Course/Compét."},
 ];
 
+const SWIM_STROKES = [
+  {id:"crawl", label:"Crawl"},
+  {id:"brasse", label:"Brasse"},
+  {id:"dos", label:"Dos"},
+  {id:"papillon", label:"Papillon"},
+  {id:"mixte", label:"4 nages"},
+  {id:"autre", label:"Autre"},
+];
+const SWIM_POOLS = [
+  {id:"25", label:"Bassin 25 m"},
+  {id:"50", label:"Bassin 50 m"},
+  {id:"libre", label:"Eau libre"},
+];
+
 const CHANGELOG = [
+  {version:"2.3.2", date:"2026-11-06", items:[
+    "Cardio : nouvelle icône de flamme dans le menu (Liquid glass et menu simple)",
+  ]},
+  {version:"2.3.1", date:"2026-11-06", items:[
+    "Réglages : les statistiques Vélo se suppriment séparément de celles de Course à pied (chacune garde l'autre)",
+    "Natation : nouveau choix « Autre » pour la nage, et la nage comme le bassin deviennent facultatifs (rien n'est choisi par défaut, un second appui désélectionne)",
+  ]},
+  {version:"2.3.0", date:"2026-11-05", items:[
+    "La natation rejoint l'ancien écran Course comme troisième sous-onglet, à côté de À pied et À vélo",
+    "La section s'appelle maintenant Cardio (course, vélo, natation) : le menu retrouve 4 onglets, avec une nouvelle icône de pouls",
+    "Réglages : « Supprimer les statistiques Course et vélo » précise ce qui est effacé",
+  ]},
+  {version:"2.2.0", name:"Swim Update", date:"2026-11-05", items:[
+    "Nouvelle partie Natation : un onglet dans le menu avec distance en mètres, durée, allure au 100 m, nage (crawl, brasse, dos, papillon, 4 nages), bassin (25 m, 50 m, eau libre), FC et calories",
+    "Natation partout : records, dernières séances avec aperçu et modification, raccourci sur l'accueil, courbe d'allure dans Statistiques, calendrier (violet), volume hebdomadaire et vue d'ensemble",
+    "Réglages : suppression des statistiques Natation, et la natation est incluse dans l'export, l'import et la série de semaines",
+    "Menu flottant Liquid glass plus large et placé plus bas, près du bord de l'écran",
+    "Correctif : le record d'allure de l'accueil ne compte plus les sorties vélo",
+    "Correctif : l'export garde maintenant aussi l'ordre, le masquage et la suppression des machines",
+  ]},
   {version:"2.1.1", date:"2026-11-05", items:[
     "Menu flottant Liquid glass plus fin (54 px au lieu de 68 px) et en icônes seules, sans texte",
     "Le bouton Statistiques suit la nouvelle hauteur de la barre",
@@ -1131,6 +1178,7 @@ const K = {
   profile: "sport_profile",
   gym: "sport_gym_sessions",
   runs: "sport_runs",
+  swims: "sport_swims",
   progress: "sport_programs_progress",
   programsList: "sport_programs_list",
   customMachines: "sport_custom_machines",
@@ -1152,6 +1200,7 @@ let state = {
   profile: load(K.profile, null),
   gym: load(K.gym, []),
   runs: load(K.runs, []),
+  swims: load(K.swims, []),
   progress: load(K.progress, {}),
   programsList: load(K.programsList, []),
   customMachines: load(K.customMachines, []),
@@ -1242,6 +1291,8 @@ const ICONS = {
   trash: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>',
   edit: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.986L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.13a.5.5 0 0 0 .632.632l4.13-1.321a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/></svg>',
   bike: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18.5" cy="17.5" r="3.5"/><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="15" cy="5" r="1"/><path d="M12 17.5V14l-3-3 4-3 2 3h2"/></svg>',
+  cardio: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>',
+  swim: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/></svg>',
   chevronUp: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>',
   chevronDown: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>',
 };
@@ -1278,6 +1329,7 @@ function computeActivityHeatmap(weeksCount){
   }
   state.gym.forEach(s=>{ if((s.status||"done")==="done") addType(s.date, "gym"); });
   state.runs.forEach(r=>{ addType(r.date, r.sport==="velo" ? "velo" : "run"); });
+  state.swims.forEach(s=>{ addType(s.date, "swim"); });
   Object.values(state.progress).forEach(p=>{ (p.history||[]).forEach(d=> addType(d, "program")); });
 
   const monday = startOfWeek();
@@ -1300,7 +1352,7 @@ function computeActivityHeatmap(weeksCount){
   }
   return weeks;
 }
-const HEATMAP_COLORS = {gym:"var(--blue)", run:"var(--red)", velo:"var(--green)", program:"var(--yellow)"};
+const HEATMAP_COLORS = {gym:"var(--blue)", run:"var(--red)", velo:"var(--green)", swim:"var(--swim)", program:"var(--yellow)"};
 function heatmapCellBg(types){
   if(!types || types.length===0) return "";
   if(types.length===1) return `background:${HEATMAP_COLORS[types[0]]};`;
@@ -1390,7 +1442,8 @@ function computeStreakWeeks(){
     const weekEnd = new Date(cursor);
     weekEnd.setDate(weekEnd.getDate()+7);
     const hasGym = state.gym.some(s=>(s.status||"done")==="done" && new Date(s.date+"T00:00:00")>=weekStart && new Date(s.date+"T00:00:00")<weekEnd);
-    const hasRun = state.runs.some(r=> new Date(r.date+"T00:00:00")>=weekStart && new Date(r.date+"T00:00:00")<weekEnd);
+    const hasRun = state.runs.some(r=> new Date(r.date+"T00:00:00")>=weekStart && new Date(r.date+"T00:00:00")<weekEnd)
+      || state.swims.some(s=> new Date(s.date+"T00:00:00")>=weekStart && new Date(s.date+"T00:00:00")<weekEnd);
     if(hasGym || hasRun){
       streak++;
       cursor.setDate(cursor.getDate()-7);
@@ -1526,6 +1579,29 @@ function speedStr(kmh){
   if(kmh==null) return "—";
   return kmh.toFixed(1) + " km/h";
 }
+function pace100Str(min, withUnit=true){
+  if(min==null || !isFinite(min)) return "—";
+  let m = Math.floor(min), s = Math.round((min-m)*60);
+  if(s===60){ m++; s=0; }
+  return `${m}'${s.toString().padStart(2,"0")}"` + (withUnit ? "/100 m" : "");
+}
+function fmtMeters(m){ return Math.round(m).toLocaleString("fr-FR") + " m"; }
+function fmtSwimTotal(m){ return m>=10000 ? (m/1000).toFixed(1).replace(".",",") + " km" : fmtMeters(m); }
+function swimPace(s){
+  const d = parseFloat(s.distance), t = parseFloat(s.duree);
+  return (d>0 && t>0) ? t*100/d : null;
+}
+function computeSwimStats(list){
+  let bestPace = Infinity, longest = 0, total = 0;
+  list.forEach(s=>{
+    const d = parseFloat(s.distance)||0;
+    total += d;
+    if(d>longest) longest = d;
+    const p = swimPace(s);
+    if(p!==null && p<bestPace) bestPace = p;
+  });
+  return {bestPace: bestPace===Infinity?null:bestPace, longest, total};
+}
 const MONTH_NAMES = ["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"];
 function monthSummary(){
   const now = new Date();
@@ -1539,6 +1615,10 @@ function monthSummary(){
     const d = new Date(r.date+"T00:00:00");
     return d.getFullYear()===y && d.getMonth()===m;
   }).reduce((a,r)=>a+(parseFloat(r.distance)||0),0);
+  const swimMonth = state.swims.filter(s=>{
+    const d = new Date(s.date+"T00:00:00");
+    return d.getFullYear()===y && d.getMonth()===m;
+  }).reduce((a,s)=>a+(parseFloat(s.distance)||0),0);
   let progCount = 0;
   Object.values(state.progress).forEach(prog=>{
     (prog.history||[]).forEach(d=>{
@@ -1546,7 +1626,7 @@ function monthSummary(){
       if(dt.getFullYear()===y && dt.getMonth()===m) progCount++;
     });
   });
-  return {gymCount, kmMonth, progCount, label: MONTH_NAMES[m]};
+  return {gymCount, kmMonth, swimMonth, progCount, label: MONTH_NAMES[m]};
 }
 
 /* ============ RENDER ROOT ============ */
@@ -1568,7 +1648,7 @@ function ensureShell(){
         <div class="tab-pill" id="tabPill"></div>
         ${tab('home', ICONS.home, 'Accueil')}
         ${tab('gym', ICONS.dumbbell, 'Salle')}
-        ${tab('run', ICONS.run, 'Course')}
+        ${tab('run', ICONS.cardio, 'Cardio')}
         ${tab('programs', ICONS.list, 'Programmes')}
       </nav>
       <button class="stats-bubble" data-screen="stats" title="Statistiques">${ICONS.stats}</button>
@@ -1701,7 +1781,7 @@ function renderTitleLetters(text){
   }).join("");
 }
 function screenTitle(){
-  return {gym:"Salle", run:"Course", stats:"Statistiques", programs:"Programmes", settings:"Réglages", changelog:"Changelog"}[state.screen] || "SPORT";
+  return {gym:"Salle", run:"Cardio", stats:"Statistiques", programs:"Programmes", settings:"Réglages", changelog:"Changelog"}[state.screen] || "SPORT";
 }
 function staggerEntrance(){
   const kids = document.querySelectorAll("#mainContent > *");
@@ -1732,7 +1812,7 @@ const GLASS_KEY = "sport_glass";
 const NAV_ITEMS = [
   {id:"home", label:"Accueil", icon:ICONS.home},
   {id:"gym", label:"Salle", icon:ICONS.dumbbell},
-  {id:"run", label:"Course", icon:ICONS.run},
+  {id:"run", label:"Cardio", icon:ICONS.cardio},
   {id:"programs", label:"Programmes", icon:ICONS.list},
 ];
 let glassState = "idle"; // idle | loading | ready | failed
@@ -1833,11 +1913,14 @@ function bindScreen(){
 function renderHome(){
   const ws = monthSummary();
   const rs = runStats();
+  const rsPied = computeRunStats(filterRunsBySport("pied"));
+  const ss = computeSwimStats(state.swims);
   const draft = getDraftSession();
   const activeProgram = getActiveProgram();
   const items = [
     ...state.gym.map(s=>({type:"gym", date:s.date, data:s})),
     ...state.runs.map(r=>({type:"run", date:r.date, data:r})),
+    ...state.swims.map(s=>({type:"swim", date:s.date, data:s})),
   ].sort((a,b)=> b.date.localeCompare(a.date)).slice(0,5);
 
   return `
@@ -1876,6 +1959,7 @@ function renderHome(){
       <div class="row-stats">
         <div class="stat"><b>${ws.gymCount}</b><span>séances salle</span></div>
         <div class="stat"><b>${ws.kmMonth.toFixed(1)}</b><span>km course</span></div>
+        <div class="stat"><b>${fmtSwimTotal(ws.swimMonth)}</b><span>natation</span></div>
         <div class="stat"><b>${ws.progCount}</b><span>programme${ws.progCount!==1?'s':''}</span></div>
       </div>
     </div>
@@ -1884,6 +1968,7 @@ function renderHome(){
       <button class="fab-item" id="quickGym"><div class="fab">${ICONS.dumbbell}</div><span>Nouvelle séance salle</span></button>
       <button class="fab-item" id="quickRun"><div class="fab">${ICONS.run}</div><span>Nouvelle course à pied</span></button>
       <button class="fab-item" id="quickVelo"><div class="fab">${ICONS.bike}</div><span>Nouvelle séance vélo</span></button>
+      <button class="fab-item" id="quickSwim"><div class="fab">${ICONS.swim}</div><span>Nouvelle séance natation</span></button>
       <button class="fab-item" id="quickProgram"><div class="fab">${ICONS.list}</div><span>Lancer un programme</span></button>
     </div>
 
@@ -1900,9 +1985,18 @@ function renderHome(){
     <div class="card">
       <h2>Course — records</h2>
       <div class="row-stats">
-        <div class="stat"><b>${paceStr(rs.bestPace)}</b><span>meilleure allure</span></div>
+        <div class="stat"><b>${paceStr(rsPied.bestPace)}</b><span>meilleure allure</span></div>
         <div class="stat"><b>${rs.longest.toFixed(1)} km</b><span>plus longue sortie</span></div>
         <div class="stat"><b>${rs.totalKm.toFixed(1)} km</b><span>cumul total</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Natation — records</h2>
+      <div class="row-stats">
+        <div class="stat"><b>${pace100Str(ss.bestPace,false)}</b><span>meilleure allure /100 m</span></div>
+        <div class="stat"><b>${fmtMeters(ss.longest)}</b><span>plus longue séance</span></div>
+        <div class="stat"><b>${fmtSwimTotal(ss.total)}</b><span>cumul total</span></div>
       </div>
     </div>
 
@@ -1913,6 +2007,8 @@ function renderHome(){
           const nb = Object.values(it.data.exercises).filter(e=>e.poids).length;
           const isDraft = (it.data.status||"done")==="draft";
           return activityRow("gym",ICONS.dumbbell, `Séance salle${isDraft?' · brouillon':''}`, `${fmtDate(it.date)} · ${nb} machine${nb>1?'s':''}`);
+        }else if(it.type==="swim"){
+          return activityRow("swim",ICONS.swim, `Natation — ${fmtMeters(parseFloat(it.data.distance))}`, `${fmtDate(it.date)} · ${it.data.duree} min`);
         }else{
           return activityRow("run",ICONS.run, `Course — ${it.data.distance} km`, `${fmtDate(it.date)} · ${it.data.duree} min`);
         }
@@ -1995,6 +2091,14 @@ function bindHome(){
     state.screen="run";
     runViewMode = "velo";
     runFormOpen = true;
+    render();
+  });
+  document.getElementById("quickSwim").addEventListener("click", ()=>{
+    state.screen="run";
+    runViewMode = "swim";
+    runFormOpen = false;
+    swimFormOpen = true;
+    editingSwimId = null;
     render();
   });
   document.getElementById("quickProgram").addEventListener("click", ()=>{
@@ -2354,6 +2458,7 @@ function renderRunDetailPopup(r){
 function renderDayDetailPopup(dateStr){
   const gymSessions = state.gym.filter(s=>s.date===dateStr && (s.status||"done")==="done");
   const runs = state.runs.filter(r=>r.date===dateStr);
+  const swims = state.swims.filter(s=>s.date===dateStr);
   const programTitles = [];
   Object.entries(state.progress).forEach(([id,prog])=>{
     (prog.history||[]).forEach(d=>{
@@ -2373,6 +2478,9 @@ function renderDayDetailPopup(dateStr){
     const isVelo = r.sport==="velo";
     rows += `<div class="settings-row"><span class="lbl">${isVelo?'🚴 Sortie vélo':'🏃 Course'}</span><span class="val">${r.distance} km · ${r.duree} min</span></div>`;
   });
+  swims.forEach(s=>{
+    rows += `<div class="settings-row"><span class="lbl">🏊 Natation</span><span class="val">${fmtMeters(parseFloat(s.distance))} · ${s.duree} min</span></div>`;
+  });
   programTitles.forEach(title=>{
     rows += `<div class="settings-row"><span class="lbl">✅ Programme</span><span class="val">${title}</span></div>`;
   });
@@ -2390,16 +2498,21 @@ function renderDayDetailPopup(dateStr){
 let runFormOpen = false;
 let runViewMode = "pied";
 let editingRunId = null;
+function runSwitchHtml(){
+  return `<div class="choice-group" id="runViewSwitch" style="margin-bottom:14px;">
+      <div class="choice ${runViewMode==="pied"?'active':''}" data-mode="pied">🏃 À pied</div>
+      <div class="choice ${runViewMode==="velo"?'active':''}" data-mode="velo">🚴 À vélo</div>
+      <div class="choice ${runViewMode==="swim"?'active':''}" data-mode="swim">🏊 Natation</div>
+    </div>`;
+}
 function renderRun(){
+  if(runViewMode === "swim") return runSwitchHtml() + renderSwim();
   const list = filterRunsBySport(runViewMode);
   const sorted = [...list].sort((a,b)=>b.date.localeCompare(a.date));
   const rs = computeRunStats(list);
   const isVelo = runViewMode === "velo";
   return `
-    <div class="choice-group" id="runViewSwitch" style="margin-bottom:14px;">
-      <div class="choice ${!isVelo?'active':''}" data-mode="pied">🏃 À pied</div>
-      <div class="choice ${isVelo?'active':''}" data-mode="velo">🚴 À vélo</div>
-    </div>
+    ${runSwitchHtml()}
     ${!runFormOpen ? `<button class="btn btn-primary" id="toggleRunForm" style="margin-bottom:14px;">${isVelo?"+ Nouvelle sortie vélo":"+ Nouvelle course"}</button>` : ""}
     ${runFormOpen ? renderRunForm() : ""}
     <div class="card">
@@ -2460,9 +2573,12 @@ function bindRun(){
       runViewMode = c.dataset.mode;
       runFormOpen = false;
       editingRunId = null;
+      swimFormOpen = false;
+      editingSwimId = null;
       render();
     });
   });
+  if(runViewMode === "swim"){ bindSwim(); return; }
   document.getElementById("toggleRunForm")?.addEventListener("click", ()=>{
     runFormOpen = true;
     editingRunId = null;
@@ -2544,6 +2660,162 @@ function bindRun(){
   });
 }
 
+/* ============ SWIM ============ */
+let swimFormOpen = false;
+let editingSwimId = null;
+function swimDetailLine(s){
+  const p = swimPace(s);
+  const extra = [];
+  const stroke = SWIM_STROKES.find(t=>t.id===s.nage); if(stroke) extra.push(stroke.label);
+  const pool = SWIM_POOLS.find(t=>t.id===s.bassin); if(pool) extra.push(pool.label);
+  if(s.fc) extra.push(`${s.fc} bpm`);
+  if(s.calories) extra.push(`${s.calories} kcal`);
+  return `${fmtMeters(parseFloat(s.distance))} · ${s.duree} min · ${pace100Str(p)}${extra.length? " · "+extra.join(" · "):""}`;
+}
+function renderSwimDetailPopup(s){
+  const rows = [
+    ["Distance", fmtMeters(parseFloat(s.distance))],
+    ["Durée", `${s.duree} min`],
+    ["Allure", pace100Str(swimPace(s))],
+  ];
+  const stroke = SWIM_STROKES.find(t=>t.id===s.nage); if(stroke) rows.push(["Nage", stroke.label]);
+  const pool = SWIM_POOLS.find(t=>t.id===s.bassin); if(pool) rows.push(["Bassin", pool.label]);
+  if(s.fc) rows.push(["FC moyenne", `${s.fc} bpm`]);
+  if(s.calories) rows.push(["Calories", `${s.calories} kcal`]);
+  return `
+    <h2>${fmtDate(s.date)}</h2>
+    ${rows.map(([lbl,val])=>`<div class="settings-row"><span class="lbl">${lbl}</span><span class="val">${val}</span></div>`).join("")}
+    <div class="popup-close-row">
+      <button class="btn btn-secondary" data-popup-close="1">Fermer</button>
+      <button class="btn btn-primary" data-popup-edit-swim="${s.id}">Modifier</button>
+    </div>
+  `;
+}
+function renderSwim(){
+  const sorted = [...state.swims].sort((a,b)=>b.date.localeCompare(a.date));
+  const ss = computeSwimStats(state.swims);
+  return `
+    ${!swimFormOpen ? `<button class="btn btn-primary" id="toggleSwimForm" style="margin-bottom:14px;">+ Nouvelle séance de natation</button>` : ""}
+    ${swimFormOpen ? renderSwimForm() : ""}
+    <div class="card">
+      <h2>Records</h2>
+      <div class="row-stats">
+        <div class="stat"><b>${pace100Str(ss.bestPace,false)}</b><span>meilleure allure /100 m</span></div>
+        <div class="stat"><b>${fmtMeters(ss.longest)}</b><span>plus longue séance</span></div>
+        <div class="stat"><b>${fmtSwimTotal(ss.total)}</b><span>cumul total</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <h2>Dernières séances de natation</h2>
+      ${sorted.length===0 ? emptyState("🏊","Aucune séance de natation enregistrée") : sorted.map(s=>`
+        <div class="history-item" data-editswim="${s.id}">
+          <div class="history-main"><div class="history-date">${fmtDate(s.date)}</div><div class="history-detail">${swimDetailLine(s)}</div></div>
+          <div class="history-actions"><button class="del-btn" data-id="${s.id}" title="Supprimer">${ICONS.trash}</button></div>
+        </div>`).join("")}
+    </div>
+  `;
+}
+function renderSwimForm(){
+  const e = editingSwimId ? state.swims.find(s=>s.id===editingSwimId) : null;
+  const strokeSel = e ? (e.nage||"") : "";
+  const poolSel = e ? (e.bassin||"") : "";
+  return `
+  <div class="card reveal-in${e?' card-editing':''}">
+    <h2>${e ? "Modifier" : "Nouvelle séance de natation"}</h2>
+    <div class="field"><label class="field-label">Date</label><input type="date" id="swimDate" value="${e?e.date:todayStr()}"></div>
+    <div class="field"><label class="field-label">Distance (mètres)</label><input type="number" step="1" min="0" inputmode="numeric" id="swimDist" value="${e?e.distance:''}" placeholder="Ex : 1500"></div>
+    <div class="field"><label class="field-label">Durée (minutes)</label><input type="number" step="0.1" min="0" inputmode="decimal" id="swimDur" value="${e?e.duree:''}" placeholder="Ex : 35"></div>
+    <div class="field" id="swimPacePreview" style="font-size:13px; color:var(--text-dim);"></div>
+    <div class="field"><label class="field-label">Nage (optionnel)</label><div class="choice-group" id="swimStroke">
+      ${SWIM_STROKES.map(t=>`<div class="choice ${t.id===strokeSel?'active':''}" data-val="${t.id}">${t.label}</div>`).join("")}
+    </div></div>
+    <div class="field"><label class="field-label">Bassin (optionnel)</label><div class="choice-group" id="swimPool">
+      ${SWIM_POOLS.map(t=>`<div class="choice ${t.id===poolSel?'active':''}" data-val="${t.id}">${t.label}</div>`).join("")}
+    </div></div>
+    <div class="field"><label class="field-label">FC moyenne (bpm, optionnel)</label><input type="number" min="0" inputmode="numeric" id="swimFc" value="${e?(e.fc||''):''}" placeholder="Ex : 140"></div>
+    <div class="field"><label class="field-label">Calories (kcal, optionnel)</label><input type="number" min="0" inputmode="numeric" id="swimCalories" value="${e?(e.calories||''):''}" placeholder="Ex : 450"></div>
+    <div class="btn-row-3070">
+      <button class="btn btn-cancel" id="cancelSwimForm">Annuler</button>
+      <button class="btn btn-primary" id="saveSwim">Enregistrer</button>
+    </div>
+  </div>`;
+}
+function bindSwim(){
+  document.getElementById("toggleSwimForm")?.addEventListener("click", ()=>{
+    swimFormOpen = true;
+    editingSwimId = null;
+    render();
+  });
+  if(swimFormOpen){
+    document.getElementById("cancelSwimForm").addEventListener("click", ()=>{
+      swimFormOpen = false;
+      editingSwimId = null;
+      render();
+    });
+    const editing = editingSwimId ? state.swims.find(s=>s.id===editingSwimId) : null;
+    const dist = document.getElementById("swimDist");
+    const dur = document.getElementById("swimDur");
+    const preview = document.getElementById("swimPacePreview");
+    let strokeVal = editing ? (editing.nage||"") : "";
+    let poolVal = editing ? (editing.bassin||"") : "";
+    /* un second appui sur le choix actif le désélectionne : la nage et le bassin restent facultatifs */
+    document.querySelectorAll("#swimStroke .choice").forEach(c=>{
+      c.addEventListener("click", ()=>{
+        const wasActive = c.classList.contains("active");
+        document.querySelectorAll("#swimStroke .choice").forEach(x=>x.classList.remove("active"));
+        if(!wasActive){ c.classList.add("active"); strokeVal = c.dataset.val; } else { strokeVal = ""; }
+      });
+    });
+    document.querySelectorAll("#swimPool .choice").forEach(c=>{
+      c.addEventListener("click", ()=>{
+        const wasActive = c.classList.contains("active");
+        document.querySelectorAll("#swimPool .choice").forEach(x=>x.classList.remove("active"));
+        if(!wasActive){ c.classList.add("active"); poolVal = c.dataset.val; } else { poolVal = ""; }
+      });
+    });
+    function updatePreview(){
+      const d = parseFloat(dist.value), t = parseFloat(dur.value);
+      preview.textContent = (d>0 && t>0) ? "Allure estimée : " + pace100Str(t*100/d) : "";
+    }
+    updatePreview();
+    dist.addEventListener("input", updatePreview);
+    dur.addEventListener("input", updatePreview);
+    document.getElementById("saveSwim").addEventListener("click", ()=>{
+      const date = document.getElementById("swimDate").value || todayStr();
+      const distance = dist.value, duree = dur.value;
+      if(!(parseFloat(distance)>0) || !(parseFloat(duree)>0)){ showToast("Renseigne distance et durée", "error"); return; }
+      const fc = document.getElementById("swimFc").value;
+      const calories = document.getElementById("swimCalories").value;
+      if(editing){
+        Object.assign(editing, {date, distance, duree, nage:strokeVal, bassin:poolVal, fc, calories});
+        showToast("Modifications enregistrées", "success");
+      } else {
+        state.swims.push({id:uid(), date, distance, duree, nage:strokeVal, bassin:poolVal, fc, calories});
+        showCelebration("Natation enregistrée");
+      }
+      save(K.swims, state.swims);
+      swimFormOpen = false;
+      editingSwimId = null;
+      render();
+    });
+  }
+  document.querySelectorAll("[data-editswim]").forEach(item=>{
+    item.addEventListener("click", ()=>{
+      const s = state.swims.find(x=>x.id===item.dataset.editswim);
+      if(!s) return;
+      showDetailPopup(renderSwimDetailPopup(s));
+    });
+  });
+  document.querySelectorAll(".del-btn").forEach(b=>{
+    b.addEventListener("click", (e)=>{
+      e.stopPropagation();
+      state.swims = state.swims.filter(s=>s.id !== b.dataset.id);
+      save(K.swims, state.swims);
+      render();
+    });
+  });
+}
+
 /* ============ PROGRAMS ============ */
 /* ============ STATS ============ */
 let statsMachine = null;
@@ -2566,6 +2838,10 @@ function renderChartDetailPopup(type){
       .filter(r=>parseFloat(r.distance)>0 && parseFloat(r.duree)>0);
     title = "Allure course à pied";
     items = paceRuns.map(r=>({date:r.date, label:paceStr(parseFloat(r.duree)/parseFloat(r.distance))}));
+  } else if(type === "swim"){
+    title = "Allure natation";
+    items = [...state.swims].sort((a,b)=>a.date.localeCompare(b.date)).filter(s=>swimPace(s)!==null)
+      .map(s=>({date:s.date, label:pace100Str(swimPace(s))}));
   } else if(type === "velo"){
     const veloRuns = [...state.runs].filter(r=>r.sport==="velo")
       .sort((a,b)=>a.date.localeCompare(b.date))
@@ -2595,7 +2871,7 @@ function weeklyVolume(n){
   now.setHours(0,0,0,0); now.setDate(now.getDate()-day);
   for(let i=n-1;i>=0;i--){
     const start = new Date(now); start.setDate(start.getDate()-7*i);
-    weeks.push({key:localDateStr(start), start, gym:0, run:0, velo:0, program:0, km:0});
+    weeks.push({key:localDateStr(start), start, gym:0, run:0, velo:0, swim:0, program:0, km:0});
   }
   state.gym.forEach(s=>{ if((s.status||"done")!=="done") return; const k=getWeekKey(s.date); const w=weeks.find(w=>w.key===k); if(w) w.gym++; });
   state.runs.forEach(r=>{
@@ -2605,6 +2881,7 @@ function weeklyVolume(n){
       w.km += parseFloat(r.distance)||0;
     }
   });
+  state.swims.forEach(s=>{ const k=getWeekKey(s.date); const w=weeks.find(w=>w.key===k); if(w) w.swim++; });
   Object.values(state.progress).forEach(p=>{
     (p.history||[]).forEach(d=>{
       const k=getWeekKey(d); const w=weeks.find(w=>w.key===k); if(w) w.program++;
@@ -2653,12 +2930,13 @@ function renderStats(){
   const totalGym = state.gym.filter(s=>(s.status||"done")==="done").length;
   const totalKm = state.runs.reduce((a,r)=>a+(parseFloat(r.distance)||0),0);
   const totalPrograms = Object.values(state.progress).reduce((a,p)=>a+(p.sessions||0),0);
+  const totalSwim = state.swims.reduce((a,s)=>a+(parseFloat(s.distance)||0),0);
   const ms = monthSummary();
   const tonnageSeries = state.gym.filter(s=>(s.status||"done")==="done")
     .sort((a,b)=>a.date.localeCompare(b.date))
     .map(s=>({date:s.date, t:sessionTonnage(s)})).filter(x=>x.t>0);
   const weeks = weeklyVolume(8);
-  const maxWeek = Math.max(1, ...weeks.map(w=>Math.max(w.gym,w.run,w.velo,w.program)));
+  const maxWeek = Math.max(1, ...weeks.map(w=>Math.max(w.gym,w.run,w.velo,w.swim,w.program)));
   const heatmapWeeks = computeActivityHeatmap(52);
   const machinesWithData = allMachines().filter(m=>machineSeries(m.id).length>=2);
   if(!statsMachine || !machinesWithData.find(m=>m.id===statsMachine)){
@@ -2673,6 +2951,8 @@ function renderStats(){
     .sort((a,b)=>a.date.localeCompare(b.date))
     .filter(r=>parseFloat(r.distance)>0 && parseFloat(r.duree)>0);
   const veloSeries = veloRuns.map(r=> parseFloat(r.distance)/(parseFloat(r.duree)/60));
+  const swimList = [...state.swims].sort((a,b)=>a.date.localeCompare(b.date)).filter(s=>swimPace(s)!==null);
+  const swimSeries = swimList.map(s=> -swimPace(s));
   const fcRuns = state.runs.filter(r=>r.fc);
   const avgFc = fcRuns.length ? Math.round(fcRuns.reduce((a,r)=>a+parseFloat(r.fc),0)/fcRuns.length) : null;
   const finishedPrograms = Object.entries(state.progress)
@@ -2696,12 +2976,14 @@ function renderStats(){
       <div class="row-stats">
         <div class="stat"><b>${ms.gymCount}</b><span>séances salle</span></div>
         <div class="stat"><b>${ms.kmMonth.toFixed(1)}</b><span>km course</span></div>
+        <div class="stat"><b>${fmtSwimTotal(ms.swimMonth)}</b><span>natation</span></div>
         <div class="stat"><b>${ms.progCount}</b><span>programmes</span></div>
       </div>
       <div class="stat-note" style="margin:14px 0 6px; font-weight:700; color:var(--text);">Depuis le début</div>
       <div class="row-stats">
         <div class="stat"><b>${totalGym}</b><span>séances salle</span></div>
         <div class="stat"><b>${totalKm.toFixed(1)}</b><span>km course</span></div>
+        <div class="stat"><b>${fmtSwimTotal(totalSwim)}</b><span>natation</span></div>
         <div class="stat"><b>${totalPrograms}</b><span>programmes finis</span></div>
       </div>
       ${avgFc ? `<div class="stat-note">FC moyenne sur tes courses : ${avgFc} bpm</div>` : ""}
@@ -2743,7 +3025,7 @@ function renderStats(){
             <div class="heatmap-col">
               ${week.days.map(day => {
                 const style = heatmapCellBg(day.types);
-                const label = day.future ? "À venir" : (day.types.length===0 ? "Aucune activité" : day.types.map(t=>({gym:"Salle",run:"Course",velo:"Vélo",program:"Programme"}[t])).join(" + "));
+                const label = day.future ? "À venir" : (day.types.length===0 ? "Aucune activité" : day.types.map(t=>({gym:"Salle",run:"Course",velo:"Vélo",swim:"Natation",program:"Programme"}[t])).join(" + "));
                 return `<div class="heatmap-cell" style="${style}" data-heatmap-day="${day.date}" title="${fmtDate(day.date)} · ${label}"></div>`;
               }).join("")}
             </div>
@@ -2755,6 +3037,7 @@ function renderStats(){
         <span class="heatmap-cell" style="background:var(--blue);"></span><span>Salle</span>
         <span class="heatmap-cell" style="background:var(--red); margin-left:8px;"></span><span>Course</span>
         <span class="heatmap-cell" style="background:var(--green); margin-left:8px;"></span><span>Vélo</span>
+        <span class="heatmap-cell" style="background:var(--swim); margin-left:8px;"></span><span>Natation</span>
         <span class="heatmap-cell" style="background:var(--yellow); margin-left:8px;"></span><span>Programme</span>
       </div>
     </div>
@@ -2768,12 +3051,13 @@ function renderStats(){
               <div class="week-bar gym" style="height:${Math.max(3,Math.round((w.gym/maxWeek)*54))}px"></div>
               <div class="week-bar run" style="height:${Math.max(3,Math.round((w.run/maxWeek)*54))}px"></div>
               <div class="week-bar velo" style="height:${Math.max(3,Math.round((w.velo/maxWeek)*54))}px"></div>
+              <div class="week-bar swim" style="height:${Math.max(3,Math.round((w.swim/maxWeek)*54))}px"></div>
               <div class="week-bar program" style="height:${Math.max(3,Math.round((w.program/maxWeek)*54))}px"></div>
             </div>
             <span>${w.start.toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit'})}</span>
           </div>`).join("")}
       </div>
-      <div class="legend"><span><i class="dot gym"></i>Salle</span><span><i class="dot run"></i>Course</span><span><i class="dot velo"></i>Vélo</span><span><i class="dot program"></i>Programme</span></div>
+      <div class="legend"><span><i class="dot gym"></i>Salle</span><span><i class="dot run"></i>Course</span><span><i class="dot velo"></i>Vélo</span><span><i class="dot swim"></i>Natation</span><span><i class="dot program"></i>Programme</span></div>
     </div>
 
     <div class="card">
@@ -2872,6 +3156,25 @@ function renderStats(){
       `}
     </div>
 
+    <div class="card">
+      <h2>Progression allure natation</h2>
+      ${swimSeries.length<2 ? emptyState("🏊","Pas encore assez de séances de natation enregistrées") : `
+        <div class="chart-click-area" data-chart-popup="swim">
+          ${sparklineSVG(swimSeries, 'spark-swim')}
+          <div class="chart-hint">Toucher pour voir le détail</div>
+        </div>
+        ${(()=>{
+          const paces = swimList.map(swimPace);
+          const current = paces[paces.length-1], best = Math.min(...paces), delta = paces[0]-current;
+          return `<div class="row-stats" style="margin-top:10px;">
+            <div class="stat"><b>${pace100Str(current,false)}</b><span>actuelle /100 m</span></div>
+            <div class="stat"><b>${pace100Str(best,false)}</b><span>record /100 m</span></div>
+            <div class="stat"><b>${delta>=0?'-':'+'}${pace100Str(Math.abs(delta),false)}</b><span>depuis le début</span></div>
+          </div>`;
+        })()}
+      `}
+    </div>
+
     <button class="btn btn-cancel" id="resetStatsBtn" style="margin-top:4px;">Réinitialiser les statistiques</button>
   `;
 }
@@ -2903,12 +3206,14 @@ function bindStats(){
     });
   });
   document.getElementById("resetStatsBtn")?.addEventListener("click", ()=>{
-    if(confirm("Réinitialiser toutes les statistiques ? Ça effacera tes séances salle, tes courses et l'historique des programmes. Cette action est irréversible.")){
+    if(confirm("Réinitialiser toutes les statistiques ? Ça effacera tes séances salle, tes courses, ta natation et l'historique des programmes. Cette action est irréversible.")){
       state.gym = [];
       state.runs = [];
+      state.swims = [];
       state.progress = {};
       save(K.gym, state.gym);
       save(K.runs, state.runs);
+      save(K.swims, state.swims);
       save(K.progress, state.progress);
       showToast("Statistiques réinitialisées", "success");
       render();
@@ -3623,7 +3928,9 @@ function renderSettings(){
       <h2>Statistiques</h2>
       <p class="stat-note" style="margin:0 0 10px;">Supprimer les statistiques d'un seul type, sans toucher aux autres.</p>
       <button class="btn btn-cancel" id="resetStatsGym" style="margin-bottom:8px;">Supprimer les statistiques Salle</button>
-      <button class="btn btn-cancel" id="resetStatsRun" style="margin-bottom:8px;">Supprimer les statistiques Course</button>
+      <button class="btn btn-cancel" id="resetStatsRun" style="margin-bottom:8px;">Supprimer les statistiques Course à pied</button>
+      <button class="btn btn-cancel" id="resetStatsVelo" style="margin-bottom:8px;">Supprimer les statistiques Vélo</button>
+      <button class="btn btn-cancel" id="resetStatsSwim" style="margin-bottom:8px;">Supprimer les statistiques Natation</button>
       <button class="btn btn-cancel" id="resetStatsPrograms">Supprimer les statistiques Programmes</button>
     </div>
 
@@ -3701,10 +4008,28 @@ function bindSettings(){
     }
   });
   document.getElementById("resetStatsRun")?.addEventListener("click", ()=>{
-    if(confirm("Supprimer toutes les statistiques Course ? Cette action est irréversible.")){
-      state.runs = [];
+    const n = state.runs.filter(r=>(r.sport||"pied")!=="velo").length;
+    if(confirm(`Supprimer les ${n} sortie${n>1?"s":""} de course à pied ? Tes sorties à vélo seront conservées. Cette action est irréversible.`)){
+      state.runs = state.runs.filter(r=>(r.sport||"pied")==="velo");
       save(K.runs, state.runs);
-      showToast("Statistiques Course supprimées", "success");
+      showToast("Statistiques Course à pied supprimées", "success");
+      render();
+    }
+  });
+  document.getElementById("resetStatsVelo")?.addEventListener("click", ()=>{
+    const n = state.runs.filter(r=>r.sport==="velo").length;
+    if(confirm(`Supprimer les ${n} sortie${n>1?"s":""} à vélo ? Tes courses à pied seront conservées. Cette action est irréversible.`)){
+      state.runs = state.runs.filter(r=>r.sport!=="velo");
+      save(K.runs, state.runs);
+      showToast("Statistiques Vélo supprimées", "success");
+      render();
+    }
+  });
+  document.getElementById("resetStatsSwim")?.addEventListener("click", ()=>{
+    if(confirm("Supprimer toutes les statistiques Natation ? Cette action est irréversible.")){
+      state.swims = [];
+      save(K.swims, state.swims);
+      showToast("Statistiques Natation supprimées", "success");
       render();
     }
   });
@@ -3790,7 +4115,7 @@ function bindSettings(){
       });
   }
   document.getElementById("exportBtn").addEventListener("click", ()=>{
-    const data = {profile:state.profile, gym:state.gym, runs:state.runs, progress:state.progress, programsList:state.programsList, customMachines:state.customMachines, exportedAt:new Date().toISOString()};
+    const data = {profile:state.profile, gym:state.gym, runs:state.runs, swims:state.swims, progress:state.progress, programsList:state.programsList, customMachines:state.customMachines, hiddenMachines:state.hiddenMachines, deletedDefaultMachines:state.deletedDefaultMachines, machineOrder:state.machineOrder, exportedAt:new Date().toISOString()};
     const blob = new Blob([JSON.stringify(data,null,2)], {type:"application/json"});
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
@@ -3815,6 +4140,10 @@ function bindSettings(){
         if(data.progress) { state.progress = data.progress; save(K.progress, state.progress); }
         if(data.programsList) { state.programsList = data.programsList; save(K.programsList, state.programsList); }
         if(data.customMachines) { state.customMachines = data.customMachines; save(K.customMachines, state.customMachines); }
+        if(data.swims) { state.swims = data.swims; save(K.swims, state.swims); }
+        if(data.hiddenMachines) { state.hiddenMachines = data.hiddenMachines; save(K.hiddenMachines, state.hiddenMachines); }
+        if(data.deletedDefaultMachines) { state.deletedDefaultMachines = data.deletedDefaultMachines; save(K.deletedDefaultMachines, state.deletedDefaultMachines); }
+        if(data.machineOrder) { state.machineOrder = data.machineOrder; save(K.machineOrder, state.machineOrder); }
         showToast("Import réussi", "success");
         render();
       }catch(err){ showToast("Fichier invalide", "error"); }
@@ -3868,6 +4197,16 @@ document.body.addEventListener("click", (e)=>{
     closeDetailPopup();
     editingSessionId = editGymBtn.dataset.popupEditGym;
     state.screen = "gym";
+    render();
+    return;
+  }
+  const editSwimBtn = e.target.closest("[data-popup-edit-swim]");
+  if(editSwimBtn){
+    closeDetailPopup();
+    editingSwimId = editSwimBtn.dataset.popupEditSwim;
+    swimFormOpen = true;
+    runViewMode = "swim";
+    state.screen = "run";
     render();
     return;
   }
