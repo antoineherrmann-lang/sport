@@ -584,20 +584,20 @@ details.changelog-group summary{font-weight:800; font-size:13px; cursor:pointer;
   --lg-accent:var(--accent-text);
   display:flex; align-items:center; justify-content:center; gap:8px; pointer-events:auto; width:100%;
 }
-#glassNavHost{flex:1 1 auto; min-width:0; max-width:440px; margin:0 10px; pointer-events:auto;}
+#glassNavHost{flex:1 1 auto; min-width:0; max-width:460px; margin:0 6px; pointer-events:auto;}
 :root[data-theme="light"] .sg-row{--lg-fill:rgb(255 255 255 / .8); --lg-blur:12px;}
 :root[data-theme="dark"] .sg-row{--lg-fill:rgb(36 36 40 / .72); --lg-blur:14px;}
-.sg-row .lg-nav{--lg-item-w:44px; --lg-item-h:46px; display:grid; flex:1 1 auto; min-width:0;}
+.sg-row .lg-nav{--lg-item-w:44px; --lg-item-h:50px; display:grid; flex:1 1 auto; min-width:0;}
 .sg-row .lg-track__item{padding:0 3px;}
 .sg-ico{display:block; width:100%; height:100%;}
 .sg-ico svg{display:block; width:100%; height:100%;}
-.sg-row .sg-stats{--lg-h:54px; flex-shrink:0;}
+.sg-row .sg-stats{--lg-h:58px; flex-shrink:0;}
 .sg-none .lg-track__select{opacity:0 !important;}
 html.sg-on .tabbar-wrap > nav.tabbar,
 html.sg-on .tabbar-wrap > .stats-bubble{display:none;}
 .tabbar-wrap{
   position:fixed; left:0; right:0; z-index:30;
-  bottom:max(var(--nav-margin), calc(var(--nav-margin) + var(--safe-b) - 14px));
+  bottom:max(var(--nav-margin), calc(var(--nav-margin) + var(--safe-b) - 7px));
   display:flex; justify-content:center; align-items:center; gap:10px; padding:0 var(--nav-margin);
   pointer-events:none;
 }
@@ -755,7 +755,7 @@ nav.tabbar .tab.active svg{transform:translateY(-1px);}
 <script>
 /* ============ CONFIG ============ */
 const APP_NAME = "Sport";
-const APP_VERSION = "2.3.2";
+const APP_VERSION = "2.3.3";
 const APP_VERSION_NAME = "Swim Update";
 
 const MACHINES = [
@@ -791,6 +791,10 @@ const SWIM_POOLS = [
 ];
 
 const CHANGELOG = [
+  {version:"2.3.3", date:"2026-11-06", items:[
+    "Menu flottant Liquid glass un peu plus haut (58 px au lieu de 54 px) et un peu plus large (marges réduites de 12 à 8 px)",
+    "Position remontée à mi-chemin entre l'ancienne et la précédente : 29 px du bord sur un iPhone à encoche (36 px avant, 22 px dans la version précédente)",
+  ]},
   {version:"2.3.2", date:"2026-11-06", items:[
     "Cardio : nouvelle icône de flamme dans le menu (Liquid glass et menu simple)",
   ]},
