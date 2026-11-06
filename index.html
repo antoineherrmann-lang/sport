@@ -581,11 +581,11 @@ details.changelog-group summary{font-weight:800; font-size:13px; cursor:pointer;
 }
 :root[data-theme="light"] .sg-row{--lg-fill:rgb(255 255 255 / .8); --lg-blur:12px;}
 :root[data-theme="dark"] .sg-row{--lg-fill:rgb(36 36 40 / .72); --lg-blur:14px;}
-.sg-row .lg-nav{--lg-item-w:58px; font-size:9.5px; letter-spacing:0;}
+.sg-row .lg-nav{--lg-item-w:56px; --lg-item-h:46px;}
 .sg-row .lg-track__item{padding:0 3px;}
 .sg-ico{display:block; width:100%; height:100%;}
 .sg-ico svg{display:block; width:100%; height:100%;}
-.sg-row .sg-stats{--lg-h:68px; flex-shrink:0;}
+.sg-row .sg-stats{--lg-h:54px; flex-shrink:0;}
 .sg-none .lg-track__select{opacity:0 !important;}
 html.sg-on .tabbar-wrap > nav.tabbar,
 html.sg-on .tabbar-wrap > .stats-bubble{display:none;}
@@ -742,7 +742,7 @@ nav.tabbar .tab.active svg{transform:translateY(-1px);}
 <script>
 /* ============ CONFIG ============ */
 const APP_NAME = "Sport";
-const APP_VERSION = "2.1.0";
+const APP_VERSION = "2.1.1";
 const APP_VERSION_NAME = "Glass Update";
 
 const MACHINES = [
@@ -764,6 +764,10 @@ const RUN_TYPES = [
 ];
 
 const CHANGELOG = [
+  {version:"2.1.1", date:"2026-11-05", items:[
+    "Menu flottant Liquid glass plus fin (54 px au lieu de 68 px) et en icônes seules, sans texte",
+    "Le bouton Statistiques suit la nouvelle hauteur de la barre",
+  ]},
   {version:"2.1.0", name:"Glass Update", date:"2026-11-05", items:[
     "Menu flottant refait avec la bibliothèque Liquid Glass : la sélection devient une lentille de verre que tu peux faire glisser d'un onglet à l'autre, la barre gonfle sous le doigt",
     "Le bouton Statistiques devient un bouton de verre à part, aligné sur la hauteur de la barre",
@@ -1749,7 +1753,7 @@ function glassNavProps(){
     statsActive: state.screen === "stats",
     statsIcon: ICONS.stats,
     statsLabel: "Statistiques",
-    showLabels: true,
+    showLabels: false,
     intensity: 5,
     onNavigate: navTo,
   };
