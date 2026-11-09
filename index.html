@@ -61,6 +61,12 @@
   --accent-dim-2: rgba(0,134,255,.22);
   --accent-2-dim: rgba(255,45,62,.14);
   --swim-dim: rgba(139,92,246,.16);
+  --panel-fill: rgba(255,255,255,.74);
+  --panel-hi: rgba(255,255,255,.9);
+  --panel-rim: rgba(0,0,0,.16);
+  --panel-btn: rgba(255,255,255,.7);
+  --panel-shadow: 0 22px 54px rgba(10,10,10,.24);
+  --sg-rim: rgba(0,0,0,.32);
   --yellow-dim: rgba(255,210,63,.3);
   --shadow-hard: 4px 4px 0 var(--edge-shadow);
   --shadow-hard-red: 4px 4px 0 var(--red);
@@ -92,6 +98,12 @@
   --accent-dim-2: rgba(0,134,255,.3);
   --accent-2-dim: rgba(255,45,62,.2);
   --swim-dim: rgba(139,92,246,.24);
+  --panel-fill: rgba(32,32,36,.78);
+  --panel-hi: rgba(255,255,255,.1);
+  --panel-rim: rgba(255,255,255,.2);
+  --panel-btn: rgba(255,255,255,.1);
+  --panel-shadow: 0 22px 54px rgba(0,0,0,.7);
+  --sg-rim: rgba(255,255,255,.3);
   --yellow-dim: rgba(255,210,63,.22);
   --shadow-hard: 4px 4px 0 var(--edge-shadow);
   --shadow-hard-red: 4px 4px 0 var(--red);
@@ -496,14 +508,14 @@ details.changelog-group summary{font-weight:800; font-size:13px; cursor:pointer;
 }
 .popup-overlay{
   position:fixed; inset:0; z-index:300; display:flex; align-items:center; justify-content:center;
-  padding:24px; background:var(--scrim); backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px);
-  opacity:0; pointer-events:none; transition:opacity .2s ease;
+  padding:24px; background:transparent;
+  visibility:hidden; pointer-events:none; transition:background .2s ease, visibility 0s linear .2s;
 }
-.popup-overlay.show{opacity:1; pointer-events:auto;}
+.popup-overlay.show{background:var(--scrim); visibility:visible; pointer-events:auto; transition:background .2s ease, visibility 0s;}
 .popup-card{
-  background:var(--bg-card); border:2px solid var(--border-strong); border-radius:var(--radius-m);
-  box-shadow:4px 4px 0 var(--blue);
-  padding:20px 18px; max-width:340px; width:100%;
+  background:var(--panel-fill); -webkit-backdrop-filter:blur(28px) saturate(170%); backdrop-filter:blur(28px) saturate(170%);
+  border-radius:26px; box-shadow:0 0 0 .5px var(--panel-rim), var(--panel-shadow), inset 0 1px 0 var(--panel-hi);
+  padding:22px 20px 18px; max-width:340px; width:100%;
   transform:scale(.95) translateY(8px); transition:transform .28s cubic-bezier(.32,1.3,.4,1);
 }
 .popup-overlay.show .popup-card{transform:scale(1) translateY(0);}
@@ -513,13 +525,14 @@ details.changelog-group summary{font-weight:800; font-size:13px; cursor:pointer;
 
 .celebrate-overlay{
   position:fixed; inset:0; z-index:300; display:flex; align-items:center; justify-content:center;
-  padding:24px; background:var(--scrim); backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px);
-  opacity:0; pointer-events:none; transition:opacity .2s ease;
+  padding:24px; background:transparent;
+  visibility:hidden; pointer-events:none; transition:background .2s ease, visibility 0s linear .2s;
 }
-.celebrate-overlay.show{opacity:1; pointer-events:auto;}
+.celebrate-overlay.show{background:var(--scrim); visibility:visible; pointer-events:auto; transition:background .2s ease, visibility 0s;}
 .celebrate-card{
-  background:var(--bg-card); border:2px solid var(--border-strong); box-shadow:4px 4px 0 var(--blue);
-  border-radius:var(--radius-m); padding:26px 22px 20px; max-width:300px; width:100%;
+  background:var(--panel-fill); -webkit-backdrop-filter:blur(28px) saturate(170%); backdrop-filter:blur(28px) saturate(170%);
+  box-shadow:0 0 0 .5px var(--panel-rim), var(--panel-shadow), inset 0 1px 0 var(--panel-hi);
+  border-radius:26px; padding:28px 22px 20px; max-width:300px; width:100%;
   text-align:center;
   transform:scale(.95) translateY(8px); transition:transform .28s cubic-bezier(.32,1.3,.4,1);
 }
@@ -527,7 +540,30 @@ details.changelog-group summary{font-weight:800; font-size:13px; cursor:pointer;
 .celebrate-title{font-family:'Anton',sans-serif; font-size:24px; text-transform:uppercase; line-height:1.05; color:var(--text); margin-bottom:8px;}
 .celebrate-phrase{font-family:'Space Grotesk',sans-serif; font-size:14.5px; font-weight:700; color:var(--text); margin-bottom:12px;}
 .celebrate-note{font-family:'Space Grotesk',sans-serif; font-size:11.5px; color:var(--text-dim); margin-bottom:18px; line-height:1.4;}
+.celebrate-feel{margin:0 0 14px; text-align:center;}
+.celebrate-feel:empty{display:none;}
+.feel-title{font-size:12.5px; font-weight:700; color:var(--text); margin-bottom:9px;}
+.feel-title span{font-weight:600; color:var(--text-dim); margin-left:6px;}
+.feel-picker{display:flex; gap:8px; justify-content:center;}
+.feel-btn{
+  width:46px; height:46px; border-radius:50%; border:2px solid var(--border); background:var(--bg-input);
+  font-size:23px; line-height:1; cursor:pointer; padding:0; display:flex; align-items:center; justify-content:center;
+  filter:grayscale(.7); opacity:.8; transition:transform .16s cubic-bezier(.32,1.5,.4,1), background .15s, filter .15s, opacity .15s;
+}
+.feel-btn:active{transform:scale(.92);}
+.feel-btn.active{background:var(--accent-dim); border-color:var(--blue); filter:none; opacity:1; transform:scale(1.12);}
+.feel-label{font-size:11.5px; font-weight:600; color:var(--text-dim); margin-top:8px; min-height:14px; font-family:'Space Grotesk',sans-serif;}
+.celebrate-card .feel-btn{background:var(--panel-btn); border:.5px solid var(--panel-rim);}
+.celebrate-card .feel-btn.active{background:var(--accent-dim); border:1.5px solid var(--blue);}
 .celebrate-card .btn{width:100%;}
+.popup-card .btn, .celebrate-card .btn{
+  border-radius:999px; box-shadow:none; border:.5px solid var(--panel-rim); padding:12px 18px; font-size:15px;
+}
+.popup-card .btn:active, .celebrate-card .btn:active{transform:scale(.97); box-shadow:none;}
+.popup-card .btn-secondary, .celebrate-card .btn-secondary{background:var(--panel-btn); color:var(--text);}
+.popup-card .btn-primary, .celebrate-card .btn-primary{background:var(--blue); border-color:transparent; color:var(--on-accent);}
+.celebrate-card .cel-line{background:rgba(127,127,127,.14);}
+.celebrate-card .cel-record{background:var(--yellow-dim);}
 .toast{
   position:fixed; left:50%; bottom:calc(var(--nav-h) + var(--nav-margin)*2 + 16px + env(safe-area-inset-bottom));
   transform:translateX(-50%) translateY(10px) scale(.9); background:var(--glass-bg); border:1px solid var(--glass-border);
@@ -587,13 +623,14 @@ details.changelog-group summary{font-weight:800; font-size:13px; cursor:pointer;
 .sg-seg-mount .lg-track__item{padding:0 8px;}
 .sg-btn-mount{--lg-accent:var(--accent-text); display:flex; flex-shrink:0;}
 .sg-btn-mount .sg-gear{--lg-h:42px;}
+.sg-row, .sg-seg-mount, .sg-btn-mount{--lg-edge:var(--sg-rim);}
 .sg-row{
   --lg-accent:var(--accent-text);
   display:flex; align-items:center; justify-content:center; gap:7px; pointer-events:auto; width:100%;
 }
 #glassNavHost{flex:1 1 auto; min-width:0; max-width:460px; margin:0 19px; pointer-events:auto;}
-:root[data-theme="light"] .sg-row{--lg-fill:rgb(255 255 255 / .8); --lg-blur:8px;}
-:root[data-theme="dark"] .sg-row{--lg-fill:rgb(36 36 40 / .72); --lg-blur:10px;}
+:root[data-theme="light"] .sg-row{--lg-fill:rgb(255 255 255 / .6); --lg-blur:8px;}
+:root[data-theme="dark"] .sg-row{--lg-fill:rgb(36 36 40 / .55); --lg-blur:10px;}
 .sg-row .lg-nav{--lg-item-w:44px; --lg-pad:5px; --lg-item-h:53px; display:grid; flex:1 1 auto; min-width:0;}
 .sg-row .lg-track__item{padding:0 3px;}
 .sg-ico{display:block; width:100%; height:100%;}
@@ -754,6 +791,7 @@ nav.tabbar .tab.active svg{transform:translateY(-1px);}
     <div class="celebrate-title" id="celebrateTitle"></div>
     <div class="celebrate-phrase" id="celebratePhrase"></div>
     <div class="celebrate-extra" id="celebrateExtra"></div>
+    <div class="celebrate-feel" id="celebrateFeel"></div>
     <div class="celebrate-note">Tes informations ont bien été enregistrées.</div>
     <button class="btn btn-primary" id="celebrateContinue">Continuer</button>
   </div>
@@ -762,7 +800,7 @@ nav.tabbar .tab.active svg{transform:translateY(-1px);}
 <script>
 /* ============ CONFIG ============ */
 const APP_NAME = "Sport";
-const APP_VERSION = "2.4.0";
+const APP_VERSION = "2.5.0";
 const APP_VERSION_NAME = "Swim Update";
 
 const MACHINES = [
@@ -783,6 +821,44 @@ const RUN_TYPES = [
   {id:"course", label:"Course/Compét."},
 ];
 
+const FEELS = [
+  {v:1, e:"😣", label:"Très dur"},
+  {v:2, e:"😕", label:"Dur"},
+  {v:3, e:"😐", label:"Correct"},
+  {v:4, e:"🙂", label:"Bien"},
+  {v:5, e:"😄", label:"Top"},
+];
+function feelOf(v){ return FEELS.find(f=>f.v===parseInt(v)) || null; }
+function feelText(v){ const f = feelOf(v); return f ? `${f.e} ${f.label}` : ""; }
+function feelPickerHtml(value){
+  const cur = parseInt(value);
+  const f = feelOf(cur);
+  return `<div class="feel-picker" role="group" aria-label="Ressenti">${FEELS.map(x=>
+    `<button type="button" class="feel-btn${cur===x.v?' active':''}" data-feel="${x.v}" aria-label="${x.label}" aria-pressed="${cur===x.v}">${x.e}</button>`).join("")}</div>
+  <div class="feel-label" data-feel-label>${f ? f.label : ""}</div>`;
+}
+/* un second appui sur le choix actif le désélectionne : le ressenti reste facultatif */
+function bindFeelPicker(root, onPick){
+  root.querySelectorAll(".feel-btn").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      const wasActive = btn.classList.contains("active");
+      root.querySelectorAll(".feel-btn").forEach(x=>{ x.classList.remove("active"); x.setAttribute("aria-pressed","false"); });
+      let val = null;
+      if(!wasActive){ btn.classList.add("active"); btn.setAttribute("aria-pressed","true"); val = parseInt(btn.dataset.feel); }
+      const lab = root.querySelector("[data-feel-label]");
+      if(lab){ const f = feelOf(val); lab.textContent = f ? f.label : ""; }
+      onPick(val);
+    });
+  });
+}
+function feelRecord(t){
+  if(!t) return null;
+  const list = t.kind==="gym" ? state.gym : t.kind==="run" ? state.runs : state.swims;
+  return list.find(x=>x.id===t.id) || null;
+}
+function feelSave(t){
+  save(t.kind==="gym" ? K.gym : t.kind==="run" ? K.runs : K.swims, t.kind==="gym" ? state.gym : t.kind==="run" ? state.runs : state.swims);
+}
 const SWIM_STROKES = [
   {id:"crawl", label:"Crawl"},
   {id:"brasse", label:"Brasse"},
@@ -798,6 +874,16 @@ const SWIM_POOLS = [
 ];
 
 const CHANGELOG = [
+  {version:"2.5.0", date:"2026-11-09", items:[
+    "Ressenti facultatif : à la fin d'une séance de salle, d'une course, d'une sortie vélo ou d'une séance de natation, la notification propose « Comment tu t'es senti ? » avec 5 visages (très dur, dur, correct, bien, top)",
+    "Un seul appui pour répondre, un second sur le même visage pour annuler, et « Continuer » ignore la question : rien n'est obligatoire. La notification reste plus longtemps affichée quand elle pose la question",
+    "Le ressenti se modifie ensuite depuis la séance (Modifier), s'affiche dans l'historique (visage) et dans l'aperçu, et la vue d'ensemble des statistiques donne le ressenti moyen",
+  ]},
+  {version:"2.4.1", date:"2026-11-09", items:[
+    "Menu flottant plus proche de celui d'Apple : verre plus clair (remplissage 60 % en clair, 55 % en sombre au lieu de 80 % et 72 %) et fin liseré de 0,5 pt (bord de la bibliothèque, plus marqué), aussi sur le bouton Statistiques, les sélecteurs et le bouton Réglages",
+    "Popups (aperçus de séance, détails, modification d'une date) et notification de fin en verre : fond translucide flouté, coins arrondis, liseré fin et boutons en pilule",
+    "Le flou des popups est porté par la carte elle-même, pas par le fond : un flou imbriqué ne voyait pas la page derrière",
+  ]},
   {version:"2.4.0", date:"2026-11-09", items:[
     "Plus de Liquid glass : les sélecteurs (À pied / À vélo / Natation, Récurrents / Ponctuels, Apparence, Liquid glass) deviennent des commandes en verre avec une lentille qui glisse sous le doigt, et le bouton Réglages de l'accueil est un bouton de verre",
     "Les éléments d'origine restent en place sous le verre : si glass-lib.js manque ou si tu choisis Simple dans Réglages, tout revient comme avant",
@@ -1527,15 +1613,31 @@ function celebrateConfetti(){
   setTimeout(()=> container.remove(), 1900);
 }
 let celebrateTimer = null;
-function showCelebration(title, extraHtml){
+function showCelebration(title, extraHtml, feel){
   const overlay = document.getElementById("celebrateModal");
   document.getElementById("celebrateTitle").textContent = title;
   document.getElementById("celebratePhrase").textContent = pickMotivation();
   document.getElementById("celebrateExtra").innerHTML = extraHtml || "";
+  const box = document.getElementById("celebrateFeel");
+  const rec = feelRecord(feel);
+  if(rec){
+    box.innerHTML = `<div class="feel-title">Comment tu t'es senti ?<span>Facultatif</span></div>` + feelPickerHtml(rec.ressenti);
+    bindFeelPicker(box, (val)=>{
+      const r = feelRecord(feel);
+      if(!r) return;
+      if(val===null) delete r.ressenti; else r.ressenti = val;
+      feelSave(feel);
+      render();
+      clearTimeout(celebrateTimer);
+      celebrateTimer = setTimeout(hideCelebration, 8000);
+    });
+  } else {
+    box.innerHTML = "";
+  }
   celebrateConfetti();
   overlay.classList.add("show");
   clearTimeout(celebrateTimer);
-  celebrateTimer = setTimeout(hideCelebration, extraHtml ? 12000 : 8000);
+  celebrateTimer = setTimeout(hideCelebration, rec ? 20000 : (extraHtml ? 12000 : 8000));
 }
 function hideCelebration(){
   document.getElementById("celebrateModal").classList.remove("show");
@@ -2081,7 +2183,7 @@ function bindHome(){
     }
     if(d) d.status = "done";
     save(K.gym, state.gym);
-    showCelebration("Séance terminée", d ? celebrationExtraHtml(sessionHighlights(d)) : "");
+    showCelebration("Séance terminée", d ? celebrationExtraHtml(sessionHighlights(d)) : "", d ? {kind:"gym", id:d.id} : null);
     render();
   });
   document.getElementById("resumeProgramHome")?.addEventListener("click", ()=>{
@@ -2228,7 +2330,7 @@ function renderGym(){
         return `<div class="history-item" data-edit="${s.id}">
           <div class="history-main">
             <div class="history-date">${fmtDate(s.date)}</div>
-            <div class="history-detail">${ex || 'Aucun détail'}</div>
+            <div class="history-detail">${ex || 'Aucun détail'}${s.ressenti ? ' · '+feelOf(s.ressenti).e : ''}</div>
           </div>
           <div class="history-actions">
             <button class="del-btn" data-id="${s.id}" title="Supprimer">${ICONS.trash}</button>
@@ -2300,6 +2402,7 @@ function renderGymForm(){
       <input type="text" id="newMachineName" placeholder="Nouvelle machine (ex : Leg press)">
       <button class="btn btn-ghost" id="addMachineBtn" type="button">+ Ajouter</button>
     </div>
+    ${!isDraft ? `<div class="field" style="margin-top:12px;"><label class="field-label">Ressenti (optionnel)</label><div id="gymFeel">${feelPickerHtml(session.ressenti)}</div></div>` : ""}
     ${isDraft ? `
     <div class="btn-row-3070" style="margin-top:8px;">
       <button class="btn btn-cancel" id="discardGym">Annuler</button>
@@ -2333,6 +2436,13 @@ function bindGym(){
     });
     document.querySelectorAll("[data-machine], [data-set-machine]").forEach(inp=>{
       inp.addEventListener("focus", ()=>{ setTimeout(()=>{ try{ inp.select(); }catch(e){} }, 0); });
+    });
+    const gymFeelBox = document.getElementById("gymFeel");
+    if(gymFeelBox) bindFeelPicker(gymFeelBox, (v)=>{
+      const s = getEditingSession();
+      if(!s) return;
+      if(v===null) delete s.ressenti; else s.ressenti = v;
+      save(K.gym, state.gym);
     });
     document.querySelectorAll("[data-toggle-sets]").forEach(btn=>{
       btn.addEventListener("click", ()=>{
@@ -2416,7 +2526,7 @@ function bindGym(){
       if(s) s.status = "done";
       save(K.gym, state.gym);
       closeSessionForm(false);
-      showCelebration("Séance terminée", s ? celebrationExtraHtml(sessionHighlights(s)) : "");
+      showCelebration("Séance terminée", s ? celebrationExtraHtml(sessionHighlights(s)) : "", s ? {kind:"gym", id:s.id} : null);
       render();
     });
     document.getElementById("closeEditGym")?.addEventListener("click", ()=>{
@@ -2455,7 +2565,7 @@ function renderGymDetailPopup(s){
       const perSet = (e.poidsParSerie||[]).filter(v=>v!==undefined && v!=="");
       const detail = perSet.length>1 ? ` (${perSet.map(v=>v+'kg').join(' → ')})` : "";
       return `<div class="settings-row"><span class="lbl">${m.label}</span><span class="val">${e.poids}kg × ${e.reps||'?'} (${e.series||'?'} séries)${detail}</span></div>`;
-    }).join("") + (sessionTonnage(s)>0 ? `<div class="settings-row"><span class="lbl"><b>Tonnage</b></span><span class="val"><b>${fmtKg(sessionTonnage(s))}</b></span></div>` : "");
+    }).join("") + (sessionTonnage(s)>0 ? `<div class="settings-row"><span class="lbl"><b>Tonnage</b></span><span class="val"><b>${fmtKg(sessionTonnage(s))}</b></span></div>` : "") + (s.ressenti ? `<div class="settings-row"><span class="lbl">Ressenti</span><span class="val">${feelText(s.ressenti)}</span></div>` : "");
   return `
     <h2>${fmtDate(s.date)}</h2>
     ${rows || `<p class="stat-note" style="margin:0;">Aucun détail enregistré</p>`}
@@ -2478,6 +2588,7 @@ function renderRunDetailPopup(r){
   if(r.fc) rows.push(["FC moyenne", `${r.fc} bpm`]);
   if(r.denivele) rows.push(["Dénivelé+", `${r.denivele} m`]);
   if(r.calories) rows.push(["Calories", `${r.calories} kcal`]);
+  if(r.ressenti) rows.push(["Ressenti", feelText(r.ressenti)]);
   return `
     <h2>${fmtDate(r.date)}</h2>
     ${rows.map(([lbl,val])=>`<div class="settings-row"><span class="lbl">${lbl}</span><span class="val">${val}</span></div>`).join("")}
@@ -2565,6 +2676,7 @@ function renderRun(){
         if(r.denivele) extra.push(`D+ ${r.denivele} m`);
         if(r.calories) extra.push(`${r.calories} kcal`);
         if(r.type) extra.push(RUN_TYPES.find(t=>t.id===r.type)?.label || r.type);
+        if(r.ressenti) extra.push(feelOf(r.ressenti).e);
         return `<div class="history-item" data-editrun="${r.id}">
           <div class="history-main"><div class="history-date">${fmtDate(r.date)}</div><div class="history-detail">${r.distance} km · ${r.duree} min · ${perf}${extra.length? " · "+extra.join(" · "):""}</div></div>
           <div class="history-actions"><button class="del-btn" data-id="${r.id}" title="Supprimer">${ICONS.trash}</button></div>
@@ -2593,6 +2705,7 @@ function renderRunForm(){
     <div class="field"><label class="field-label">FC moyenne (bpm, optionnel)</label><input type="number" min="0" id="runFc" value="${editing?(editing.fc||''):''}" placeholder="Ex : 152"></div>
     <div class="field"><label class="field-label">Dénivelé positif (m, optionnel)</label><input type="number" min="0" id="runDenivele" value="${editing?(editing.denivele||''):''}" placeholder="Ex : 80"></div>
     <div class="field"><label class="field-label">Calories (kcal, optionnel)</label><input type="number" min="0" id="runCalories" value="${editing?(editing.calories||''):''}" placeholder="Ex : 320"></div>
+    ${editing ? `<div class="field"><label class="field-label">Ressenti (optionnel)</label><div id="runFeel">${feelPickerHtml(editing.ressenti)}</div></div>` : ""}
     <div class="btn-row-3070">
       <button class="btn btn-cancel" id="cancelRunForm">Annuler</button>
       <button class="btn btn-primary" id="saveRun">Enregistrer</button>
@@ -2628,6 +2741,9 @@ function bindRun(){
     const editing = editingRunId ? state.runs.find(r=>r.id===editingRunId) : null;
     let runTypeVal = editing ? editing.type : RUN_TYPES[0].id;
     let runSportVal = editing ? editing.sport : runViewMode;
+    let feelVal = editing && editing.ressenti ? editing.ressenti : null;
+    const runFeelBox = document.getElementById("runFeel");
+    if(runFeelBox) bindFeelPicker(runFeelBox, (v)=>{ feelVal = v; });
     document.querySelectorAll("#runSport .choice").forEach(c=>{
       c.addEventListener("click", ()=>{
         document.querySelectorAll("#runSport .choice").forEach(x=>x.classList.remove("active"));
@@ -2663,10 +2779,13 @@ function bindRun(){
       const calories = document.getElementById("runCalories").value;
       if(editing){
         Object.assign(editing, {date, distance, duree, sport:runSportVal, type:runTypeVal, fc, denivele, calories});
+        if(feelVal===null) delete editing.ressenti; else editing.ressenti = feelVal;
         showToast("Modifications enregistrées", "success");
       } else {
-        state.runs.push({id:uid(), date, distance, duree, sport:runSportVal, type:runTypeVal, fc, denivele, calories});
-        showCelebration(runSportVal==="velo" ? "Sortie enregistrée" : "Course enregistrée");
+        const newRun = {id:uid(), date, distance, duree, sport:runSportVal, type:runTypeVal, fc, denivele, calories};
+        state.runs.push(newRun);
+        save(K.runs, state.runs);
+        showCelebration(runSportVal==="velo" ? "Sortie enregistrée" : "Course enregistrée", "", {kind:"run", id:newRun.id});
       }
       save(K.runs, state.runs);
       runFormOpen = false;
@@ -2702,6 +2821,7 @@ function swimDetailLine(s){
   const pool = SWIM_POOLS.find(t=>t.id===s.bassin); if(pool) extra.push(pool.label);
   if(s.fc) extra.push(`${s.fc} bpm`);
   if(s.calories) extra.push(`${s.calories} kcal`);
+  if(s.ressenti) extra.push(feelOf(s.ressenti).e);
   return `${fmtMeters(parseFloat(s.distance))} · ${s.duree} min · ${pace100Str(p)}${extra.length? " · "+extra.join(" · "):""}`;
 }
 function renderSwimDetailPopup(s){
@@ -2714,6 +2834,7 @@ function renderSwimDetailPopup(s){
   const pool = SWIM_POOLS.find(t=>t.id===s.bassin); if(pool) rows.push(["Bassin", pool.label]);
   if(s.fc) rows.push(["FC moyenne", `${s.fc} bpm`]);
   if(s.calories) rows.push(["Calories", `${s.calories} kcal`]);
+  if(s.ressenti) rows.push(["Ressenti", feelText(s.ressenti)]);
   return `
     <h2>${fmtDate(s.date)}</h2>
     ${rows.map(([lbl,val])=>`<div class="settings-row"><span class="lbl">${lbl}</span><span class="val">${val}</span></div>`).join("")}
@@ -2766,6 +2887,7 @@ function renderSwimForm(){
     </div></div>
     <div class="field"><label class="field-label">FC moyenne (bpm, optionnel)</label><input type="number" min="0" inputmode="numeric" id="swimFc" value="${e?(e.fc||''):''}" placeholder="Ex : 140"></div>
     <div class="field"><label class="field-label">Calories (kcal, optionnel)</label><input type="number" min="0" inputmode="numeric" id="swimCalories" value="${e?(e.calories||''):''}" placeholder="Ex : 450"></div>
+    ${e ? `<div class="field"><label class="field-label">Ressenti (optionnel)</label><div id="swimFeel">${feelPickerHtml(e.ressenti)}</div></div>` : ""}
     <div class="btn-row-3070">
       <button class="btn btn-cancel" id="cancelSwimForm">Annuler</button>
       <button class="btn btn-primary" id="saveSwim">Enregistrer</button>
@@ -2790,6 +2912,9 @@ function bindSwim(){
     const preview = document.getElementById("swimPacePreview");
     let strokeVal = editing ? (editing.nage||"") : "";
     let poolVal = editing ? (editing.bassin||"") : "";
+    let feelVal = editing && editing.ressenti ? editing.ressenti : null;
+    const swimFeelBox = document.getElementById("swimFeel");
+    if(swimFeelBox) bindFeelPicker(swimFeelBox, (v)=>{ feelVal = v; });
     /* un second appui sur le choix actif le désélectionne : la nage et le bassin restent facultatifs */
     document.querySelectorAll("#swimStroke .choice").forEach(c=>{
       c.addEventListener("click", ()=>{
@@ -2820,10 +2945,13 @@ function bindSwim(){
       const calories = document.getElementById("swimCalories").value;
       if(editing){
         Object.assign(editing, {date, distance, duree, nage:strokeVal, bassin:poolVal, fc, calories});
+        if(feelVal===null) delete editing.ressenti; else editing.ressenti = feelVal;
         showToast("Modifications enregistrées", "success");
       } else {
-        state.swims.push({id:uid(), date, distance, duree, nage:strokeVal, bassin:poolVal, fc, calories});
-        showCelebration("Natation enregistrée");
+        const newSwim = {id:uid(), date, distance, duree, nage:strokeVal, bassin:poolVal, fc, calories};
+        state.swims.push(newSwim);
+        save(K.swims, state.swims);
+        showCelebration("Natation enregistrée", "", {kind:"swim", id:newSwim.id});
       }
       save(K.swims, state.swims);
       swimFormOpen = false;
@@ -2986,6 +3114,8 @@ function renderStats(){
   const swimList = [...state.swims].sort((a,b)=>a.date.localeCompare(b.date)).filter(s=>swimPace(s)!==null);
   const swimSeries = swimList.map(s=> -swimPace(s));
   const fcRuns = state.runs.filter(r=>r.fc);
+  const feelList = [...state.gym.filter(s=>(s.status||"done")==="done"), ...state.runs, ...state.swims].map(x=>parseInt(x.ressenti)).filter(v=>v>=1&&v<=5);
+  const feelAvg = feelList.length ? {avg: feelList.reduce((a,b)=>a+b,0)/feelList.length, n: feelList.length} : null;
   const avgFc = fcRuns.length ? Math.round(fcRuns.reduce((a,r)=>a+parseFloat(r.fc),0)/fcRuns.length) : null;
   const finishedPrograms = Object.entries(state.progress)
     .filter(([id,prog])=>(prog.sessions||0)>0)
@@ -3019,6 +3149,7 @@ function renderStats(){
         <div class="stat"><b>${totalPrograms}</b><span>programmes finis</span></div>
       </div>
       ${avgFc ? `<div class="stat-note">FC moyenne sur tes courses : ${avgFc} bpm</div>` : ""}
+      ${feelAvg ? `<div class="stat-note">Ressenti moyen : ${feelAvg.avg.toFixed(1).replace(".",",")}/5 ${feelOf(Math.round(feelAvg.avg)).e} sur ${feelAvg.n} séance${feelAvg.n>1?"s":""}</div>` : ""}
       ${activeProgram ? `<div class="stat-note">🔵 Programme en cours : ${activeProgram.title} (${state.progress[activeProgram.id].done.length}/${activeProgram.steps.length} étapes)</div>` : ""}
     </div>
 
