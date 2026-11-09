@@ -202,21 +202,21 @@ main{padding:18px;}
   0%,100%{opacity:1; transform:scale(1);}
   50%{opacity:.35; transform:scale(1.35);}
 }
-.card h2{font-family:'Anton',sans-serif; font-size:17px; margin:0 0 12px; text-transform:uppercase; letter-spacing:.3px; font-weight:400; color:var(--text);}
+.card h2{line-height:1.1; font-family:'Anton',sans-serif; font-size:17px; margin:0 0 10px; text-transform:uppercase; letter-spacing:.3px; font-weight:400; color:var(--text);}
 .row-stats{display:flex; gap:10px;}
-.stat{flex:1; text-align:center; background:var(--bg-input); border-radius:var(--radius-s); padding:12px 6px; border:2px solid var(--border);}
-.stat b{display:block; font-size:22px; font-family:'Anton',sans-serif; font-weight:400;}
-.stat span{font-size:11px; color:var(--text-dim); font-weight:600;}
+.stat{flex:1; text-align:center; background:var(--bg-input); border-radius:var(--radius-s); padding:9px 6px; border:2px solid var(--border); line-height:1.2;}
+.stat b{display:block; font-size:22px; line-height:1.05; margin-bottom:2px; font-family:'Anton',sans-serif; font-weight:400;}
+.stat span{display:block; font-size:11px; line-height:1.2; color:var(--text-dim); font-weight:600;}
 
 .grid-machines{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
 .machine-pr{
-  background:var(--bg-input); border-radius:var(--radius-s); padding:10px 12px; border:2px solid var(--border);
+  background:var(--bg-input); border-radius:var(--radius-s); padding:8px 12px; border:2px solid var(--border); line-height:1.2;
 }
-.machine-pr .name{font-size:12px; color:var(--text-dim); display:block; margin-bottom:2px; font-weight:600;}
-.machine-pr .val{font-size:18px; font-weight:700; font-family:'IBM Plex Mono',monospace;}
+.machine-pr .name{font-size:12px; line-height:1.2; color:var(--text-dim); display:block; margin-bottom:1px; font-weight:600;}
+.machine-pr .val{display:block; font-size:18px; line-height:1.2; font-weight:700; font-family:'IBM Plex Mono',monospace;}
 
 .activity-item{
-  display:flex; align-items:center; gap:12px; padding:10px 0; border-bottom:2px solid var(--border);
+  display:flex; align-items:center; gap:12px; padding:8px 0; border-bottom:2px solid var(--border);
 }
 .activity-item:last-child{border-bottom:none;}
 .activity-dot{width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; border:2px solid var(--border-strong);}
@@ -225,8 +225,8 @@ main{padding:18px;}
 .activity-dot.run{background:var(--accent-2-dim); color:var(--accent-2-text);}
 .activity-dot.swim{background:var(--swim-dim); color:var(--swim);}
 .activity-main{flex:1; min-width:0;}
-.activity-title{font-weight:700; font-size:14px;}
-.activity-sub{font-size:12px; color:var(--text-dim);}
+.activity-title{font-weight:700; font-size:14px; line-height:1.25;}
+.activity-sub{font-size:12px; line-height:1.3; color:var(--text-dim);}
 
 .btn{
   display:inline-flex; align-items:center; justify-content:center; gap:8px;
@@ -580,6 +580,13 @@ details.changelog-group summary{font-weight:800; font-size:13px; cursor:pointer;
   backdrop-filter:blur(20px) saturate(150%); -webkit-backdrop-filter:blur(20px) saturate(150%);
 }
 .sub-h{font-family:'Space Grotesk',sans-serif; font-size:12px; color:var(--text-dim); text-transform:uppercase; letter-spacing:.3px; font-weight:700; margin:18px 0 8px;}
+.sg-hidden{display:none !important;}
+.sg-seg-mount{--lg-accent:var(--accent-text); display:block;}
+.sg-seg-mount .lg-track{display:grid; width:100%;}
+.sg-seg-mount .lg-track--segmented{font-size:14px;}
+.sg-seg-mount .lg-track__item{padding:0 8px;}
+.sg-btn-mount{--lg-accent:var(--accent-text); display:flex; flex-shrink:0;}
+.sg-btn-mount .sg-gear{--lg-h:42px;}
 .sg-row{
   --lg-accent:var(--accent-text);
   display:flex; align-items:center; justify-content:center; gap:7px; pointer-events:auto; width:100%;
@@ -686,7 +693,7 @@ nav.tabbar .tab.active svg{transform:translateY(-1px);}
 .fab-item span{font-size:9.5px; font-weight:700; color:var(--text-dim); text-align:center; line-height:1.2;}
 
 /* Statistiques */
-.stat-note{font-size:12px; color:var(--text-dim); margin-top:10px; font-family:'IBM Plex Mono',monospace;}
+.stat-note{font-size:12px; line-height:1.4; color:var(--text-dim); margin-top:10px; font-family:'IBM Plex Mono',monospace;}
 .heatmap-container{
   display:grid; grid-template-columns:24px 1fr; grid-template-rows:auto auto; gap:2px 4px;
   overflow-x:auto; padding-bottom:4px;
@@ -755,7 +762,7 @@ nav.tabbar .tab.active svg{transform:translateY(-1px);}
 <script>
 /* ============ CONFIG ============ */
 const APP_NAME = "Sport";
-const APP_VERSION = "2.3.4";
+const APP_VERSION = "2.4.0";
 const APP_VERSION_NAME = "Swim Update";
 
 const MACHINES = [
@@ -791,6 +798,14 @@ const SWIM_POOLS = [
 ];
 
 const CHANGELOG = [
+  {version:"2.4.0", date:"2026-11-09", items:[
+    "Plus de Liquid glass : les sélecteurs (À pied / À vélo / Natation, Récurrents / Ponctuels, Apparence, Liquid glass) deviennent des commandes en verre avec une lentille qui glisse sous le doigt, et le bouton Réglages de l'accueil est un bouton de verre",
+    "Les éléments d'origine restent en place sous le verre : si glass-lib.js manque ou si tu choisis Simple dans Réglages, tout revient comme avant",
+    "Interligne resserré : cases de statistiques, records des machines, activité récente, titres de cartes et notes, pour des cartes plus compactes, surtout sur l'accueil",
+    "Correctif : les totaux de natation à partir de 1 000 m s'affichent en km (1,5 km) et l'unité ne passe plus à la ligne, ce qui gonflait les cases du mois",
+    "Réglages : la section Menu flottant devient Liquid glass (Activé / Simple) et couvre le menu, les sélecteurs et le bouton Réglages",
+    "Nouveau glass-lib.js à envoyer sur GitHub avec index.html",
+  ]},
   {version:"2.3.4", date:"2026-11-06", items:[
     "Menu flottant Liquid glass recalé sur les dimensions mesurées de l'app Apple Store : barre de 63 pt de haut, bouton Statistiques rond de 63 pt, marges latérales de 21 pt et 7 pt entre les deux",
     "Flou légèrement réduit : verre du menu (8 px en clair, 10 px en sombre) et flou progressif du bas de l'écran",
@@ -1593,8 +1608,8 @@ function pace100Str(min, withUnit=true){
   if(s===60){ m++; s=0; }
   return `${m}'${s.toString().padStart(2,"0")}"` + (withUnit ? "/100 m" : "");
 }
-function fmtMeters(m){ return Math.round(m).toLocaleString("fr-FR") + " m"; }
-function fmtSwimTotal(m){ return m>=10000 ? (m/1000).toFixed(1).replace(".",",") + " km" : fmtMeters(m); }
+function fmtMeters(m){ return Math.round(m).toLocaleString("fr-FR") + "\u00a0m"; }
+function fmtSwimTotal(m){ return m>=1000 ? (m/1000).toFixed(1).replace(".",",") + "\u00a0km" : fmtMeters(m); }
 function swimPace(s){
   const d = parseFloat(s.distance), t = parseFloat(s.duree);
   return (d>0 && t>0) ? t*100/d : null;
@@ -1760,6 +1775,7 @@ function render(){
   }
   document.getElementById("mainContent").innerHTML = renderScreen();
   bindScreen();
+  adoptGlass();
   if(lastRenderedScreen !== state.screen){
     if(isFirstVisit){
       staggerEntrance();
@@ -1856,7 +1872,10 @@ function mountGlassNav(){
   document.documentElement.classList.add("sg-on");
 }
 function unmountGlassNav(){
-  if(window.SportGlass && window.SportGlass.mounted) window.SportGlass.unmount();
+  if(window.SportGlass){
+    if(window.SportGlass.release) window.SportGlass.release();
+    if(window.SportGlass.mounted) window.SportGlass.unmount();
+  }
   const host = document.getElementById("glassNavHost");
   if(host) host.remove();
   document.documentElement.classList.remove("sg-on");
@@ -1866,15 +1885,20 @@ function syncGlassNav(){
   if(window.SportGlass && window.SportGlass.mounted) window.SportGlass.update(glassNavProps());
 }
 function glassStatusText(){
-  if(glassPref() !== "lib") return "Menu simple : verre léger intégré à l'app.";
+  if(glassPref() !== "lib") return "Simple : verre léger intégré à l'app, sans la bibliothèque.";
   if(glassState === "loading") return "Chargement de glass-lib.js…";
   if(glassState === "failed") return "glass-lib.js est introuvable : le menu simple est utilisé. Envoie ce fichier sur GitHub avec index.html.";
   if(glassState === "ready" && window.SportGlass){
     return window.SportGlass.info().refract
-      ? "Liquid glass actif : le fond est déformé par le verre (Chrome)."
-      : "Liquid glass actif : verre translucide et lentille animée (Safari).";
+      ? "Actif sur le menu, les sélecteurs et le bouton Réglages. Le fond est déformé par le verre (Chrome)."
+      : "Actif sur le menu, les sélecteurs et le bouton Réglages : verre translucide et lentille animée (Safari).";
   }
-  return "Liquid glass : verre animé et lentille qui suit ton doigt.";
+  return "Verre animé et lentille qui suit ton doigt.";
+}
+function adoptGlass(){
+  if(glassPref() === "lib" && window.SportGlass && window.SportGlass.adopt){
+    window.SportGlass.adopt(document.getElementById("mainContent"));
+  }
 }
 function refreshGlassNote(){
   const note = document.getElementById("glassNote");
@@ -1882,14 +1906,14 @@ function refreshGlassNote(){
 }
 function loadGlassLib(){
   if(glassPref() !== "lib") return;
-  if(window.SportGlass){ glassState = "ready"; mountGlassNav(); refreshGlassNote(); return; }
+  if(window.SportGlass){ glassState = "ready"; mountGlassNav(); adoptGlass(); refreshGlassNote(); return; }
   if(glassState === "loading") return;
   glassState = "loading";
   const s = document.createElement("script");
   s.src = "glass-lib.js?v=" + APP_VERSION;
   s.async = true;
   s.onload = ()=>{
-    if(window.SportGlass){ glassState = "ready"; mountGlassNav(); }
+    if(window.SportGlass){ glassState = "ready"; mountGlassNav(); adoptGlass(); }
     else glassState = "failed";
     refreshGlassNote();
   };
@@ -1934,7 +1958,7 @@ function renderHome(){
   return `
     <div class="home-header">
       <div class="home-logo">${LOGO_HORIZONTAL}</div>
-      <button class="icon-btn hero-settings" id="openSettings" title="Réglages">${ICONS.settings}</button>
+      <button class="icon-btn hero-settings" id="openSettings" data-glass="btn" title="Réglages">${ICONS.settings}</button>
     </div>
 
     ${draft ? `
@@ -2507,7 +2531,7 @@ let runFormOpen = false;
 let runViewMode = "pied";
 let editingRunId = null;
 function runSwitchHtml(){
-  return `<div class="choice-group" id="runViewSwitch" style="margin-bottom:14px;">
+  return `<div class="choice-group" id="runViewSwitch" data-glass="seg" style="margin-bottom:14px;">
       <div class="choice ${runViewMode==="pied"?'active':''}" data-mode="pied">🏃 À pied</div>
       <div class="choice ${runViewMode==="velo"?'active':''}" data-mode="velo">🚴 À vélo</div>
       <div class="choice ${runViewMode==="swim"?'active':''}" data-mode="swim">🏊 Natation</div>
@@ -3404,7 +3428,7 @@ function renderPrograms(){
     ${activeProgram ? renderActiveProgramCard(activeProgram) : ""}
 
     ${!programFormOpen ? `
-    <div class="choice-group" id="programsViewSwitch" style="margin-bottom:6px;">
+    <div class="choice-group" id="programsViewSwitch" data-glass="seg" style="margin-bottom:6px;">
       <div class="choice ${programsViewMode==='recurrent'?'active':''}" data-mode="recurrent">Récurrents</div>
       <div class="choice ${programsViewMode==='ponctuel'?'active':''}" data-mode="ponctuel">Ponctuels</div>
     </div>
@@ -3895,13 +3919,13 @@ function renderSettings(){
   return `
     <div class="card">
       <h2>Apparence</h2>
-      <div class="choice-group" id="themeChoice">
+      <div class="choice-group" id="themeChoice" data-glass="seg">
         ${[["auto","Auto"],["light","Clair"],["dark","Sombre"]].map(([v,l])=>`<div class="choice ${themePref()===v?'active':''}" data-theme-pref="${v}">${l}</div>`).join("")}
       </div>
       <p class="stat-note" id="themeNote" style="margin:10px 0 0;">${themePref()==="auto" ? "Suit le réglage de ton iPhone (actuellement " + (resolveTheme()==="dark" ? "sombre" : "clair") + ")." : "Thème fixé manuellement."}</p>
-      <h3 class="sub-h">Menu flottant</h3>
-      <div class="choice-group" id="glassChoice">
-        ${[["lib","Liquid glass"],["off","Simple"]].map(([v,l])=>`<div class="choice ${glassPref()===v?'active':''}" data-glass-pref="${v}">${l}</div>`).join("")}
+      <h3 class="sub-h">Liquid glass</h3>
+      <div class="choice-group" id="glassChoice" data-glass="seg">
+        ${[["lib","Activé"],["off","Simple"]].map(([v,l])=>`<div class="choice ${glassPref()===v?'active':''}" data-glass-pref="${v}">${l}</div>`).join("")}
       </div>
       <p class="stat-note" id="glassNote" style="margin:10px 0 0;">${glassStatusText()}</p>
     </div>
